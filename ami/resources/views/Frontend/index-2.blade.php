@@ -2,7 +2,7 @@
 @extends('Frontend.Layout.mainlayout')
 @section('remaining_content')
 @push('title')
-   <title>Index</title>
+   <title>Home</title>
 @endpush
 
     <!-- main-slider -->
