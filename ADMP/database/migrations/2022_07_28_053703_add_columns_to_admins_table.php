@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->after('id');
             $table->string('email')->after('name');
             $table->string('password')->after('email');
-            $table->string('img')->after('password');
+            $table->string('img')->default('null')->after('password');
         });
     }
 

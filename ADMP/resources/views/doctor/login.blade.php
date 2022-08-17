@@ -49,7 +49,7 @@
 					</div>
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
-							<a href="{{url('/index')}}" class="menu-logo">
+							<a href="{{url('/doctor')}}" class="menu-logo">
 								<img src="{{url('Frontend/assets/img/logo.png')}}" class="img-fluid" alt="Logo">
 							</a>
 							<a id="menu_close" class="menu-close" href="javascript:void(0);">
@@ -57,65 +57,9 @@
 							</a>
 						</div>
 						<ul class="main-nav">
-							<li>
-								<a href="{{url('/index')}}">Home</a>
-							</li>
-							<li class="has-submenu">
-								<a href="#">Doctors <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/doctor-dashboard')}}">Doctor Dashboard</a></li>
-									<li><a href="{{url('/appointments')}}">Appointments</a></li>
-									<li><a href="{{url('/schedule-timings')}}">Schedule Timing</a></li>
-									<li><a href="{{url('/my-patients')}}">Patients List</a></li>
-									<li><a href="{{url('/patient-profile')}}">Patients Profile</a></li>
-									<li><a href="{{url('/chat-doctor')}}">Chat</a></li>
-									<li><a href="{{url('/invoices')}}">Invoices</a></li>
-									<li><a href="{{url('/doctor-profile-settings')}}">Profile Settings</a></li>
-									<li><a href="{{url('/reviews')}}">Reviews</a></li>
-									<li><a href="{{url('/doctor-register')}}">Doctor Register</a></li>
-								</ul>
-							</li>	
-							<li class="has-submenu">
-								<a href="#">Patients <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/search')}}">Search Doctor</a></li>
-									<li><a href="{{url('/doctor-profile')}}">Doctor Profile</a></li>
-									<li><a href="{{url('/booking')}}">Booking</a></li>
-									<li><a href="{{url('/checkout')}}">Checkout</a></li>
-									<li><a href="{{url('/booking-success')}}">Booking Success</a></li>
-									<li><a href="{{url('/patient-dashboard')}}">Patient Dashboard</a></li>
-									<li><a href="{{url('/favourites')}}">Favourites</a></li>
-									<li><a href="{{url('/chat')}}">Chat</a></li>
-									<li><a href="{{url('/profile-settings')}}">Profile Settings</a></li>
-									<li><a href="{{url('/change-password')}}">Change Password</a></li>
-								</ul>
-							</li>	
-							<li class="has-submenu active">
-								<a href="#">Pages <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/voice-call')}}">Voice Call</a></li>
-									<li><a href="{{url('/video-call')}}">Video Call</a></li>
-									<li><a href="{{url('/search')}}">Search Doctors</a></li>
-									<li><a href="{{url('/calendar')}}">Calendar</a></li>
-									<li><a href="{{url('/components')}}">Components</a></li>
-									<li class="has-submenu">
-										<a href="{{url('/invoices')}}">Invoices</a>
-										<ul class="submenu">
-											<li><a href="{{url('/invoices')}}">Invoices</a></li>
-											<li><a href="{{url('/invoice-view')}}">Invoice View</a></li>
-										</ul>
-									</li>
-									<li><a href="{{url('/blank-page')}}">Starter Page</a></li>
-									<li class="active"><a href="{{url('/login')}}">Login</a></li>
-									<li><a href="{{url('/login')}}">Register</a></li>
-									<li><a href="{{url('/forgot-password')}}">Forgot Password</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="admin/index.html" target="_blank">Admin</a>
-							</li>
+							
 							<li class="login-link">
-								<a href="{{url('/login')}}">Login / Signup</a>
+								<a href="{{url('/doctor')}}">Login / Signup</a>
 							</li>
 						</ul>
 					</div>		 
@@ -130,7 +74,7 @@
 							</div>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link header-login" href="{{url('/login')}}">login / Signup </a>
+							<a class="nav-link header-login" href="{{url('/doctor')}}">login / Signup </a>
 						</li>
 					</ul>
 				</nav>
@@ -150,36 +94,35 @@
 									<div class="col-md-7 col-lg-6 login-left">
 										<img src="{{url('Frontend/assets/img/login-banner.png')}}" class="img-fluid" alt="Doccure Login">	
 									</div>
+									
 									<div class="col-md-12 col-lg-6 login-right">
 										<div class="login-header">
 											<h3>Login <span>Doccure</span></h3>
-										</div>
-										<form action="https://dreamguys.co.in/demo/doccure/index.html">
+										</div>@if(session()->has('fail'))
+												
+												<i class="alert alert-success">{{session('fail')}}</i>
+															
+											@endif
+										<form action="{{url('/doctorlogin')}}" method="post" enctype="multipart/form-data">
+											@csrf
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating">
+												<input type="email" name="email" class="form-control floating">
 												<label class="focus-label">Email</label>
 											</div>
 											<div class="form-group form-focus">
-												<input type="password" class="form-control floating">
+												<input type="password" name="password" class="form-control floating">
 												<label class="focus-label">Password</label>
 											</div>
 											<div class="text-right">
-												<a class="forgot-link" href="{{url('/forgot-password')}}">Forgot Password ?</a>
+												<a class="forgot-link" href="{{url('/doctor-forgot-password')}}">Forgot Password ?</a>
 											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
+											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit" name="submit" value="send">Login</button>
 											<div class="login-or">
 												<span class="or-line"></span>
 												<span class="span-or">or</span>
 											</div>
-											<div class="row form-row social-login">
-												<div class="col-6">
-													<a href="#" class="btn btn-facebook btn-block"><i class="fab fa-facebook-f mr-1"></i> Login</a>
-												</div>
-												<div class="col-6">
-													<a href="#" class="btn btn-google btn-block"><i class="fab fa-google mr-1"></i> Login</a>
-												</div>
-											</div>
-											<div class="text-center dont-have">Don’t have an account? <a href="{{url('/register')}}">Register</a></div>
+											
+											<div class="text-center dont-have">Don’t have an account? <a href="{{url('/contact')}}">Contact Us</a></div>
 										</form>
 									</div>
 								</div>

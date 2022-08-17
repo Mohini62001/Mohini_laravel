@@ -1,4 +1,4 @@
-@extends('patient.Layout.main_layout') 	
+@extends('doctor.Layout.main_layout') 	
 @section('main_container')
 			
 			<!-- Breadcrumb -->
@@ -28,110 +28,27 @@
 						
 							<!-- Profile Sidebar -->
 							<div class="profile-sidebar">
-								<div class="widget-profile pro-widget-content">
-									<div class="profile-info-widget">
-										<a href="#" class="booking-doc-img">
-											<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-02.jpg')}}" alt="User Image">
-										</a>
-										<div class="profile-det-info">
-											<h3>Dr. Darren Elder</h3>
-											
-											<div class="patient-details">
-												<h5 class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="dashboard-widget">
-									<nav class="dashboard-menu">
-										<ul>
-											<li>
-												<a href="{{url('/doctor-dashboard')}}">
-													<i class="fas fa-columns"></i>
-													<span>Dashboard</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/appointments')}}">
-													<i class="fas fa-calendar-check"></i>
-													<span>Appointments</span>
-												</a>
-											</li>
-											<li class="active">
-												<a href="{{url('/my-patients')}}">
-													<i class="fas fa-user-injured"></i>
-													<span>My Patients</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/schedule-timings')}}">
-													<i class="fas fa-hourglass-start"></i>
-													<span>Schedule Timings</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/invoices')}}">
-													<i class="fas fa-file-invoice"></i>
-													<span>Invoices</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/reviews')}}">
-													<i class="fas fa-star"></i>
-													<span>Reviews</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/chat-doctor')}}">
-													<i class="fas fa-comments"></i>
-													<span>Message</span>
-													<small class="unread-msg">23</small>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/doctor-profile-settings')}}">
-													<i class="fas fa-user-cog"></i>
-													<span>Profile Settings</span>
-												</a>
-											</li>
-											<li>
-												<a href="social-media.html">
-													<i class="fas fa-share-alt"></i>
-													<span>Social Media</span>
-												</a>
-											</li>
-											<li>
-												<a href="doctor-{{url('/change-password')}}">
-													<i class="fas fa-lock"></i>
-													<span>Change Password</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/index')}}">
-													<i class="fas fa-sign-out-alt"></i>
-													<span>Logout</span>
-												</a>
-											</li>
-										</ul>
-									</nav>
-								</div>
+								
+								@include('doctor/Layout/doctor-widget');
+								
 							</div>
 							<!-- /Profile Sidebar -->
 							
 						</div>
 						<div class="col-md-7 col-lg-8 col-xl-9">
-						
-							<div class="row row-grid">
+						<input class="form-control" id="myInput" type="text" placeholder="Search..">
+							<br>
+							<div class="myclass row row-grid">
 								<div class="col-md-6 col-lg-4 col-xl-3">
 									<div class="card widget-profile pat-widget-profile">
 										<div class="card-body">
 											<div class="pro-widget-content">
 												<div class="profile-info-widget">
-													<a href="{{url('/patient-profile')}}" class="booking-doc-img">
+													<a href="{{url('/doctor-patient-profile')}}" class="booking-doc-img">
 														<img src="{{url('Frontend/assets/img/patients/patient.jpg')}}" alt="User Image">
 													</a>
 													<div class="profile-det-info">
-														<h3><a href="{{url('/patient-profile')}}">Richard Wilson</a></h3>
+														<h3><a href="{{url('/doctor-patient-profile')}}">Richard Wilson</a></h3>
 														
 														<div class="patient-details">
 															<h5><b>Patient ID :</b> P0016</h5>
@@ -156,11 +73,11 @@
 										<div class="card-body">
 											<div class="pro-widget-content">
 												<div class="profile-info-widget">
-													<a href="{{url('/patient-profile')}}" class="booking-doc-img">
+													<a href="{{url('/doctor-patient-profile')}}" class="booking-doc-img">
 														<img src="{{url('Frontend/assets/img/patients/patient1.jpg')}}" alt="User Image">
 													</a>
 													<div class="profile-det-info">
-														<h3><a href="{{url('/patient-profile')}}">Charlene Reed</a></h3>
+														<h3><a href="{{url('/doctor-patient-profile')}}">Charlene Reed</a></h3>
 														
 														<div class="patient-details">
 															<h5><b>Patient ID :</b> P0001</h5>
@@ -469,6 +386,18 @@
 
 			</div>		
 			<!-- /Page Content -->
+
+			<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".myclass .card").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
    
 			<!-- Footer -->
 			<footer class="footer">
@@ -614,6 +543,8 @@
 	  
 		<!-- jQuery -->
 		<script src="{{ url('Frontend/assets/js/jquery.min.js') }}"></script>
+
+		
 		
 		<!-- Bootstrap Core JS -->
 		<script src="{{  url('Frontend/assets/js/popper.min.js') }}"></script>

@@ -24,7 +24,7 @@
 							@endif
 						</div>
 					</div>
-					<!-- /Page Header -->
+					<!-- /Page Header --->
 					
 					<div class="row">
 						<div class="col-xl-6 d-flex">
@@ -36,14 +36,20 @@
 										<div class="form-group row">
 											<label class="col-lg-3 col-form-label"> Name</label>
 											<div class="col-lg-9">
-												<input type="text" class="form-control" name="name">
+												<input type="text" class="form-control" name="name" placeholder="Urology, heart surgeon, etc.. ">
+												@if ($errors->has('name'))
+												    <span class="text-danger">{{ $errors->first('name')}}</span>
+												@endif
 											</div>
 										</div>
 										<div class="form-group row">
-												<label class="col-lg-3 col-form-label"> Img</label>
-												<div class="col-lg-9">
-													<input type="file" class="form-control" name="img">
-												</div>
+											<label class="col-lg-3 col-form-label"> Img</label>
+											<div class="col-lg-9">
+												<input type="file" class="form-control" name="img">
+												@if ($errors->has('img'))
+												    <span class="text-danger">{{ $errors->first('img')}}</span>
+												@endif
+											</div>
 										</div>
 										
 										

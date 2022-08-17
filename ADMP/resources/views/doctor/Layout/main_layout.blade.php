@@ -1,3 +1,3 @@
-@include('patient.Layout.header')
+@include('doctor.Layout.header')
 @yield('main_container')
 

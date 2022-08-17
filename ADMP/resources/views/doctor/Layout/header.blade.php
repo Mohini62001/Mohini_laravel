@@ -11,8 +11,17 @@
 		<!-- Favicons -->
 		<link type="image/x-icon" href="{{url('Frontend/assets/img/favicon.png')}}" rel="icon">
 		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+		  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/css/bootstrap.min.css')}}">
+
+		
 		
 		<!-- Fontawesome CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/plugins/fontawesome/css/fontawesome.min.css')}}">
@@ -40,7 +49,33 @@
 		<!-- Select2 CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/plugins/select2/css/select2.min.css')}}">
 		
-		
+		<!--
+1 Include jquery File  
+-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<!--
+2 Include these two files 
+-->
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<!--
+3 Call this single function 
+-->
+<script>
+	$(document).ready(function() 
+	{
+		$('#table').DataTable();
+	} );
+</script>
+<script>
+	$(document).ready(function() 
+	{
+		$('#table1').DataTable();
+	} );
+</script>
+
 		<!-- Main CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/css/style.css')}}">
 		
@@ -67,10 +102,10 @@
 								<span></span>
 							</span>
 						</a>
-						<a href="{{url('/index')}}" class="navbar-brand logo">
+						<a href="{{url('/doctor-dashboard')}}" class="navbar-brand logo">
 							<img src="{{url('Frontend/assets/img/logo.png')}}" class="img-fluid" alt="Logo">
 						</a>
-					</div>
+					</div>	
 					<div class="main-menu-wrapper">
 						<div class="menu-header">
 							<a href="{{url('/index')}}" class="menu-logo">
@@ -81,34 +116,21 @@
 							</a>
 						</div>
 						<ul class="main-nav">
-							<li class="active">
-								<a href="{{url('/index')}}">Home</a>
+							<li class="">
+								<a href="{{url('/doctor-dashboard')}}">Hospital</a>
 							</li>
-							<li class="has-submenu">
-								<a href="#">Doctors <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/doctor')}}">Login</a></li>
-									<li><a href="{{url('/doctor-dashboard')}}">Doctor Dashboard</a></li>
-									<li><a href="{{url('/doctor-appointments')}}">Appointments</a></li>
-									<li><a href="{{url('/doctor-schedule-timings')}}">Schedule Timing</a></li>
-									<li><a href="{{url('/doctor-my-patients')}}">Patients List</a></li>
-									<li><a href="{{url('/doctor-booking')}}">Booking</a></li>
-									<li><a href="{{url('/doctor-patient-profile')}}">Patients Profile</a></li>
-									<li><a href="{{url('/doctor-chat-doctor')}}">Chat</a></li>
-									<li><a href="{{url('/doctor-invoices')}}">Invoices</a></li>
-									<li><a href="{{url('/doctor-profile-settings')}}">Profile Settings</a></li>
-									<li><a href="{{url('/doctor-reviews')}}">Reviews</a></li>
-									<li><a href="{{url('/doctor-register')}}">Doctor Register</a></li>
-									<li><a href="{{url('/doctor-change-password')}}">Change Password</a></li>
-									<li><a href="{{url('/doctor-calendar')}}">Calendar</a></li>
-									<li><a href="{{url('/doctor-favourites')}}">Favourites</a></li>
-									<li><a href="{{url('/doctor-forgot-password')}}">Forgot Password</a></li>
-								
-									<li><a href="{{url('/doctor-components')}}">Components</a></li>
-									<li><a href="{{url('/doctor-blank-page')}}">Starter Page</a></li>
-									
-								</ul>
-							</li>	
+							
+							<li class="">
+								<a href="{{url('/doctor-mr-dashboard')}}">MR</a>
+							</li>
+							<li class="">
+								<a href="{{url('/doctor-manager-dashboard')}}">Health Manager</a>
+							</li>
+							<li class="">
+								<a href="{{url('/doctor-company-dashboard')}}">Company</a>
+							</li>
+							
+							
 							
 						</ul>		 
 					</div>		 
@@ -123,7 +145,7 @@
 							</div>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link header-login" href="{{url('/login')}}">login / Signup </a>
+							<a class="nav-link header-login" href="{{url('/doctor')}}">login / Signup </a>
 						</li>
 					</ul>
 				</nav>

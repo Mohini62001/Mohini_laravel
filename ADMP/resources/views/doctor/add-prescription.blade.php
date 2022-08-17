@@ -1,4 +1,4 @@
-@extends('patient.Layout.main_layout') 	
+@extends('doctor.Layout.main_layout') 	
 @section('main_container')
 			
 			<!-- Breadcrumb -->

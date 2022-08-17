@@ -116,6 +116,10 @@
 						
 						<div class="col-md-12 col-lg-8 col-xl-9">
 
+						<?php
+						foreach($doctorlist_arr as $data)
+						{
+						?>
 							<!-- Doctor Widget -->
 							<div class="card">
 								<div class="card-body">
@@ -123,63 +127,48 @@
 										<div class="doc-info-left">
 											<div class="doctor-img">
 												<a href="{{url('/doctor-profile')}}">
-													<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-01.jpg')}}" class="img-fluid" alt="User Image">
+													<img src="{{asset('upload/doctor/' . $data->profile_img)}}" class="img-fluid" alt="User Image">
 												</a>
 											</div>
 											<div class="doc-info-cont">
-												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. Ruby Perrin</a></h4>
-												<p class="doc-speciality">MDS - Periodontology and Oral Implantology, BDS</p>
-												<h5 class="doc-department"><img src="{{url('Frontend/assets/img/specialities/specialities-05.png')}}" class="img-fluid" alt="Speciality">Dentist</h5>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(17)</span>
-												</div>
+												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. <?php echo $data->first_name?> <?php echo $data->last_name?></a></h4>
+												<p class="doc-speciality"><?php echo $data->short_tittle?></p>
+												<h5 class="doc-department"><img src="{{asset('upload/specialities/' . $data->img)}}" class="img-fluid" alt="Speciality"><?php echo $data->specialist_id?></h5>
+												
 												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Florida, USA</p>
+													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> <?php echo $data->city?>, <?php echo $data->state?></p>
 													<ul class="clinic-gallery">
+													<?php
+														$hospital_img=$fetch->hospital_img;
+														$hosp_img_arr=explode(",",$hospital_img);
+								
+														foreach($hosp_img_arr as $d)
+														{
+														?>
 														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-01.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-01.jpg')}}" alt="Feature">
+															<a href="{{asset('upload/hospital/'.$d)}}" data-fancybox="gallery">
+																<img src="{{asset('upload/hospital/'.$d)}}" alt="Feature">
 															</a>
 														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-02.jpg')}}" data-fancybox="gallery">
-																<img  src="{{url('Frontend/assets/img/features/feature-02.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-03.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-03.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-04.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-04.jpg')}}" alt="Feature">
-															</a>
-														</li>
+														<?php
+														}
+														?>
 													</ul>
 												</div>
-												<div class="clinic-services">
-													<span>Dental Fillings</span>
-													<span> Whitneing</span>
-												</div>
+												
 											</div>
 										</div>
 										<div class="doc-info-right">
 											<div class="clini-infos">
 												<ul>
-													<li><i class="far fa-thumbs-up"></i> 98%</li>
-													<li><i class="far fa-comment"></i> 17 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Florida, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $300 - $1000 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i> </li>
+													<li><i class="fas fa-map-marker-alt"></i> <?php echo $data->city?>, <?php echo $data->state?></li>
+													<li><i class="far fa-money-bill-alt"></i> Consulting Fees: <?php echo $data->consulting_fees?>  </li>
+													<li><i class="far fa-money-bill-alt"></i> Followup Fees: <?php echo $data->followup_fees?>  </li>
+												
 												</ul>
 											</div>
 											<div class="clinic-booking">
-												<a class="view-pro-btn" href="{{url('/doctor-profile')}}">View Profile</a>
+												<a class="view-pro-btn" href="{{url('doctor-profile/'.$data->id)}}">View Profile</a>
 												<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
 											</div>
 										</div>
@@ -187,294 +176,11 @@
 								</div>
 							</div>
 							<!-- /Doctor Widget -->
+							<?php
+							}
+							?>
 
-							<!-- Doctor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="doctor-widget">
-										<div class="doc-info-left">
-											<div class="doctor-img">
-												<a href="{{url('/doctor-profile')}}">
-													<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-02.jpg')}}" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="doc-info-cont">
-												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. Darren Elder</a></h4>
-												<p class="doc-speciality">BDS, MDS - Oral & Maxillofacial Surgery</p>
-												<h5 class="doc-department"><img src="{{url('Frontend/assets/img/specialities/specialities-05.png')}}" class="img-fluid" alt="Speciality">Dentist</h5>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(35)</span>
-												</div>
-												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Newyork, USA</p>
-													<ul class="clinic-gallery">
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-01.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-01.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-02.jpg')}}" data-fancybox="gallery">
-																<img  src="{{url('Frontend/assets/img/features/feature-02.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-03.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-03.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-04.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-04.jpg')}}" alt="Feature">
-															</a>
-														</li>
-													</ul>
-												</div>
-												<div class="clinic-services">
-													<span>Dental Fillings</span>
-													<span> Whitneing</span>
-												</div>
-											</div>
-										</div>
-										<div class="doc-info-right">
-											<div class="clini-infos">
-												<ul>
-													<li><i class="far fa-thumbs-up"></i> 100%</li>
-													<li><i class="far fa-comment"></i> 35 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Newyork, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $50 - $300 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="clinic-booking">
-												<a class="view-pro-btn" href="{{url('/doctor-profile')}}">View Profile</a>
-												<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Doctor Widget -->
-
-							<!-- Doctor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="doctor-widget">
-										<div class="doc-info-left">
-											<div class="doctor-img">
-												<a href="{{url('/doctor-profile')}}">
-													<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-03.jpg')}}" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="doc-info-cont">
-												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. Deborah Angel</a></h4>
-												<p class="doc-speciality">MBBS, MD - General Medicine, DNB - Cardiology</p>
-												<p class="doc-department"><img src="{{url('Frontend/assets/img/specialities/specialities-04.png')}}" class="img-fluid" alt="Speciality">Cardiology</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(27)</span>
-												</div>
-												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Georgia, USA</p>
-													<ul class="clinic-gallery">
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-01.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-01.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-02.jpg')}}" data-fancybox="gallery">
-																<img  src="{{url('Frontend/assets/img/features/feature-02.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-03.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-03.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-04.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-04.jpg')}}" alt="Feature">
-															</a>
-														</li>
-													</ul>
-												</div>
-												<div class="clinic-services">
-													<span>Dental Fillings</span>
-													<span> Whitneing</span>
-												</div>
-											</div>
-										</div>
-										<div class="doc-info-right">
-											<div class="clini-infos">
-												<ul>
-													<li><i class="far fa-thumbs-up"></i> 99%</li>
-													<li><i class="far fa-comment"></i> 35 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Newyork, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $100 - $400 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="clinic-booking">
-												<a class="view-pro-btn" href="{{url('/doctor-profile')}}">View Profile</a>
-												<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Doctor Widget -->
-
-							<!-- Doctor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="doctor-widget">
-										<div class="doc-info-left">
-											<div class="doctor-img">
-												<a href="{{url('/doctor-profile')}}">
-													<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-04.jpg')}}" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="doc-info-cont">
-												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. Sofia Brient</a></h4>
-												<p class="doc-speciality">MBBS, MS - General Surgery, MCh - Urology</p>
-												<p class="doc-department"><img src="{{url('Frontend/assets/img/specialities/specialities-01.png')}}" class="img-fluid" alt="Speciality">Urology</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(4)</span>
-												</div>
-												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Louisiana, USA</p>
-													<ul class="clinic-gallery">
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-01.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-01.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-02.jpg')}}" data-fancybox="gallery">
-																<img  src="{{url('Frontend/assets/img/features/feature-02.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-03.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-03.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-04.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-04.jpg')}}" alt="Feature">
-															</a>
-														</li>
-													</ul>
-												</div>
-												<div class="clinic-services">
-													<span>Dental Fillings</span>
-													<span> Whitneing</span>
-												</div>
-											</div>
-										</div>
-										<div class="doc-info-right">
-											<div class="clini-infos">
-												<ul>
-													<li><i class="far fa-thumbs-up"></i> 97%</li>
-													<li><i class="far fa-comment"></i> 4 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Newyork, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $150 - $250 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="clinic-booking">
-												<a class="view-pro-btn" href="{{url('/doctor-profile')}}">View Profile</a>
-												<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Doctor Widget -->
-
-							<!-- Doctor Widget -->
-							<div class="card">
-								<div class="card-body">
-									<div class="doctor-widget">
-										<div class="doc-info-left">
-											<div class="doctor-img">
-												<a href="{{url('/doctor-profile')}}">
-													<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-06.jpg')}}" class="img-fluid" alt="User Image">
-												</a>
-											</div>
-											<div class="doc-info-cont">
-												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. Katharine Berthold</a></h4>
-												<p class="doc-speciality">MS - Orthopaedics, MBBS, M.Ch - Orthopaedics</p>
-												<p class="doc-department"><img src="{{url('Frontend/assets/img/specialities/specialities-03.png')}}" class="img-fluid" alt="Speciality">Orthopaedics</p>
-												<div class="rating">
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating">(52)</span>
-												</div>
-												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> Texas, USA</p>
-													<ul class="clinic-gallery">
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-01.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-01.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-02.jpg')}}" data-fancybox="gallery">
-																<img  src="{{url('Frontend/assets/img/features/feature-02.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-03.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-03.jpg')}}" alt="Feature">
-															</a>
-														</li>
-														<li>
-															<a href="{{url('Frontend/assets/img/features/feature-04.jpg')}}" data-fancybox="gallery">
-																<img src="{{url('Frontend/assets/img/features/feature-04.jpg')}}" alt="Feature">
-															</a>
-														</li>
-													</ul>
-												</div>
-												<div class="clinic-services">
-													<span>Dental Fillings</span>
-													<span> Whitneing</span>
-												</div>
-											</div>
-										</div>
-										<div class="doc-info-right">
-											<div class="clini-infos">
-												<ul>
-													<li><i class="far fa-thumbs-up"></i> 100%</li>
-													<li><i class="far fa-comment"></i> 52 Feedback</li>
-													<li><i class="fas fa-map-marker-alt"></i> Texas, USA</li>
-													<li><i class="far fa-money-bill-alt"></i> $100 - $500 <i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i></li>
-												</ul>
-											</div>
-											<div class="clinic-booking">
-												<a class="view-pro-btn" href="{{url('/doctor-profile')}}">View Profile</a>
-												<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Doctor Widget -->
+							
 
 							<div class="load-more text-center">
 								<a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>	
@@ -486,145 +192,8 @@
 
 			</div>		
 			<!-- /Page Content -->
-   
-			<!-- Footer -->
-			<footer class="footer">
-				
-				<!-- Footer Top -->
-				<div class="footer-top">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-lg-3 col-md-6">
-							
-								<!-- Footer Widget -->
-								<div class="footer-widget footer-about">
-									<div class="footer-logo">
-										<img src="{{url('Frontend/assets/img/footer-logo.png')}}" alt="logo">
-									</div>
-									<div class="footer-about-content">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-										<div class="social-icon">
-											<ul>
-												<li>
-													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
-												</li>
-												<li>
-													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
-												</li>
-												<li>
-													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-												</li>
-												<li>
-													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-												</li>
-												<li>
-													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<!-- /Footer Widget -->
-								
-							</div>
-							
-							<div class="col-lg-3 col-md-6">
-							
-								<!-- Footer Widget -->
-								<div class="footer-widget footer-menu">
-									<h2 class="footer-title">For Patients</h2>
-									<ul>
-										<li><a href="{{url('/search')}}"><i class="fas fa-angle-double-right"></i> Search for Doctors</a></li>
-										<li><a href="{{url('/login')}}"><i class="fas fa-angle-double-right"></i> Login</a></li>
-										<li><a href="{{url('/login')}}"><i class="fas fa-angle-double-right"></i> Register</a></li>
-										<li><a href="{{url('/booking')}}"><i class="fas fa-angle-double-right"></i> Booking</a></li>
-										<li><a href="{{url('/patient-dashboard')}}"><i class="fas fa-angle-double-right"></i> Patient Dashboard</a></li>
-									</ul>
-								</div>
-								<!-- /Footer Widget -->
-								
-							</div>
-							
-							<div class="col-lg-3 col-md-6">
-							
-								<!-- Footer Widget -->
-								<div class="footer-widget footer-menu">
-									<h2 class="footer-title">For Doctors</h2>
-									<ul>
-										<li><a href="{{url('/appointments')}}"><i class="fas fa-angle-double-right"></i> Appointments</a></li>
-										<li><a href="{{url('/chat')}}"><i class="fas fa-angle-double-right"></i> Chat</a></li>
-										<li><a href="{{url('/login')}}"><i class="fas fa-angle-double-right"></i> Login</a></li>
-										<li><a href="{{url('/doctor-register')}}"><i class="fas fa-angle-double-right"></i> Register</a></li>
-										<li><a href="{{url('/doctor-dashboard')}}"><i class="fas fa-angle-double-right"></i> Doctor Dashboard</a></li>
-									</ul>
-								</div>
-								<!-- /Footer Widget -->
-								
-							</div>
-							
-							<div class="col-lg-3 col-md-6">
-							
-								<!-- Footer Widget -->
-								<div class="footer-widget footer-contact">
-									<h2 class="footer-title">Contact Us</h2>
-									<div class="footer-contact-info">
-										<div class="footer-address">
-											<span><i class="fas fa-map-marker-alt"></i></span>
-											<p> 3556  Beech Street, San Francisco,<br> California, CA 94108 </p>
-										</div>
-										<p>
-											<i class="fas fa-phone-alt"></i>
-											+1 315 369 5943
-										</p>
-										<p class="mb-0">
-											<i class="fas fa-envelope"></i>
-											doccure@example.com
-										</p>
-									</div>
-								</div>
-								<!-- /Footer Widget -->
-								
-							</div>
-							
-						</div>
-					</div>
-				</div>
-				<!-- /Footer Top -->
-				
-				<!-- Footer Bottom -->
-                <div class="footer-bottom">
-					<div class="container-fluid">
-					
-						<!-- Copyright -->
-						<div class="copyright">
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-									<div class="copyright-text">
-										<p class="mb-0"><a href="templateshub.net">Templates Hub</a></p>
-									</div>
-								</div>
-								<div class="col-md-6 col-lg-6">
-								
-									<!-- Copyright Menu -->
-									<div class="copyright-menu">
-										<ul class="policy-menu">
-											<li><a href="{{url('/term-condition')}}">Terms and Conditions</a></li>
-											<li><a href="{{url('/privacy-policy')}}">Policy</a></li>
-										</ul>
-									</div>
-									<!-- /Copyright Menu -->
-									
-								</div>
-							</div>
-						</div>
-						<!-- /Copyright -->
-						
-					</div>
-				</div>
-				<!-- /Footer Bottom -->
-				
-			</footer>
-			<!-- /Footer -->
+			@endsection	
+			
 
 		</div>
 		<!-- /Main Wrapper -->
@@ -655,6 +224,4 @@
 		
 	</body>
 
-<!-- doccure/{{url('/search')}}  30 Nov 2019 04:12:16 GMT -->
 </html>
-@endsection	

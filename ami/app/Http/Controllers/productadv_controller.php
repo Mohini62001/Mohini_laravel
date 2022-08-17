@@ -106,7 +106,7 @@ class productadv_controller extends Controller
 			$file=$request->file('img');  // get file
 			$file_name=time() . "_img." . $request->file('img')->getClientOriginalExtension();// make file name
 			$file->move('upload/product',$file_name); //file name move upload in public		
-			$data->img=$file_name; // file name store in db
+			$data->img= $file_name; // file name store in db
 			unlink('upload/product',$old_img);
 		}
 		

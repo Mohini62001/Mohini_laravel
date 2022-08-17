@@ -45,12 +45,18 @@
 														<div class="row">
 															<div class="col-md-6">
 																<div class="form-group">
-																	<input type="text" placeholder="First Name" class="form-control" name="first_name">
+																	<input type="text" placeholder="First Name" value="{{old('first_name')}}" class="form-control" name="first_name">
+																	@if ($errors->has('first_name'))
+            															<span class="text-danger">{{ $errors->first('first_name') }}</span>
+       																@endif
 																</div>
 															</div>
 															<div class="col-md-6">
 																<div class="form-group">
-																	<input type="text" placeholder="Last Name" class="form-control" name="last_name">
+																	<input type="text" placeholder="Last Name" value="{{old('last_name')}}" class="form-control" name="last_name">
+																	@if ($errors->has('last_name'))
+            															<span class="text-danger">{{ $errors->first('last_name') }}</span>
+       																@endif
 																</div>
 															</div>
 														</div>
@@ -59,7 +65,10 @@
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">DOB</label>
 													<div class="col-lg-9">
-														<input type="date" class="form-control" name="dob">
+														<input type="date" value="{{old('dob')}}" class="form-control" name="dob">
+														@if ($errors->has('dob'))
+            												<span class="text-danger">{{ $errors->first('dob') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
@@ -77,12 +86,13 @@
 															Female
 															</label>
 														</div>
+
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Specialist ID</label>
 													<div class="col-lg-9">
-														<select class="select" name="specialist_id">
+														<select class="select" value="{{old('specialist_id')}}" name="specialist_id">
 															<option value="">Select</option>
 															<?php
 															foreach($special_id_arr as $data)
@@ -94,31 +104,46 @@
 															}
 															?>
 														</select>
+														@if ($errors->has('specialist_id'))
+            												<span class="text-danger">{{ $errors->first('specialist_id') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Liacence No</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="liacence_no">
+														<input type="text" value="{{old('liacence_no')}}" class="form-control" name="liacence_no">
+														@if ($errors->has('liacence_no'))
+            												<span class="text-danger">{{ $errors->first('liacence_no') }}</span>
+       													@endif
 													</div>
 												</div>
 												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Experience</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="experience">
+														<input type="text" value="{{old('experience')}}" class="form-control" name="experience">
+														@if ($errors->has('experience'))
+            												<span class="text-danger">{{ $errors->first('experience') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Dr. Mobile</label>
 													<div class="col-lg-9">
-														<input type="tel" class="form-control" name="dr_mobile">
+														<input type="tel" value="{{old('dr_mobile')}}" class="form-control" name="dr_mobile">
+														@if ($errors->has('dr_mobile'))
+            												<span class="text-danger">{{ $errors->first('dr_mobile') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">About</label>
 													<div class="col-lg-9">
-														<textarea name="about" rows="4" cols="5" class="form-control" placeholder="Enter message"></textarea>
+														<textarea name="about" value="{{old('about')}}" rows="4" cols="5" class="form-control" placeholder="About"></textarea>
+														@if ($errors->has('about'))
+            												<span class="text-danger">{{ $errors->first('about') }}</span>
+       													@endif
 													</div>
 												</div>
 											</div>
@@ -126,122 +151,129 @@
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Short Title</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="short_tittle">
+														<input type="text" class="form-control" value="{{old('short_tittle')}}" name="short_tittle">
+														@if ($errors->has('short_tittle'))
+            												<span class="text-danger">{{ $errors->first('short_tittle') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Email</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="email">
+														<input type="text" class="form-control" value="{{old('email')}}" name="email">
+														@if ($errors->has('email'))
+            												<span class="text-danger">{{ $errors->first('email') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Password</label>
 													<div class="col-lg-9">
-														<input type="password" class="form-control" name="password">
+														<input type="password" class="form-control" value="{{old('password')}}" name="password">
+														@if ($errors->has('password'))
+            												<span class="text-danger">{{ $errors->first('password') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Profile Img</label>
 													<div class="col-lg-9">
-														<input type="file" class="form-control" name="profile_img">
+														<input type="file" class="form-control" value="{{old('profile_img')}}" name="profile_img">
+														@if ($errors->has('profile_img'))
+            												<span class="text-danger">{{ $errors->first('profile_img') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Education</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="education">
+														<input type="text" class="form-control" value="{{old('education')}}" name="education">
+														@if ($errors->has('education'))
+            												<span class="text-danger">{{ $errors->first('education') }}</span>
+       													@endif
 													</div>
 												</div>
 												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Visiting Card</label>
 													<div class="col-lg-9">
-														<input type="file" class="form-control" name="visit_card">
+														<input type="file" class="form-control" value="{{old('visit_card')}}" name="visit_card">
+														@if ($errors->has('visit_card'))
+            												<span class="text-danger">{{ $errors->first('visit_card') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Office no</label>
 													<div class="col-lg-9">
-														<input type="tel" class="form-control" name="office_no">
+														<input type="tel" class="form-control" value="{{old('office_no')}}" name="office_no">
+														@if ($errors->has('office_no'))
+            												<span class="text-danger">{{ $errors->first('office_no') }}</span>
+       													@endif
 													</div>
 												</div>
 											</div>
 											
 										</div>
 
-										<h4 class="card-title">Hospital Details</h4><br>
+										 <h4 class="card-title">Hospital Details</h4><br>
 										<div class="row">
 											<div class="col-xl-6">
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Hospital Name</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="hospital_name">
+														<input type="text" class="form-control" value="{{old('hospital_name')}}" name="hospital_name">
+														@if ($errors->has('hospital_name'))
+            												<span class="text-danger">{{ $errors->first('hospital_name') }}</span>
+       													@endif
 													</div>
 												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Hospital timing</label>
-													<div class="col-lg-9">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="form-group ">
-																	To:
-																	<input type="time" name="hospital_time_to" class="form-control">
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	From:
-																	<input type="time" name="hospital_time_from" class="form-control">
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Days</label>
-													<div class="col-lg-9">
-														Monday <input type="checkbox" name="day[]" value="Monday">&nbsp;&nbsp;
-														Tuesday <input type="checkbox" name="day[]" value="Tuesday">&nbsp;&nbsp;&nbsp;&nbsp;
-														Wednesday <input type="checkbox" name="day[]" value="Wednesday">&nbsp;&nbsp;
-														Thursday <input type="checkbox" name="day[]" value="Thursday">
-														Friday <input type="checkbox" name="day[]" value="Friday">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														Saturday <input type="checkbox" name="day[]" value="Saturday">&nbsp;&nbsp;&nbsp;&nbsp;
-														Sunday <input type="checkbox" name="day[]" value="Sunday"> 
-													</div>
-												</div>
+												
+												
 
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Notification</label>
 													<div class="col-lg-9">
-														<textarea  class="form-control" name="notification"></textarea>
-													</div>
-												</div>
-												
-											</div>
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Hospital Img</label>
-													<div class="col-lg-9">
-														<input type="file" class="form-control" name="hospital_img">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Consulting </label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control" name="consulting_fees">
+														<textarea  class="form-control" value="{{old('notification')}}" name="notification"></textarea>
+														@if ($errors->has('notification'))
+            												<span class="text-danger">{{ $errors->first('notification') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Followup Fees</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="followup_fees">
+														<input type="text" class="form-control" value="{{old('followup_fees')}}" name="followup_fees">
+														@if ($errors->has('followup_fees'))
+            												<span class="text-danger">{{ $errors->first('followup_fees') }}</span>
+       													@endif
+													</div>
+												</div>
+											</div>
+											<div class="col-xl-6">
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Hospital Img</label>
+													<div class="col-lg-9">
+														<input type="file"  class="form-control" name="hospital_img[]" multiple >
+														@if ($errors->has('hospital_img'))
+            												<span class="text-danger">{{ $errors->first('hospital_img') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Consulting </label>
+													<div class="col-lg-9">
+														<input type="text" class="form-control" value="{{old('consulting_fees')}}" name="consulting_fees">
+														@if ($errors->has('consulting_fees'))
+            												<span class="text-danger">{{ $errors->first('consulting_fees') }}</span>
+       													@endif
+													</div>
+												</div>
+												
+												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">State</label>
 													<div class="col-lg-9">
-														<select class="select" name="state">
+														<select class="select" value="{{old('state')}}" name="state">
 															<option value="">Select</option>
 															<?php
 															foreach($state_id_arr as $d)
@@ -253,6 +285,9 @@
 															}
 															?>
 														</select>
+														@if ($errors->has('state'))
+            												<span class="text-danger">{{ $errors->first('state') }}</span>
+       													@endif
 													</div>
 												</div>
 											</div>
@@ -263,7 +298,7 @@
 											<div class="form-group row">
 													<label class="col-lg-3 col-form-label">City</label>
 													<div class="col-lg-9">
-														<select class="select" name="city">
+														<select class="select" value="{{old('city')}}" name="city">
 															<option value="">Select</option>
 															<?php
 															foreach($city_id_arr as $c)
@@ -275,12 +310,18 @@
 															}
 															?>
 														</select>
+														@if ($errors->has('city'))
+            												<span class="text-danger">{{ $errors->first('city') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Address</label>
 													<div class="col-lg-9">
-														<textarea name="address" rows="4" class="form-control"></textarea>
+														<textarea name="address" rows="4" value="{{old('address')}}" class="form-control"></textarea>
+														@if ($errors->has('address'))
+            												<span class="text-danger">{{ $errors->first('address') }}</span>
+       													@endif
 													</div>
 												</div>
 												
@@ -290,7 +331,7 @@
 											<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Area</label>
 													<div class="col-lg-9">
-														<select class="select" name="area">
+														<select class="select" value="{{old('area')}}" name="area">
 															<option value="">Select</option>
 															<?php
 															foreach($area_id_arr as $a)
@@ -302,26 +343,147 @@
 															}
 															?>
 														</select>
+														@if ($errors->has('area'))
+            												<span class="text-danger">{{ $errors->first('area') }}</span>
+       													@endif
 													</div>
 												</div>
 												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Postal Code</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="pincode">
+														<input type="text" class="form-control" value="{{old('pincode')}}" name="pincode">
+														@if ($errors->has('pincode'))
+            												<span class="text-danger">{{ $errors->first('pincode') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Google Map URL</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="google_map">
+														<input type="text" class="form-control"  name="google_map">
+														
 													</div>
 												</div>
 											</div>
 										</div>
+                                      
+
+										<h4 class="card-title">Hospital Timings</h4><br>
+										<div class="row">
+											<div class="col-xl-6">
+											<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Days</label>
+													<div class="col-lg-9">
+														Monday <input type="checkbox" name="day[]" value="Monday"><br>
+														Tuesday <input type="checkbox" name="day[]" value="Tuesday"><br>
+														Wednesday <input type="checkbox" name="day[]" value="Wednesday"><br>
+														Thursday <input type="checkbox" name="day[]" value="Thursday"><br>
+														Friday <input type="checkbox" name="day[]" value="Friday"><br>
+														Saturday <input type="checkbox" name="day[]" value="Saturday"><br>
+														Sunday <input type="checkbox" name="day[]" value="Sunday"> 
+
+														@if ($errors->has('day'))
+            												<span class="text-danger">{{ $errors->first('day') }}</span>
+       													@endif
+													</div>
+												</div>
+											
+											</div>
+											<div class="col-xl-6">
+											<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Morning Time</label>
+													<div class="col-lg-9">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group ">
+																	To:
+																	<input type="time" name="hospital_morning_to"  class="form-control">
+																	
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	From:
+																	<input type="time" name="hospital_morning_from"  class="form-control">
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Afternoon timing</label>
+													<div class="col-lg-9">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group ">
+																	To:
+																	<input type="time" name="hospital_afternoon_to"  class="form-control">
+																	
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	From:
+																	<input type="time" name="hospital_afternoon_from"  class="form-control">
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Evening timing</label>
+													<div class="col-lg-9">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group ">
+																	To:
+																	<input type="time" name="hospital_evening_to"  class="form-control">
+																	
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	From:
+																	<input type="time" name="hospital_evening_from"  class="form-control">
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+														</div>
+											
+											
+												
+												
+												
+												
+												
+												
+												
+											</div>
+											
+												
+												
+												
+												
+												
+												
+											
+											
+										</div>
+
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="send">Submit</button>
 										</div>
+
+
 									</form>
 								</div>
 							</div>

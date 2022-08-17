@@ -16,9 +16,11 @@
 									<li class="breadcrumb-item active">Specialities</li>
 								</ul>
 							</div>
-							<div class="col-sm-5 col">
-								<a href="#Add_Specialities_details" data-toggle="modal" class="btn btn-primary float-right mt-2">Add</a>
-							</div>
+							@if(session()->has('success'))
+												
+								<i class="alert alert-success">{{session('success')}}</i>
+												
+							@endif
 						</div>
 					</div>
 					<!-- /Page Header -->
@@ -27,7 +29,7 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="table-responsive">
-										<table class="datatable table table-hover table-center mb-0">
+										<table id="table" class="table table-hover table-center mb-0">
 											<thead>
 												<tr>
 													<th>ID</th>

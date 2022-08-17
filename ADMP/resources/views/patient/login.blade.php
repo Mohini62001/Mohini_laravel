@@ -60,63 +60,7 @@
 							<li>
 								<a href="{{url('/index')}}">Home</a>
 							</li>
-							<li class="has-submenu">
-								<a href="#">Doctors <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/doctor-dashboard')}}">Doctor Dashboard</a></li>
-									<li><a href="{{url('/appointments')}}">Appointments</a></li>
-									<li><a href="{{url('/schedule-timings')}}">Schedule Timing</a></li>
-									<li><a href="{{url('/my-patients')}}">Patients List</a></li>
-									<li><a href="{{url('/patient-profile')}}">Patients Profile</a></li>
-									<li><a href="{{url('/chat-doctor')}}">Chat</a></li>
-									<li><a href="{{url('/invoices')}}">Invoices</a></li>
-									<li><a href="{{url('/doctor-profile-settings')}}">Profile Settings</a></li>
-									<li><a href="{{url('/reviews')}}">Reviews</a></li>
-									<li><a href="{{url('/doctor-register')}}">Doctor Register</a></li>
-								</ul>
-							</li>	
-							<li class="has-submenu">
-								<a href="#">Patients <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/search')}}">Search Doctor</a></li>
-									<li><a href="{{url('/doctor-profile')}}">Doctor Profile</a></li>
-									<li><a href="{{url('/booking')}}">Booking</a></li>
-									<li><a href="{{url('/checkout')}}">Checkout</a></li>
-									<li><a href="{{url('/booking-success')}}">Booking Success</a></li>
-									<li><a href="{{url('/patient-dashboard')}}">Patient Dashboard</a></li>
-									<li><a href="{{url('/favourites')}}">Favourites</a></li>
-									<li><a href="{{url('/chat')}}">Chat</a></li>
-									<li><a href="{{url('/profile-settings')}}">Profile Settings</a></li>
-									<li><a href="{{url('/change-password')}}">Change Password</a></li>
-								</ul>
-							</li>	
-							<li class="has-submenu active">
-								<a href="#">Pages <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/voice-call')}}">Voice Call</a></li>
-									<li><a href="{{url('/video-call')}}">Video Call</a></li>
-									<li><a href="{{url('/search')}}">Search Doctors</a></li>
-									<li><a href="{{url('/calendar')}}">Calendar</a></li>
-									<li><a href="{{url('/components')}}">Components</a></li>
-									<li class="has-submenu">
-										<a href="{{url('/invoices')}}">Invoices</a>
-										<ul class="submenu">
-											<li><a href="{{url('/invoices')}}">Invoices</a></li>
-											<li><a href="{{url('/invoice-view')}}">Invoice View</a></li>
-										</ul>
-									</li>
-									<li><a href="{{url('/blank-page')}}">Starter Page</a></li>
-									<li class="active"><a href="{{url('/login')}}">Login</a></li>
-									<li><a href="{{url('/login')}}">Register</a></li>
-									<li><a href="{{url('/forgot-password')}}">Forgot Password</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="admin/index.html" target="_blank">Admin</a>
-							</li>
-							<li class="login-link">
-								<a href="{{url('/login')}}">Login / Signup</a>
-							</li>
+							
 						</ul>
 					</div>		 
 					<ul class="nav header-navbar-rht">
@@ -154,19 +98,20 @@
 										<div class="login-header">
 											<h3>Login <span>Doccure</span></h3>
 										</div>
-										<form action="https://dreamguys.co.in/demo/doccure/index.html">
+										<form action="{{url('/patientlogin')}}" method="post" enctype="multipart/form-data">
+											@csrf
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating">
+												<input type="email" class="form-control floating" name="email">
 												<label class="focus-label">Email</label>
 											</div>
 											<div class="form-group form-focus">
-												<input type="password" class="form-control floating">
+												<input type="password" class="form-control floating" name="password">
 												<label class="focus-label">Password</label>
 											</div>
 											<div class="text-right">
 												<a class="forgot-link" href="{{url('/forgot-password')}}">Forgot Password ?</a>
 											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Login</button>
+											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit" name="submit" value="send">Login</button>
 											<div class="login-or">
 												<span class="or-line"></span>
 												<span class="span-or">or</span>

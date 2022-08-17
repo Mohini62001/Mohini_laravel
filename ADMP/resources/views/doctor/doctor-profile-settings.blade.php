@@ -1,4 +1,4 @@
-@extends('patient.Layout.main_layout') 	
+@extends('doctor.Layout.main_layout') 	
 @section('main_container')
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
@@ -27,164 +27,194 @@
 						
 							<!-- Profile Sidebar -->
 							<div class="profile-sidebar">
-								<div class="widget-profile pro-widget-content">
-									<div class="profile-info-widget">
-										<a href="#" class="booking-doc-img">
-											<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-02.jpg')}}" alt="User Image">
-										</a>
-										<div class="profile-det-info">
-											<h3>Dr. Darren Elder</h3>
-											
-											<div class="patient-details">
-												<h5 class="mb-0">BDS, MDS - Oral & Maxillofacial Surgery</h5>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="dashboard-widget">
-									<nav class="dashboard-menu">
-										<ul>
-											<li>
-												<a href="{{url('/doctor-dashboard')}}">
-													<i class="fas fa-columns"></i>
-													<span>Dashboard</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/appointments')}}">
-													<i class="fas fa-calendar-check"></i>
-													<span>Appointments</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/my-patients')}}">
-													<i class="fas fa-user-injured"></i>
-													<span>My Patients</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/schedule-timings')}}">
-													<i class="fas fa-hourglass-start"></i>
-													<span>Schedule Timings</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/invoices')}}">
-													<i class="fas fa-file-invoice"></i>
-													<span>Invoices</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/reviews')}}">
-													<i class="fas fa-star"></i>
-													<span>Reviews</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/chat-doctor')}}">
-													<i class="fas fa-comments"></i>
-													<span>Message</span>
-													<small class="unread-msg">23</small>
-												</a>
-											</li>
-											<li class="active">
-												<a href="{{url('/doctor-profile-settings')}}">
-													<i class="fas fa-user-cog"></i>
-													<span>Profile Settings</span>
-												</a>
-											</li>
-											<li>
-												<a href="social-media.html">
-													<i class="fas fa-share-alt"></i>
-													<span>Social Media</span>
-												</a>
-											</li>
-											<li>
-												<a href="doctor-{{url('/change-password')}}">
-													<i class="fas fa-lock"></i>
-													<span>Change Password</span>
-												</a>
-											</li>
-											<li>
-												<a href="{{url('/index')}}">
-													<i class="fas fa-sign-out-alt"></i>
-													<span>Logout</span>
-												</a>
-											</li>
-										</ul>
-									</nav>
-								</div>
+								
+								@include('doctor/Layout/doctor-widget');
+								
 							</div>
 							<!-- /Profile Sidebar -->
 							
 						</div>
 						<div class="col-md-7 col-lg-8 col-xl-9">
-						
+						<form action="{{url('/editdoctor/{id}')}}" method="post" enctype="multipart/form-data">
+						@csrf
 							<!-- Basic Information -->
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">Basic Information</h4>
 									<div class="row form-row">
-										<div class="col-md-12">
+							            <div class="col-md-12">
 											<div class="form-group">
 												<div class="change-avatar">
 													<div class="profile-img">
-														<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-02.jpg')}}" alt="User Image">
+													<!--<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-02.jpg')}}" alt="User Image">--->
+											<!--<input type="file" class="form-control" value="{{asset('upload/doctor/'.$fetch->profile_img)}}" name="profile_img" alt="User Image">-->
+													<img src="{{asset('upload/doctor/'.$fetch->profile_img)}}" height="50px" width="50px"> 
+													    
+														<!--<img src="{{url('Frontend/assets/img/doctors/doctor-thumb-02.jpg')}}" alt="User Image">-->
 													</div>
 													<div class="upload-img">
 														<div class="change-photo-btn">
 															<span><i class="fa fa-upload"></i> Upload Photo</span>
-															<input type="file" class="upload">
+															<input type="file" class="upload" name="profile_img" value="{{asset('upload/doctor/'.$fetch->profile_img)}}">
 														</div>
 														<small class="form-text text-muted">Allowed JPG, GIF or PNG. Max size of 2MB</small>
 													</div>
+													@if(session()->has('success'))
+												
+														<i class="alert alert-success">{{session('success')}}</i>
+												
+													@endif
 												</div>
 											</div>
+											
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Username <span class="text-danger">*</span></label>
-												<input type="text" class="form-control" readonly>
+												<label>First Name </label>
+												<input type="text" class="form-control" name="first_name" value="<?php echo $fetch->first_name?>">
+												@if ($errors->has('first_name'))
+            										<span class="text-danger">{{ $errors->first('first_name') }}</span>
+       											@endif
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Email <span class="text-danger">*</span></label>
-												<input type="email" class="form-control" readonly>
+												<label>Last Name </label>
+												<input type="text" class="form-control" name="last_name" value="<?php echo $fetch->last_name?>">
+												@if ($errors->has('last_name'))
+            										<span class="text-danger">{{ $errors->first('last_name') }}</span>
+       											@endif
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>First Name <span class="text-danger">*</span></label>
-												<input type="text" class="form-control">
+												<label>Email </label>
+												<input type="email" class="form-control" name="email" value="<?php echo $fetch->email?>" readonly >
 											</div>
 										</div>
+										
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Last Name <span class="text-danger">*</span></label>
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>Phone Number</label>
-												<input type="text" class="form-control">
+												<label>Short Title</label>
+												<input type="text" class="form-control" name="short_tittle" value="<?php echo $fetch->short_tittle?>">
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Gender</label>
-												<select class="form-control select">
-													<option>Select</option>
-													<option>Male</option>
-													<option>Female</option>
+												<select class="form-control select" name="gender">
+												<?php
+													$gender=$fetch->gender;
+													if($gender=="Male")
+														{
+												?>
+														<option>Select Gender</option>
+														<option value="Male" selected>Male</option>
+														<option>Female</option>
+												<?php
+														}
+													else
+														{
+												?>
+														<option>Select Gender</option>
+														<option >Male</option>
+														<option value="Female" selected>Female</option>
+												<?php
+														}
+												?>
 												</select>
+												
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group mb-0">
 												<label>Date of Birth</label>
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="dob" value="<?php echo $fetch->dob?>">
+												@if ($errors->has('dob'))
+            										<span class="text-danger">{{ $errors->first('dob') }}</span>
+       											@endif
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Specialist ID</label>
+												<select class="select" name="specialist_id" value="<?php echo $fetch->name?>">
+															<option value="">Select</option>
+															<?php
+															foreach($special_id_arr as $data)
+															{
+																if($data->id==$fetch->specialist_id)
+															 	{
+															?>
+															<option value="<?php echo $data->id;?>" selected>
+														        <?php echo $data->name ?></option>
+															<?php
+															    }
+																else
+                                                                {
+															?>
+															<option value="<?php echo $data->id;?>">
+                                                            <?php echo $data->name;?></option>
+															<?php
+															    }
+														    }
+														  ?>
+														</select>
+													</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Education</label>
+												<input type="text" class="form-control" name="education" value="<?php echo $fetch->education?>">
+												@if ($errors->has('education'))
+            										<span class="text-danger">{{ $errors->first('education') }}</span>
+       											@endif
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Experience</label>
+												<input type="text" class="form-control" name="experience" value="<?php echo $fetch->experience?>">
+												@if ($errors->has('experience'))
+            										<span class="text-danger">{{ $errors->first('experience') }}</span>
+       											@endif
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Liacence no</label>
+												<input type="text" class="form-control" name="liacence_no" value="<?php echo $fetch->liacence_no?>">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Phone Number</label>
+												<input type="text" class="form-control" name="dr_mobile" value="<?php echo $fetch->dr_mobile?>">
+												@if ($errors->has('dr_mobile'))
+            										<span class="text-danger">{{ $errors->first('dr_mobile') }}</span>
+       											@endif
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Visiting Card</label>
+												<input type="file" class="form-control" value="{{asset('upload/visitingcard/'.$fetch->visit_card)}}" name="visit_card">
+												<img src="{{asset('upload/visitingcard/'.$fetch->visit_card)}}" height="50px" width="50px">
+												@if ($errors->has('visit_card'))
+            												<span class="text-danger">{{ $errors->first('visit_card') }}</span>
+       													@endif
+									<!---		@if ($errors->has('visit_card'))
+            										<span class="text-danger">{{ $errors->first('visit_card') }}</span>
+       											@endif-->
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Notification</label>
+												<input type="text" class="form-control" name="notification" value="<?php echo $fetch->notification?>">
+												@if ($errors->has('notification'))
+            										<span class="text-danger">{{ $errors->first('notification') }}</span>
+       											@endif
 											</div>
 										</div>
 									</div>
@@ -197,8 +227,7 @@
 								<div class="card-body">
 									<h4 class="card-title">About Me</h4>
 									<div class="form-group mb-0">
-										<label>Biography</label>
-										<textarea class="form-control" rows="5"></textarea>
+										<textarea name="about" class="form-control" rows="5" value=""><?php echo $fetch->about?></textarea>
 									</div>
 								</div>
 							</div>
@@ -207,23 +236,43 @@
 							<!-- Clinic Info -->
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">Clinic Info</h4>
+									<h4 class="card-title">Hospital Info</h4>
 									<div class="row form-row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Clinic Name</label>
-												<input type="text" class="form-control">
+												<label>Hospital Name</label>
+												<input type="text" class="form-control" name="hospital_name" value="<?php echo $fetch->hospital_name?>">
+												@if ($errors->has('hospital_name'))
+            										<span class="text-danger">{{ $errors->first('hospital_name') }}</span>
+       											@endif
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Clinic Address</label>
-												<input type="text" class="form-control">
+												<label>Office No</label>
+												<input type="text" class="form-control" name="office_no" value="<?php echo $fetch->office_no?>">
+												@if ($errors->has('office_no'))
+            										<span class="text-danger">{{ $errors->first('office_no') }}</span>
+       											@endif
 											</div>
 										</div>
-										<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
-												<label>Clinic Images</label>
+												<label>Hospital Image</label>
+												<input type="file" value="{{asset('upload/hospital/'.$fetch->hospital_img)}}" class="form-control" name="hospital_img">
+												<img src="{{asset('upload/hospital/'.$fetch->hospital_img)}}" height="50px" width="50px"> 
+												@if ($errors->has('hospital_img'))
+            										<span class="text-danger">{{ $errors->first('hospital_img') }}</span>
+       											@endif
+										<!------@if ($errors->has('hospital_img'))
+            										<span class="text-danger">{{ $errors->first('hospital_img') }}</span>
+       											@endif--->
+											</div>
+										</div>
+                                 <!---
+									<div class="col-md-12">
+											<div class="form-group">
+												<label>Hospital Images</label>
 												<form action="#" class="dropzone"></form>
 											</div>
 											<div class="upload-wrap">
@@ -238,6 +287,7 @@
 											</div>
 										</div>
 									</div>
+									--->
 								</div>
 							</div>
 							<!-- /Clinic Info -->
@@ -249,39 +299,117 @@
 									<div class="row form-row">
 										<div class="col-md-6">
 											<div class="form-group">
-												<label>Address Line 1</label>
-												<input type="text" class="form-control">
+												<label>Address</label>
+												<input type="text" class="form-control" name="address" value="<?php echo $fetch->address?>">
+												@if ($errors->has('address'))
+            										<span class="text-danger">{{ $errors->first('address') }}</span>
+       											@endif
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label">Address Line 2</label>
-												<input type="text" class="form-control">
+												<label class="control-label">State</label>
+												<select class="select" name="state" value="<?php echo $fetch->state?>">
+															<option value="">Select</option>
+															<?php
+															foreach($state_id_arr as $d)
+															{
+																if($d->id==$fetch->state)
+															 	{
+															?>
+															<option value="<?php echo $d->id;?>"selected>
+															<?php echo $d->name ?></option>
+															<?php
+															    }
+																else
+                                                                {
+															?>
+															<option value="<?php echo $d->id;?>" >
+															<?php echo $d->name ?></option>
+															<?php
+															    }
+														    }
+														    ?>
+														</select>
+														@if ($errors->has('state'))
+            												<span class="text-danger">{{ $errors->first('state') }}</span>
+       													@endif
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label">City</label>
-												<input type="text" class="form-control">
+												<select class="select" name="city" value="<?php echo $fetch->city_name?>">
+															<option value="">Select</option>
+															<?php
+															foreach($city_id_arr as $c)
+															{
+																if($c->id==$fetch->city)
+															 	{
+															?>
+															<option value="<?php echo $c->id;?>"selected>
+														       <?php echo $c->city_name ?></option>
+															<?php
+															    }
+																else
+                                                                {
+															?>
+															<option value="<?php echo $c->id;?>" >
+														       <?php echo $c->city_name ?></option>
+															<?php
+															    }
+														    }
+														    ?>
+														</select>
+														@if ($errors->has('city'))
+            												<span class="text-danger">{{ $errors->first('city') }}</span>
+       													@endif
 											</div>
 										</div>
 
 										<div class="col-md-6">
 											<div class="form-group">
-												<label class="control-label">State / Province</label>
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label">Country</label>
-												<input type="text" class="form-control">
+												<label class="control-label">Area</label>
+												<select class="select" name="area" value="<?php echo $fetch->area_name?>">
+															<option value="">Select</option>
+															<?php
+															foreach($area_id_arr as $a)
+															{
+																if($a->id==$fetch->area)
+															 	{
+															?>
+															<option value="<?php echo $a->id;?>"selected>
+														       <?php echo $a->area_name ?></option>
+															<?php
+															    }
+																else
+                                                                {
+															?>
+															<option value="<?php echo $a->id;?>">
+														       <?php echo $a->area_name ?></option>
+															<?php
+															    }
+														    }
+														    ?>
+														</select>
+														@if ($errors->has('area'))
+            												<span class="text-danger">{{ $errors->first('area') }}</span>
+       													@endif
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label class="control-label">Postal Code</label>
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="pincode" value="<?php echo $fetch->pincode?>">
+												@if ($errors->has('pincode'))
+            										<span class="text-danger">{{ $errors->first('pincode') }}</span>
+       											@endif
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">Google Map</label>
+												<input type="url" class="form-control" name="google_map" value="<?php echo $fetch->google_map?>">
 											</div>
 										</div>
 									</div>
@@ -293,209 +421,201 @@
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">Pricing</h4>
-									
-									<div class="form-group mb-0">
-										<div id="pricing_select">
-											<div class="custom-control custom-radio custom-control-inline">
-												<input type="radio" id="price_free" name="rating_option" class="custom-control-input" value="price_free" checked>
-												<label class="custom-control-label" for="price_free">Free</label>
-											</div>
-											<div class="custom-control custom-radio custom-control-inline">
-												<input type="radio" id="price_custom" name="rating_option" value="custom_price" class="custom-control-input">
-												<label class="custom-control-label" for="price_custom">Custom Price (per hour)</label>
+								<div class="row form-row">
+									<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">Consulting Fees</label>
+												<input type="text" class="form-control" name="consulting_fees" value="<?php echo $fetch->consulting_fees?>">
+												@if ($errors->has('consulting_fees'))
+            										<span class="text-danger">{{ $errors->first('consulting_fees') }}</span>
+       											@endif
 											</div>
 										</div>
+									
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">Followup Fees</label>
+												<input type="text" class="form-control" name="followup_fees" value="<?php echo $fetch->followup_fees?>">
+												@if ($errors->has('followup_fees'))
+            										<span class="text-danger">{{ $errors->first('followup_fees') }}</span>
+       											@endif
+											</div>
+										</div>
+								</div>
+								</div>
+							</div>
+							<!-- /Pricing -->
 
-									</div>
-									
-									<div class="row custom_price_cont" id="custom_price_cont" style="display: none;">
-										<div class="col-md-4">
-											<input type="text" class="form-control" id="custom_rating_input" name="custom_rating_count" value="" placeholder="20">
-											<small class="form-text text-muted">Custom price you can add</small>
+							<!-- Pricing -->
+							<div class="card">
+								<div class="card-body">
+									<h4 class="card-title">Working Day & Timing</h4>
+								<div class="row form-row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Monday</label>
+											<input type="checkbox" name="day[]" value="Monday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Monday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?> >
 										</div>
 									</div>
 									
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Tuesday</label>
+											<input type="checkbox" name="day[]" value="Tuesday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Tuesday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?>>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Wednesday</label>
+											<input type="checkbox" name="day[]" value="Wednesday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Wednesday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?>>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Thursday</label>
+											<input type="checkbox" name="day[]" value="Thursday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Thursday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?>>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Friday</label>
+											<input type="checkbox" name="day[]" value="Friday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Friday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?>>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Saturday</label>
+											<input type="checkbox" name="day[]" value="Saturday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Saturday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?>>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label class="control-label">Sunday</label>
+											<input type="checkbox" name="day[]" value="Sunday" <?php
+																$day=$fetch->day;
+																$day_arr=explode(",",$day);
+																if(in_array("Sunday",$day_arr))
+																{
+																	echo "checked";
+																}
+																?>>
+										</div>
+										@if ($errors->has('day'))
+            								<span class="text-danger">{{ $errors->first('day') }}</span>
+       									@endif
+									</div>
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-2">
+									</div>
+
+									<h5 class="card-title">Morning Time</h5><br>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="control-label">TO</label>
+											<input type="time" name="hospital_morning_to"  class="form-control" value="<?php echo $fetch->hospital_morning_to?>">
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="control-label">From</label>
+											<input type="time" name="hospital_morning_from"  class="form-control" value="<?php echo $fetch->hospital_morning_from?>">
+										</div>
+									</div>
+                                     
+									<h5>Afternoon Time</h5><br>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="control-label">TO</label>
+											<input type="time" name="hospital_afternoon_to"  class="form-control" value="<?php echo $fetch->hospital_afternoon_to?>">
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="control-label">From</label>
+											<input type="time" name="hospital_afternoon_from"  class="form-control" value="<?php echo $fetch->hospital_afternoon_from?>">
+										</div>
+									</div>
+
+									<h5>Evening Time</h5><br>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="control-label">TO</label>
+											<input type="time" name="hospital_evening_to"  class="form-control" value="<?php echo $fetch->hospital_evening_to?>">
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="control-label">From</label>
+											<input type="time" name="hospital_evening_from"  class="form-control" value="<?php echo $fetch->hospital_evening_from?>">
+										</div>
+									</div>
+								</div>
+							
 								</div>
 							</div>
 							<!-- /Pricing -->
 							
-							<!-- Services and Specialization -->
-							<div class="card services-card">
-								<div class="card-body">
-									<h4 class="card-title">Services and Specialization</h4>
-									<div class="form-group">
-										<label>Services</label>
-										<input type="text" data-role="tagsinput" class="input-tags form-control" placeholder="Enter Services" name="services" value="Tooth cleaning " id="services">
-										<small class="form-text text-muted">Note : Type & Press enter to add new services</small>
-									</div> 
-									<div class="form-group mb-0">
-										<label>Specialization </label>
-										<input class="input-tags form-control" type="text" data-role="tagsinput" placeholder="Enter Specialization" name="specialist" value="Children Care,Dental Care" id="specialist">
-										<small class="form-text text-muted">Note : Type & Press  enter to add new specialization</small>
-									</div> 
-								</div>              
-							</div>
-							<!-- /Services and Specialization -->
-						 
-							<!-- Education -->
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">Education</h4>
-									<div class="education-info">
-										<div class="row form-row education-cont">
-											<div class="col-12 col-md-10 col-lg-11">
-												<div class="row form-row">
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>Degree</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>College/Institute</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>Year of Completion</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="add-more">
-										<a href="javascript:void(0);" class="add-education"><i class="fa fa-plus-circle"></i> Add More</a>
-									</div>
-								</div>
-							</div>
-							<!-- /Education -->
+							
 						
-							<!-- Experience -->
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">Experience</h4>
-									<div class="experience-info">
-										<div class="row form-row experience-cont">
-											<div class="col-12 col-md-10 col-lg-11">
-												<div class="row form-row">
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>Hospital Name</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>From</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>To</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="form-group">
-															<label>Designation</label>
-															<input type="text" class="form-control">
-														</div> 
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="add-more">
-										<a href="javascript:void(0);" class="add-experience"><i class="fa fa-plus-circle"></i> Add More</a>
-									</div>
-								</div>
-							</div>
-							<!-- /Experience -->
-							
-							<!-- Awards -->
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">Awards</h4>
-									<div class="awards-info">
-										<div class="row form-row awards-cont">
-											<div class="col-12 col-md-5">
-												<div class="form-group">
-													<label>Awards</label>
-													<input type="text" class="form-control">
-												</div> 
-											</div>
-											<div class="col-12 col-md-5">
-												<div class="form-group">
-													<label>Year</label>
-													<input type="text" class="form-control">
-												</div> 
-											</div>
-										</div>
-									</div>
-									<div class="add-more">
-										<a href="javascript:void(0);" class="add-award"><i class="fa fa-plus-circle"></i> Add More</a>
-									</div>
-								</div>
-							</div>
-							<!-- /Awards -->
-							
-							<!-- Memberships -->
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">Memberships</h4>
-									<div class="membership-info">
-										<div class="row form-row membership-cont">
-											<div class="col-12 col-md-10 col-lg-5">
-												<div class="form-group">
-													<label>Memberships</label>
-													<input type="text" class="form-control">
-												</div> 
-											</div>
-										</div>
-									</div>
-									<div class="add-more">
-										<a href="javascript:void(0);" class="add-membership"><i class="fa fa-plus-circle"></i> Add More</a>
-									</div>
-								</div>
-							</div>
-							<!-- /Memberships -->
-							
-							<!-- Registrations -->
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">Registrations</h4>
-									<div class="registrations-info">
-										<div class="row form-row reg-cont">
-											<div class="col-12 col-md-5">
-												<div class="form-group">
-													<label>Registrations</label>
-													<input type="text" class="form-control">
-												</div> 
-											</div>
-											<div class="col-12 col-md-5">
-												<div class="form-group">
-													<label>Year</label>
-													<input type="text" class="form-control">
-												</div> 
-											</div>
-										</div>
-									</div>
-									<div class="add-more">
-										<a href="javascript:void(0);" class="add-reg"><i class="fa fa-plus-circle"></i> Add More</a>
-									</div>
-								</div>
-							</div>
-							<!-- /Registrations -->
 							
 							<div class="submit-section submit-btn-bottom">
-								<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+								<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Save Changes</button>
 							</div>
-							
+						</form>	
 						</div>
 					</div>
 

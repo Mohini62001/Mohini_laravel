@@ -11,367 +11,153 @@
 					<div class="page-header">
 						<div class="row">
 							<div class="col">
-								<h3 class="page-title">Add MR</h3>
+								<h3 class="page-title"> MR</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="{{url('/admin')}}">Dashboard</a></li>
-									<li class="breadcrumb-item active">Horizontal Form</li>
+									<li class="breadcrumb-item active">Add MR</li>
 								</ul>
 							</div>
+							@if(session()->has('success'))
+												
+								<i class="alert alert-success">{{session('success')}}</i>
+												
+							@endif
 						</div>
 					</div>
 					<!-- /Page Header -->
 					
-					<div class="row">
-						<div class="col-xl-6 d-flex">
-							<div class="card flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Basic Form</h4>
-								</div>
-								<div class="card-body">
-									<form action="#">
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">First Name</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Last Name</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Email Address</label>
-											<div class="col-lg-9">
-												<input type="email" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Username</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Password</label>
-											<div class="col-lg-9">
-												<input type="password" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Repeat Password</label>
-											<div class="col-lg-9">
-												<input type="password" class="form-control">
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-6 d-flex">
-							<div class="card flex-fill">
-								<div class="card-header">
-									<h4 class="card-title">Address Form</h4>
-								</div>
-								<div class="card-body">
-									<form action="#">
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Address 1</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Address 2</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">City</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">State</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Country</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label">Postal Code</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control">
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
+					
+
 					<div class="row">
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<h4 class="card-title">Two Column Horizontal Form</h4>
+									<h4 class="card-title">Add MR</h4>
 								</div>
 								<div class="card-body">
-									<h4 class="card-title">Personal Information</h4>
-									<form action="#">
-										<div class="row">
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">First Name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Last Name</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Gender</label>
-													<div class="col-lg-9">
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="gender" id="gender_male" value="option1" checked>
-															<label class="form-check-label" for="gender_male">
-															Male
-															</label>
-														</div>
-														<div class="form-check form-check-inline">
-															<input class="form-check-input" type="radio" name="gender" id="gender_female" value="option2">
-															<label class="form-check-label" for="gender_female">
-															Female
-															</label>
-														</div>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Blood Group</label>
-													<div class="col-lg-9">
-														<select class="select">
-															<option>Select</option>
-															<option value="1">A+</option>
-															<option value="2">O+</option>
-															<option value="3">B+</option>
-															<option value="4">AB+</option>
-														</select>
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Username</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Email</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Password</label>
-													<div class="col-lg-9">
-														<input type="password" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Repeat Password</label>
-													<div class="col-lg-9">
-														<input type="password" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<h4 class="card-title">Address</h4>
-										<div class="row">
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Address Line 1</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Address Line 2</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">State</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">City</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Country</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Postal Code</label>
-													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">Two Column Horizontal Form</h4>
-								</div>
-								<div class="card-body">
-									<form action="#">
+									<form action="{{url('/admin-add-mr')}}" method="post" enctype="multipart/form-data">
+										@csrf
 										<div class="row">
 											<div class="col-xl-6">
 												<h4 class="card-title">Personal Details</h4>
 												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Profile Img</label>
+													<div class="col-lg-9">
+														<input type="file" class="form-control" value="{{old('mrprofile_img')}}" name="mrprofile_img">
+														@if ($errors->has('mrprofile_img'))
+												    		<span class="text-danger">{{ $errors->first('mrprofile_img')}}</span>
+														@endif
+													</div>
+												</div>
+												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">First Name</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" value="{{old('first_name')}}" name="first_name">
+														@if ($errors->has('first_name'))
+												    		<span class="text-danger">{{ $errors->first('first_name')}}</span>
+														@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Last Name</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Password</label>
-													<div class="col-lg-9">
-														<input type="password" class="form-control">
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">State</label>
-													<div class="col-lg-9">
-														<select class="select">
-															<option>Select State</option>
-															<option value="1">California</option>
-															<option value="2">Texas</option>
-															<option value="3">Florida</option>
-														</select>
-													</div>
-												</div>
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">About</label>
-													<div class="col-lg-9">
-														<textarea rows="4" cols="5" class="form-control" placeholder="Enter message"></textarea>
-													</div>
-												</div>
-											</div>
-											<div class="col-xl-6">
-												<h4 class="card-title">Personal details</h4>
-												<div class="row">
-													<label class="col-lg-3 col-form-label">Name</label>
-													<div class="col-lg-9">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="form-group">
-																	<input type="text" placeholder="First Name" class="form-control">
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<input type="text" placeholder="Last Name" class="form-control">
-																</div>
-															</div>
-														</div>
+														<input type="text" class="form-control" value="{{old('last_name')}}" name="last_name">
+														@if ($errors->has('last_name'))
+												    		<span class="text-danger">{{ $errors->first('last_name')}}</span>
+														@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Email</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control">
+														<input type="text" class="form-control" value="{{old('email')}}" name="email">
+														@if ($errors->has('email'))
+												    		<span class="text-danger">{{ $errors->first('email')}}</span>
+														@endif
 													</div>
 												</div>
 												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Phone</label>
+													<label class="col-lg-3 col-form-label">Password</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control">
+														<input type="password" class="form-control" value="{{old('password')}}" name="password">
+														@if ($errors->has('password'))
+												    		<span class="text-danger">{{ $errors->first('password')}}</span>
+														@endif
+													</div>
+												</div>
+											</div>
+
+											<div class="col-xl-6">
+												<h4 class="card-title">Company details</h4>
+												<div class="form-group row">
+											        <label class="col-lg-3 col-form-label">Company Id</label>
+													<div class="col-lg-9">
+													<select class="select" value="{{old('company_id')}}" name="company_id">
+															<option value="">Select</option>
+															<?php
+															foreach($company_id_arr as $data)
+															{
+															?>
+															<option value="<?php echo $data->id;?>">
+														        <?php echo $data->company_name ?></option>
+															<?php
+															}
+															?>
+														</select>
+														@if ($errors->has('company_id'))
+												    		<span class="text-danger">{{ $errors->first('company_id')}}</span>
+														@endif
 													</div>
 												</div>
 												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Address</label>
+													<label class="col-lg-3 col-form-label">Company Name</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control m-b-20">
-														<div class="row">
-															<div class="col-md-6">
-																<div class="form-group">
-																	<select class="select">
-																		<option>Select Country</option>
-																		<option value="1">USA</option>
-																		<option value="2">France</option>
-																		<option value="3">India</option>
-																		<option value="4">Spain</option>
-																	</select>
-																</div>
-																<div class="form-group">
-																	<input type="text" placeholder="ZIP code" class="form-control">
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<input type="text" placeholder="State/Province" class="form-control">
-																</div>
-																<div class="form-group">
-																	<input type="text" placeholder="City" class="form-control">
-																</div>
-															</div>
-														</div>
+														<input type="text" class="form-control" value="{{old('company_name')}}" name="company_name">
+														@if ($errors->has('company_name'))
+												    		<span class="text-danger">{{ $errors->first('company_name')}}</span>
+														@endif
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Manager Id</label>
+													<div class="col-lg-9">
+													<select class="select" value="{{old('manager_id')}}" name="manager_id">
+															<option value="">Select</option>
+															<?php
+															foreach($manager_id_arr as $data)
+															{
+															?>
+															<option value="<?php echo $data->id;?>">
+														        <?php echo $data->Manager_name ?></option>
+															<?php
+															}
+															?>
+														</select>
+														@if ($errors->has('manager_id'))
+												    		<span class="text-danger">{{ $errors->first('manager_id')}}</span>
+														@endif
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Visiting Card</label>
+													<div class="col-lg-9">
+														<input type="file" class="form-control" value="{{old('visiting_card')}}" name="visiting_card">
+														@if ($errors->has('visiting_card'))
+												    		<span class="text-danger">{{ $errors->first('visiting_card')}}</span>
+														@endif
 													</div>
 												</div>
 											</div>
 										</div>
 										<div class="text-right">
-											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary" name="submit" value="send">Submit</button>
 										</div>
 									</form>
 								</div>
 							</div>
 						</div>
 					</div>
+					
 				
 				</div>			
 			</div>

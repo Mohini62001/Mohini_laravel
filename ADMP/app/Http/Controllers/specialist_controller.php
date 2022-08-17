@@ -35,7 +35,11 @@ class specialist_controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        $data=$request->validate([
+            'name'=>'required|regex:/[a-zA-z0-9\s]+/',
+            'img'=>'required|mimes:jpeg,png,jpg,gif,svg',
+        ]);
         $data=new specialist;
         $data->name=$request->name;
 
