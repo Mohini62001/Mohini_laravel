@@ -92,7 +92,7 @@
 												<div class="form-group row">
 											        <label class="col-lg-3 col-form-label">Company Id</label>
 													<div class="col-lg-9">
-													<select class="select" value="{{old('company_id')}}" name="company_id">
+													<select class="select form-control" value="{{old('company_id')}}" name="company_id">
 															<option value="">Select</option>
 															<?php
 															foreach($company_id_arr as $data)
@@ -121,7 +121,7 @@
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Manager Id</label>
 													<div class="col-lg-9">
-													<select class="select" value="{{old('manager_id')}}" name="manager_id">
+													<select class="select form-control" value="{{old('manager_id')}}" name="manager_id">
 															<option value="">Select</option>
 															<?php
 															foreach($manager_id_arr as $data)

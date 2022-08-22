@@ -7,6 +7,7 @@ use App\Models\companie;
 use App\Models\manager;
 use App\Models\mr;
 use Hash;
+use session;
 
 class mr_controller extends Controller
 {
@@ -18,6 +19,7 @@ class mr_controller extends Controller
     public function index()
     {
         $data=mr::all();
+        //$data=mr::join2('managers','companies','mrs.manager_id','=','managers.id','mrs.company_id','=','companies.id')->get();
         return view('admin.mr',["mr_arr"=>$data]);
     }
 
@@ -49,8 +51,8 @@ class mr_controller extends Controller
             'last_name'=>'required|alpha',
             'email'=>'required|email|unique:managers',
             'password'=>'required|min:6|unique:managers',
-            'profile_img'=>'required|mimes:jpeg,png,jpg,gif,svg',
-            'visiting_card'=>'required|mimes:jpeg,png,jpg,gif,svg',
+            'mrprofile_img'=>'required',
+            'visiting_card'=>'required',
             
         ]);
         $data=new mr;
@@ -160,4 +162,207 @@ class mr_controller extends Controller
         $data=delete();
         return redirect('admin-mr')->with("success","MR deleted successfully");
     }
+
+
+    /////////////////////////////////Company Panel//////////////////////////////////////////////
+
+    public function companymrcreate()
+    {
+        $company_id_arr=companie::all();
+        $manager_id_arr=manager::all();
+        return view('company.add-mr',["company_id_arr"=>$company_id_arr,"manager_id_arr"=>$manager_id_arr]);
+    }
+
+    public function companymrstore(Request $request)
+    {   
+        $data=$request->validate([
+            'company_id'=>'required',
+            'manager_id'=>'required',
+            'company_name'=>'required|regex:/[a-zA-z0-9\s]+/',
+            'first_name'=>'required|alpha',
+            'last_name'=>'required|alpha',
+            'email'=>'required|email|unique:mrs',
+            'password'=>'required|min:6',
+            'mrprofile_img'=>'required',
+            'visiting_card'=>'required',
+            
+        ]);
+        $data=new mr;
+
+        $data->company_id=$request->session('company_id');
+        $data->manager_id=$request->manager_id;
+        $data->company_name=$request->company_name;
+        $data->first_name=$request->first_name;
+        $data->last_name=$request->last_name;
+        $data->email=$request->email;
+        $data->password=Hash::make($request->password);
+
+        // img upload
+		$file=$request->file('mrprofile_img');  // get file
+		$file_name=time()."_mrprofile_img.".$request->file('mrprofile_img')->getClientOriginalExtension();// make file name
+		$file->move('upload/mr',$file_name); //file name move upload in public		
+		$data->mrprofile_img=$file_name; // file name store in db
+
+        // visitingcard upload
+		$file2=$request->file('visiting_card');  // get file
+		$file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+		$file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+		$data->visiting_card=$file_name2; // file name store in db
+
+        $res=$data->save();
+        return redirect('company-add-mr')->with('success','Add MR Success');
+
+    }
+
+    public function companymrindex()
+    {
+        $data=mr::all();
+        //$data=mr::join2('managers','companies','mrs.manager_id','=','managers.id','mrs.company_id','=','companies.id')->get();
+        return view('company.mr',["mr_arr"=>$data]);
+    }
+
+    public function companymredit($id)
+    {
+        $data=mr::find($id);
+        $company_id_arr=companie::all();
+        $manager_id_arr=manager::all();
+        return view('company.edit-mr',["fetch"=>$data,"company_id_arr"=>$company_id_arr,"manager_id_arr"=>$manager_id_arr]);
+    }
+
+    public function companymrupdate(Request $request, $id)
+    {
+        $data=mr::find($id);
+
+        $data->company_id=$request->company_id;
+        $data->manager_id=Session('manager_id');
+        $data->company_name=$request->company_name;
+        $data->first_name=$request->first_name;
+        $data->last_name=$request->last_name;
+        $data->email=$request->email;
+        $old_img=$data->mrprofile_img;
+        $old_img2=$data->visiting_card;
+
+        //img upload
+        if($request->hasFile('mrprofile_img'))
+		{
+			$file=$request->file('mrprofile_img');  // get file
+			$file_name=time() . "_mrprofile_img." . $request->file('mrprofile_img')->getClientOriginalExtension();// make file name
+			$file->move('upload/mr',$file_name); //file name move upload in public		
+			$data->mrprofile_img=$file_name; // file name store in db
+			unlink('upload/mr/'.$old_img);
+		}
+         // visitingcard upload
+         if($request->hasFile('visiting_card'))
+		{
+            $file2=$request->file('visiting_card');  // get file
+            $file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+            $file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+            $data->visiting_card=$file_name2; // file name store in db
+            unlink('upload/visitingcard/'.$old_img2);
+        }
+
+        $data->save();
+		return redirect('/company-mr')->with('success','Update Success');
+    }
+
+    //////////////////////////////////////////////////manager panel/////////////////////////////////////
+
+    public function managermrcreate()
+    {
+        $company_id_arr=companie::all();
+        return view('manager.add-mr',["company_id_arr"=>$company_id_arr]);
+    }
+
+    public function managermrstore(Request $request)      
+    {   
+        $data=$request->validate([
+            'company_id'=>'required',
+           // 'manager_id'=>'required',
+            'company_name'=>'required|regex:/[a-zA-z0-9\s]+/',
+            'first_name'=>'required|alpha',
+            'last_name'=>'required|alpha',
+            'email'=>'required|email|unique:mrs',
+            'password'=>'required|min:6',
+            'mrprofile_img'=>'required',
+            'visiting_card'=>'required',
+            
+        ]);
+        
+        $data=new mr;
+
+        $data->company_id=$request->company_id;
+        $data->manager_id=Session('manager_id');
+        $data->company_name=$request->company_name;
+        $data->first_name=$request->first_name;
+        $data->last_name=$request->last_name;
+        $data->email=$request->email;
+        $data->password=Hash::make($request->password);
+
+        // img upload
+		$file=$request->file('mrprofile_img');  // get file
+		$file_name=time()."_mrprofile_img.".$request->file('mrprofile_img')->getClientOriginalExtension();// make file name
+		$file->move('upload/mr',$file_name); //file name move upload in public		
+		$data->mrprofile_img=$file_name; // file name store in db
+
+        // visitingcard upload
+		$file2=$request->file('visiting_card');  // get file
+		$file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+		$file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+		$data->visiting_card=$file_name2; // file name store in db
+
+        $res=$data->save();
+        return redirect('manager-add-mr')->with('success','Add MR Success');
+
+    }
+
+    public function managermrindex()
+    {
+        $data=mr::all();
+        //$data=mr::join2('managers','companies','mrs.manager_id','=','managers.id','mrs.company_id','=','companies.id')->get();
+        return view('manager.mr',["mr_arr"=>$data]);
+    }
+
+    public function managermredit($id)
+    {
+        $data=mr::find($id);
+        $company_id_arr=companie::all();
+        return view('manager.edit-mr',["fetch"=>$data,"company_id_arr"=>$company_id_arr]);
+    }
+
+    public function managermrupdate(Request $request, $id)
+    {
+        $data=mr::find($id);
+
+        $data->company_id=$request->company_id;
+        $data->manager_id=Session('manager_id');
+        $data->company_name=$request->company_name;
+        $data->first_name=$request->first_name;
+        $data->last_name=$request->last_name;
+        $data->email=$request->email;
+        $old_img=$data->mrprofile_img;
+        $old_img2=$data->visiting_card;
+
+        //img upload
+        if($request->hasFile('mrprofile_img'))
+		{
+			$file=$request->file('mrprofile_img');  // get file
+			$file_name=time() . "_mrprofile_img." . $request->file('mrprofile_img')->getClientOriginalExtension();// make file name
+			$file->move('upload/mr',$file_name); //file name move upload in public		
+			$data->mrprofile_img=$file_name; // file name store in db
+			//unlink('upload/mr/'.$old_img);
+		}
+         // visitingcard upload
+         if($request->hasFile('visiting_card'))
+		{
+            $file2=$request->file('visiting_card');  // get file
+            $file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+            $file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+            $data->visiting_card=$file_name2; // file name store in db
+           // unlink('upload/visitingcard/'.$old_img2);
+        }
+
+        $data->save();
+		return redirect('/manager-mr')->with('success','Update Success');
+    }
+
 }

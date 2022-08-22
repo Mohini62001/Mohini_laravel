@@ -23,16 +23,25 @@
 										<form action="{{url('/register')}}" method="post" enctype="multipart/form-data">
 											@csrf
 											<div class="form-group form-focus">
-												<input type="text" class="form-control floating" name="name">
+												<input type="text" class="form-control floating" value="{{old('name')}}" name="name">
 												<label class="focus-label">Name</label>
+												@if ($errors->has('name'))
+            										<span class="text-danger">{{ $errors->first('name') }}</span>
+       											@endif
 											</div>
 											<div class="form-group form-focus">
-												<input type="text" class="form-control floating" name="email">
+												<input type="text" class="form-control floating" value="{{old('email')}}" name="email">
 												<label class="focus-label">Email</label>
+												@if ($errors->has('email'))
+            										<span class="text-danger">{{ $errors->first('email') }}</span>
+       											@endif
 											</div>
 											<div class="form-group form-focus">
-												<input type="password" class="form-control floating" name="password">
+												<input type="password" class="form-control floating" value="{{old('password')}}" name="password">
 												<label class="focus-label">Create Password</label>
+												@if ($errors->has('password'))
+            										<span class="text-danger">{{ $errors->first('password') }}</span>
+       											@endif
 											</div>
 											<div class="text-right">
 												<a class="forgot-link" href="{{url('/login')}}">Already have an account?</a>

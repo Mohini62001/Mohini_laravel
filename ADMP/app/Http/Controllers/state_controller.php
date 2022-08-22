@@ -44,7 +44,7 @@ class state_controller extends Controller
     public function addstate(Request $request)
     {
         $data=new state;
-        $data->name=$request->name;
+        $data->state_name=$request->state_name;
 
         $data->save();
         return redirect('/admin-location')->with('success','State Add Success');
@@ -111,8 +111,25 @@ class state_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function statedelete($id)
     {
-        //
+        $data=state::find($id);
+        $data->delete();
+        return redirect('admin-location')->with("success"," deleted successfully");
     }
+
+    public function citydelete($id)
+    {
+        $data=citie::find($id);
+        $data->delete();
+        return redirect('admin-location')->with("succes"," deleted successfully");
+    }
+
+    public function areadelete($id)
+    {
+        $data=area::find($id);
+        $data->delete();
+        return redirect('admin-location')->with("succe"," deleted successfully");
+    }
+
 }

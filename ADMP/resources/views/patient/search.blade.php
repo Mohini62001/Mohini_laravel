@@ -133,13 +133,13 @@
 											<div class="doc-info-cont">
 												<h4 class="doc-name"><a href="{{url('/doctor-profile')}}">Dr. <?php echo $data->first_name?> <?php echo $data->last_name?></a></h4>
 												<p class="doc-speciality"><?php echo $data->short_tittle?></p>
-												<h5 class="doc-department"><img src="{{asset('upload/specialities/' . $data->img)}}" class="img-fluid" alt="Speciality"><?php echo $data->specialist_id?></h5>
+												<h5 class="doc-department"><img src="{{asset('upload/specialities/' . $data->img)}}" class="img-fluid" alt="Speciality"><?php echo $data->name?></h5>
 												
 												<div class="clinic-details">
 													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> <?php echo $data->city?>, <?php echo $data->state?></p>
 													<ul class="clinic-gallery">
 													<?php
-														$hospital_img=$fetch->hospital_img;
+														$hospital_img=$data->hospital_img;
 														$hosp_img_arr=explode(",",$hospital_img);
 								
 														foreach($hosp_img_arr as $d)

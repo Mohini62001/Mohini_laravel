@@ -91,7 +91,7 @@
 												<div class="form-group row">
 											        <label class="col-lg-3 col-form-label">Company Id</label>
 													<div class="col-lg-9">
-													<select class="select" name="company_id" value="{{old('company_id')}}">
+													<select class="form-control select" name="company_id" value="{{old('company_id')}}">
 															<option value="">Select</option>
 															<?php
 															foreach($company_id_arr as $data)

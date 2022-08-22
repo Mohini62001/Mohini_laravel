@@ -43,101 +43,109 @@
 									<!-- Social Form -->
 									   
 									                                                                                       
-									    <div class="row">
-										 <div class="col-md-6 col-lg-6">
-											<h4 class="card-title">Add Services</h4>
-											<form action="{{url('/addservice')}}" method="post" enctype="multipart/form-data"> 
-										      @csrf
-												<div class="form-group">
-													<label>Service </label>
-													<input type="text" class="form-control" name="title" placeholder="Tooth cleaning">
+										<div class="row">
+										 	<div class="col-md-6 col-lg-6">
+												<h4 class="card-title">Add Services</h4>
+												<form action="{{url('/addservice')}}" method="post" enctype="multipart/form-data"> 
+												@csrf
+													<div class="form-group">
+														<label>Service </label>
+														<input type="text" class="form-control" name="title" placeholder="Tooth cleaning">
+													</div>
+													<div class="submit-section">
+														<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Service</button>
+													</div>
+												</form>
+												<hr>
+												@if(session()->has('success'))
+													<i class="alert alert-success">{{session('success')}}</i>
+												@endif
+												<div class="table-responsive">
+													<table class="datatable table table-hover table-center mb-0">
+														<thead>
+															<tr>
+																<th>ID</th>
+																<th>Service Name</th>
+																<th class="text-right">Actions</th>
+															</tr>
+														</thead>
+														<tbody>
+														<?php
+																foreach($service_arr as $data) 
+																{
+															?>
+															<tr>
+																<td><?php echo $data->id?></td>
+																<td><?php echo $data->title?></td>
+																<td class="text-right">
+																	<div class="actions">
+																		<a  href="{{url('addservice/'. $data->id)}}" class="btn btn-sm bg-danger-light">
+																			<i class="fe fe-trash"></i> Delete
+																		</a>
+																	</div>
+																</td>
+															</tr>
+															<?php
+															}
+															?>
+															
+															
+															
+															
+														</tbody>
+													</table>
 												</div>
-												<div class="submit-section">
-											        <button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Service</button>
-												</div>
-											</form>
-											<hr>
-											<div class="table-responsive">
-												<table class="datatable table table-hover table-center mb-0">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>Service Name</th>
-													<th class="text-right">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-											<?php
-													foreach($service_arr as $data) 
-													{
-												?>
-												<tr>
-													<td><?php echo $data->id?></td>
-													<td><?php echo $data->title?></td>
-													<td class="text-right">
-														<div class="actions">
-															<a  href="{{url('admin-add-specialities/'. $data->id)}}" class="btn btn-sm bg-danger-light">
-																<i class="fe fe-trash"></i> Delete
-															</a>
-														</div>
-													</td>
-												</tr>
-												<?php
-												}
-												?>
-												
-												
-												
-												
-											</tbody>
-										</table>
-									</div>
 											</div>
 
 											<div class="col-md-6 col-lg-6">
-											<h4 class="card-title">Add Specializations</h4>
-											<form action="{{url('/addspecialitie')}}" method="post" enctype="multipart/form-data">
-												@csrf
-												<div class="form-group">
-													<label>Specialization</label>
-													<input type="text" class="form-control" name="title" placeholder="Oral and Maxillofacial Surgery">
+												<h4 class="card-title">Add Specializations</h4>
+												<form action="{{url('/addspecialitie')}}" method="post" enctype="multipart/form-data">
+													@csrf
+													<div class="form-group">
+														<label>Specialization</label>
+														<input type="text" class="form-control" name="title" placeholder="Oral and Maxillofacial Surgery">
+													</div>
+													<div class="submit-section">
+														<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Specialities</button>
+													</div>
+												</form>	
+												<hr>
+												@if(session()->has('succes'))
+													
+													<i class="alert alert-success">{{session('succes')}}</i>
+													
+												@endif
+												<div class="table-responsive">
+													<table class="datatable table table-hover table-center mb-0">
+														<thead>
+															<tr>
+																<th>ID</th>
+																<th>Specialities Name</th>
+																<th class="text-right">Actions</th>
+															</tr>
+														</thead>
+														<tbody>
+															<?php
+																foreach($special_arr as $data1) 
+																{
+															?>
+															<tr>
+																<td><?php echo $data1->id?></td>
+																<td><?php echo $data1->title?></td>
+																<td class="text-right">
+																	<div class="actions">
+																		<a  href="{{url('addspecialitie/'. $data1->id)}}" class="btn btn-sm bg-danger-light">
+																			<i class="fe fe-trash"></i> Delete
+																		</a>
+																	</div>
+																</td>
+															</tr>
+															<?php
+															}
+															?>	
+														</tbody>
+													</table>
 												</div>
-												<div class="submit-section">
-													<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Specialities</button>
-												</div>
-											</form>	
-											<hr>
-											<div class="table-responsive">
-										<table class="datatable table table-hover table-center mb-0">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>Specialities Name</th>
-													<th class="text-right">Actions</th>
-												</tr>
-											</thead>
-											<tbody>
-											<?php
-													foreach($special_arr as $data1) 
-													{
-												?>
-												<tr>
-													<td><?php echo $data1->id?></td>
-													 <td><?php echo $data1->title?></td>
-													<td class="text-right">
-														<div class="actions">
-															<a  href="{{url('admin-add-specialities/'. $data->id)}}" class="btn btn-sm bg-danger-light">
-																<i class="fe fe-trash"></i> Delete
-															</a>
-														</div>
-													</td>
-												</tr>
-												<?php
-												}
-												?>	
-											</tbody>
-										</table>
-									</div>
 											</div>
 
 										</div>

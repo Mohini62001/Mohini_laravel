@@ -16,20 +16,29 @@
 									</div>
 									<div class="col-md-12 col-lg-6 login-right">
 										<div class="login-header">
-											<h3>Forgot Password?</h3>
-											<p class="small text-muted">Enter your email to get a password reset link</p>
+											<h3>Contact</h3>
 										</div>
 										
 										<!-- Forgot Password Form -->
 										<form action="https://dreamguys.co.in/demo/doccure/{{url('/login')}}">
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating">
+												<input type="text" name="name" class="form-control floating">
+												<label class="focus-label">Name</label>
+											</div>
+											<div class="form-group form-focus">
+												<input type="email" name="email" class="form-control floating">
 												<label class="focus-label">Email</label>
 											</div>
-											<div class="text-right">
-												<a class="forgot-link" href="{{url('/login')}}">Remember your password?</a>
+											<div class="form-group form-focus">
+												<input type="mobileno" name="mobileno" class="form-control floating">
+												<label class="focus-label">Mobile No</label>
 											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Reset Password</button>
+											<div class="form-group form-focus">
+												<textarea name="comment" class="form-control floating" rows="3"></textarea>
+												<label class="focus-label">Comment</label>
+											</div>
+											
+											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit" name="submit" value="Send">Reset Password</button>
 										</form>
 										<!-- /Forgot Password Form -->
 										

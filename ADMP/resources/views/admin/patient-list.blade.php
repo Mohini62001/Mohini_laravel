@@ -24,6 +24,11 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="card">
+							@if(session()->has('success'))
+												
+												<i class="alert alert-success">{{session('success')}}</i>
+															
+											@endif
 								<div class="card-body">
 									<div class="table-responsive">
 										<div class="table-responsive">
@@ -53,7 +58,7 @@
 													<td><?php echo $data->mobileno?></td>
 													<td class="text-right">
 														<div class="actions">
-															<a  href="" class="btn btn-sm bg-danger-light">
+															<a  href="{{url('register/'. $data->id)}}" class="btn btn-sm bg-danger-light">
 																<i class="fe fe-trash"></i> Delete
 															</a>
 														</div>
@@ -65,25 +70,7 @@
 													?>
 
 												
-												<tr>
-													<td>2</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/admin-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('/Backend/assets/img/patients/patient4.jpg')}}" alt="User Image"></a>
-														</h2>
-													</td>
-													<td>Michelle</td>
-													<td>Fairfax</td>
-													<td>Female</td>
-													<td>Michelle@gmail.com</td>
-													<td class="text-right">
-														<div class="actions">
-															<a  href="" class="btn btn-sm bg-danger-light">
-																<i class="fe fe-trash"></i> Delete
-															</a>
-														</div>
-												    </td>
-													</tr>
+												
 												
 												
 												

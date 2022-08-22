@@ -16,6 +16,8 @@ use App\Http\Controllers\service_controller;
 use App\Http\Controllers\drspecialitie_controller;
 use App\Http\Controllers\patient_controller;
 use App\Http\Controllers\patient_slots_controller;
+use App\Http\Controllers\doc_fav_medicines_controller;
+use App\Http\Controllers\contact_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +104,8 @@ Route::get('/doctor-social-media', function (){return view('doctor.social-media'
 Route::get('/doctor-service-specialization',[service_controller::class,'create']);
 Route::post('/addservice',[service_controller::class,'addservice']);
 Route::get('/doctor-service-specialization',[service_controller::class,'index']);
+Route::get('/addservice/{id}',[service_controller::class,'servicedelete']);
+Route::get('/addspecialitie/{id}',[service_controller::class,'specialdelete']);
 
 //Route::get('/addspeciality',[drspecialitie_controller::class,'addspeciality']);
 Route::post('/addspecialitie',[service_controller::class,'addspecialitie']);
@@ -117,8 +121,12 @@ Route::get('/doctor-patient-schedule-timings',[patient_slots_controller::class,'
 Route::post('/doctor-patient-schedule-timings',[patient_slots_controller::class,'store']);
 
 
-Route::get('/doctor-my-medicine', function (){return view('doctor.my-medicine');});
-
+//Route::get('/doctor-my-medicine', function (){return view('doctor.my-medicine');});
+Route::get('/doctor-my-medicine',[doc_fav_medicines_controller::class,'create']);
+Route::post('/addlistmedicine',[doc_fav_medicines_controller::class,'addlistmedicine']);
+Route::post('/addmedicine',[doc_fav_medicines_controller::class,'addmedicine']);
+Route::get('/doctor-my-medicine/{id}',[doc_fav_medicines_controller::class,'destroy']);
+//Route::get('/doctor-my-medicine',[doc_fav_medicines_controller::class,'index']);
 
 Route::get('/doctor-mr-dashboard', function (){return view('doctor.mr-dashboard');});
 Route::get('/doctor-mr-schedule-timings', function (){return view('doctor.mr-schedule-timings');});
@@ -161,6 +169,9 @@ Route::get('/editadmin/{id}',[admin_controller::class,'editadmin']);
 Route::post('/admin-profile/{id}',[admin_controller::class,'update']);
 Route::get('/admin-settings', function (){return view('admin.settings');});
 
+Route::get('/admin-medicine',[doc_fav_medicines_controller::class,'adminmedicinemanage']);
+
+Route::get('/admin-contact',[contact_controller::class,'index']);
 
 //Route::get('/admin-location', function (){return view('admin.location');});
 //Route::get('/admin-location',[state_controller::class,'create']);
@@ -168,6 +179,9 @@ Route::post('/addstate',[state_controller::class,'addstate']);
 Route::post('/addcity',[state_controller::class,'addcity']);
 Route::post('/addarea',[state_controller::class,'addarea']);
 Route::get('/admin-location',[state_controller::class,'index']);
+Route::get('/addstate/{id}',[state_controller::class,'statedelete']);
+Route::get('/addcity/{id}',[state_controller::class,'citydelete']);
+Route::get('/addarea/{id}',[state_controller::class,'areadelete']);
 
 Route::get('/admin-specialities',[specialist_controller::class,'index']);
 Route::get('/admin-add-specialities',[specialist_controller::class,'create']);
@@ -178,6 +192,7 @@ Route::get('/admin-add-specialities/{id}',[specialist_controller::class,'destroy
 //
 //Route::get('/admin-patient', function (){return view('admin.patient-list');});
 Route::get('/admin-patient',[patient_controller::class,'index']);
+Route::get('/register/{id}',[patient_controller::class,'destroy']); 
 Route::get('/admin-patient-appointment', function (){return view('admin.patient-appointment');});
 Route::get('/admin-patient-cancel-appointment', function (){return view('admin.patient-cancel-appointment');});
 
@@ -190,21 +205,21 @@ Route::get('/admin-add-doctor/{id}',[doctor_controller::class,'destroy']);
 Route::get('/admin-doctor-appointment', function (){return view('admin.doctor-appointment');});
 Route::get('/admin-doctor-cancel-appointment', function (){return view('admin.doctor-cancel-appointment');});
 
-Route::get('/admin-add-company',[companie_controller::class,'create']);
-Route::post('/admin-add-company',[companie_controller::class,'store']);
-Route::get('/admin-company',[companie_controller::class,'index']);
-Route::get('/edit-company/{id}',[companie_controller::class,'edit']);
-Route::post('/edit-company/{id}',[companie_controller::class,'update']);
-Route::get('/admin-add-company/{id}',[companie_controller::class,'destroy']); 
+Route::get('/admin-add-company',[companie_controller::class,'admincompanycreate']);
+Route::post('/admin-add-company',[companie_controller::class,'admincompanystore']);
+Route::get('/admin-company',[companie_controller::class,'admincompanyindex']);
+Route::get('/edit-company/{id}',[companie_controller::class,'admincompanyedit']);
+Route::post('/edit-company/{id}',[companie_controller::class,'admincompanyupdate']);
+Route::get('/admin-add-company/{id}',[companie_controller::class,'admincompanydestroy']); 
 Route::get('/admin-company-appointment', function (){return view('admin.company-appointment');});
 Route::get('/admin-company-cancel-appointment', function (){return view('admin.company-cancel-appointment');});
 
-Route::get('/admin-add-manager',[manager_controller::class,'create']);
-Route::post('/admin-add-manager',[manager_controller::class,'store']);
-Route::get('/admin-manager',[manager_controller::class,'index']);
-Route::get('/edit-manager/{id}',[manager_controller::class,'edit']);
-Route::post('/edit-manager/{id}',[manager_controller::class,'update']);
-Route::get('/admin-add-manager/{id}',[manager_controller::class,'destroy']); 
+Route::get('/admin-add-manager',[manager_controller::class,'adminmanagercreate']);
+Route::post('/admin-add-manager',[manager_controller::class,'adminmanagerstore']);
+Route::get('/admin-manager',[manager_controller::class,'adminmanagerindex']);
+Route::get('/edit-manager/{id}',[manager_controller::class,'adminmanageredit']);
+Route::post('/edit-manager/{id}',[manager_controller::class,'adminmanagerupdate']);
+Route::get('/admin-add-manager/{id}',[manager_controller::class,'adminmanagerdestroy']); 
 Route::get('/admin-manager-appointment', function (){return view('admin.manager-appointment');});
 Route::get('/admin-manager-cancel-appointment', function (){return view('admin.manager-cancel-appointment');});
 
@@ -229,13 +244,90 @@ Route::get('/admin-error-500', function (){return view('admin.error-500');});
 Route::get('/admin-blank-page', function (){return view('admin.blank-page');});
 Route::get('/admin-components', function (){return view('admin.components');});
 
-Route::get('/admin-form-basic-inputs', function (){return view('admin.form-basic-inputs');});
-Route::get('/admin-form-input-groups', function (){return view('admin.form-input-groups');});
-Route::get('/admin-form-horizontal', function (){return view('admin.form-horizontal');});
-Route::get('/admin-form-vertical', function (){return view('admin.form-vertical');});
-Route::get('/admin-form-validation', function (){return view('admin.form-validation');});
-Route::get('/admin-tables-basic', function (){return view('admin.tables-basic');});
-Route::get('/admin-data-tables', function (){return view('admin.data-tables');});
 
 });
 //===========================================================================================================
+
+Route::get('/company',[companie_controller::class,'login']);
+Route::post('/companylogin',[companie_controller::class,'companylogin']);
+Route::get('/companylogout',[companie_controller::class,'companylogout']);
+
+
+Route::group(['middleware'=>['afterlogincompany']], function(){
+
+    Route::get('/company-dashboard', function (){return view('company.index');});
+    Route::get('/company-profile',[companie_controller::class,'companyprofile']);
+    Route::get('/editcompany{id}',[companie_controller::class,'editcompany']);
+    Route::post('/company-profile/{id}',[companie_controller::class,'companyupdate']);
+    
+    Route::get('/company-doctor',[doctor_controller::class,'companydoctorindex']);
+    Route::get('/company-doctor-appointment', function (){return view('company.doctor-appointment');});
+    Route::get('/company-doctor-cancel-appointment', function (){return view('company.doctor-cancel-appointment');});
+    
+    Route::get('/company-add-manager',[manager_controller::class,'companymanagercreate']);
+    Route::post('/company-add-manager',[manager_controller::class,'companymanagerstore']);
+    Route::get('/company-manager',[manager_controller::class,'companymanagerindex']);
+    Route::get('/company-edit-manager/{id}',[manager_controller::class,'companymanageredit']);
+    Route::post('/company-edit-manager/{id}',[manager_controller::class,'companymanagerupdate']);
+    Route::get('/company-add-manager/{id}',[manager_controller::class,'companymanagerdestroy']); 
+    Route::get('/company-manager-appointment', function (){return view('company.manager-appointment');});
+    Route::get('/company-manager-cancel-appointment', function (){return view('company.manager-cancel-appointment');});
+    
+    Route::get('/company-add-mr',[mr_controller::class,'companymrcreate']);
+    Route::post('/company-add-mr',[mr_controller::class,'companymrstore']);
+    Route::get('/company-mr',[mr_controller::class,'companymrindex']);
+    Route::get('/company-edit-mr/{id}',[mr_controller::class,'companymredit']);
+    Route::post('/company-edit-mr/{id}',[mr_controller::class,'companymrupdate']);
+    Route::get('/company-add-mr/{id}',[mr_controller::class,'companymrdestroy']); 
+    Route::get('/company-mr-appointment', function (){return view('company.mr-appointment');});
+    Route::get('/company-mr-cancel-appointment', function (){return view('company.mr-cancel-appointment');});
+    
+    Route::get('/company-stockiest',[stockiest_controller::class,'companystockiestindex']);
+    Route::get('/company-add-stockiest',[stockiest_controller::class,'companystockiescreate']);
+    Route::post('/company-add-stockiest',[stockiest_controller::class,'companystockieststore']);
+
+    Route::post('/companyaddmedicine',[doc_fav_medicines_controller::class,'companyaddmedicine']);
+    Route::get('/company-medicine-manager',[doc_fav_medicines_controller::class,'companymedicinecreate']);
+    Route::get('/companyaddmedicine/{id}',[doc_fav_medicines_controller::class,'companymedicinedelete']);
+    
+    Route::get('/company-divisions-manager',[doc_fav_medicines_controller::class,'companydivisioncreate']);
+    Route::post('/companyadddivision',[doc_fav_medicines_controller::class,'companyadddivision']);
+    Route::get('/companyadddivision/{id}',[doc_fav_medicines_controller::class,'companydivisiondelete']);
+    
+    
+    });
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    Route::get('/manager',[manager_controller::class,'login']);
+    Route::post('/managerlogin',[manager_controller::class,'managerlogin']);
+    Route::get('/managerlogout',[manager_controller::class,'managerlogout']);
+    
+    Route::get('/manager-dashboard', function (){return view('manager.index');});
+    Route::get('/manager-profile',[manager_controller::class,'managerprofile']);
+    Route::get('/editmanager{id}',[manager_controller::class,'editmanager']);
+    Route::post('/manager-profile/{id}',[manager_controller::class,'managerupdate']);
+    
+    Route::get('/manager-doctor',[doctor_controller::class,'managerdoctorindex']);
+    Route::get('/manager-doctor-appointment', function (){return view('manager.doctor-appointment');});
+    Route::get('/manager-doctor-cancel-appointment', function (){return view('manager.doctor-cancel-appointment');});
+    
+    Route::get('/manager-add-mr',[mr_controller::class,'managermrcreate']);
+    Route::post('/manager-add-mr',[mr_controller::class,'managermrstore']);
+    Route::get('/manager-mr',[mr_controller::class,'managermrindex']);
+    Route::get('/manager-edit-mr/{id}',[mr_controller::class,'managermredit']);
+    Route::post('/manager-edit-mr/{id}',[mr_controller::class,'managermrupdate']);
+    Route::get('/manager-add-mr/{id}',[mr_controller::class,'managermrdestroy']); 
+    Route::get('/manager-mr-appointment', function (){return view('manager.mr-appointment');});
+    Route::get('/manager-mr-cancel-appointment', function (){return view('manager.mr-cancel-appointment');});
+    
+    Route::get('/manager-stockiest',[stockiest_controller::class,'managerstockiestindex']);
+    Route::get('/manager-add-stockiest',[stockiest_controller::class,'managerstockiescreate']);
+    Route::post('/manager-add-stockiest',[stockiest_controller::class,'managerstockieststore']);
+
+    Route::post('/manageraddmedicine',[doc_fav_medicines_controller::class,'manageraddmedicine']);
+    Route::get('/manager-medicine-manager',[doc_fav_medicines_controller::class,'managermedicinecreate']);
+    Route::get('/manageraddmedicine/{id}',[doc_fav_medicines_controller::class,'managermedicinedelete']);
+    
+   
+    

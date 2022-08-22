@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\patient_slots;
 use App\Models\doctor;
+use Hash;
 use session;
 
 class patient_slots_controller extends Controller
@@ -25,7 +26,8 @@ class patient_slots_controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
+        $morningmonday=patient_slots::where('day','=','Monday')->where('time','=','Morning')->where('doc_id','=',session('doctor_id'))->get();
         return view('doctor.patient-schedule-timings');
     }
 
@@ -37,13 +39,28 @@ class patient_slots_controller extends Controller
      */
     public function store(Request $request)
     {
-        $data=new patient_slots;
-        $data->doc_id=$request->doc_id;
-        $data->days=$request->days;
-        $data->slot_timing=$request->slot_timing;
+        
+            
+        $time=$request->time;
+        $day=$request->day;
+        $no_slots=$request->no_slots;
+        $min=$request->min;
+        $start_time=$request->start_time;
+        date_default_timezone_set('asia/calcutta');
+        $i=0;
+        while($i<$no_slots)
+        {   
+            $data=new patient_slots;
+            $data->time=$time;    
+            $data->doc_id=Session('doctor_id');
+            $data->day=$day;
+            $data->slot_timing=date('H:i',strtotime($min,strtotime($start_time)));
+            $start_time=date('H:i',strtotime($min,strtotime($start_time)));
+            $data->save();
+            $i++;
 
-        $data->save();
-        return redirect('doctor.patient-schedule-timings')->with('success','Schedule Add Success');
+        }
+        return redirect('doctor-patient-schedule-timings')->with('success','Schedule add success');
     }
 
     /**

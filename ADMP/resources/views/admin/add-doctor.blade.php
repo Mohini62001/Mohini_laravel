@@ -280,7 +280,7 @@
 															{
 															?>
 															<option value="<?php echo $d->id;?>">
-															       <?php echo $d->name ?></option>
+															       <?php echo $d->state_name ?></option>
 															<?php
 															}
 															?>
@@ -295,7 +295,7 @@
 										
 										<div class="row">
 											<div class="col-xl-6">
-											<div class="form-group row">
+												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">City</label>
 													<div class="col-lg-9">
 														<select class="select" value="{{old('city')}}" name="city">
@@ -328,7 +328,7 @@
 											</div>
 											<div class="col-xl-6">
 											
-											<div class="form-group row">
+												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Area</label>
 													<div class="col-lg-9">
 														<select class="select" value="{{old('area')}}" name="area">

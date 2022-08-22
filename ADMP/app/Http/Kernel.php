@@ -48,6 +48,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\afterlogin::class
         ],
 
+        'afterlogincompany'=>[
+            \App\Http\Middleware\afterlogincompany::class
+        ],
+
         'doctorafterlogin'=>[
             \App\Http\Middleware\doctorafterlogin::class
         ],

@@ -35,7 +35,6 @@
 											<thead>
 												<tr>
 													<th>Manager ID</th>
-													<th>Company </th>
 													<th>Profile Img</th>
 													<th>Manager Name</th>
 													<th>Email</th>
@@ -53,8 +52,7 @@
 												<tr>
 													<td><?php echo $data->id?></td>
 
-													<td><?php echo $data->company_name ?></td>
-
+													
 													<td><img src="{{asset('upload/manager/' . $data->mprofile_img)}}" height="50px" width="50px"/></td>
 
 													<td><?php echo $data->Manager_name?></td>

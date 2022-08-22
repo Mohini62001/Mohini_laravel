@@ -20,6 +20,14 @@ class patient_controller extends Controller
         return view('admin.patient-list',["patient_arr"=>$data]);
     }
 
+    public function destroy($id)
+    {
+        $data=patient::find($id);
+        $data->delete();
+        return redirect('admin-patient')->with('success','Delete Success');
+    }
+
+    /////////////////////////////////patient panel////////////////////////////////////////////////////
     /**
      * Show the form for creating a new resource.
      *
@@ -38,6 +46,11 @@ class patient_controller extends Controller
      */
     public function store(Request $request)
     {
+        $data=$request->validate([
+            'name'=>'required',
+            'email'=>'required',
+            'password'=>'required',
+        ]);
         $data=new patient;
         $data->name=$request->name;
         $data->email=$request->email;
@@ -160,8 +173,5 @@ class patient_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+   
 }

@@ -21,6 +21,7 @@
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/css/bootstrap.min.css')}}">
 		
+
 		<!-- Fontawesome CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/plugins/fontawesome/css/fontawesome.min.css')}}">
 		<link rel="stylesheet" href="{{url('Frontend/assets/plugins/fontawesome/css/all.min.css')}}">
@@ -50,6 +51,28 @@
 		
 		<!-- Main CSS -->
 		<link rel="stylesheet" href="{{url('Frontend/assets/css/style.css')}}">
+
+		<!--
+1 Include jquery File  
+-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<!--
+2 Include these two files 
+-->
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<!--
+3 Call this single function 
+-->
+<script>
+	$(document).ready(function() 
+	{
+		$('#table').DataTable();
+	} );
+</script>
+
 		
 		
 		

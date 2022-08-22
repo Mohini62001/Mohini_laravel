@@ -35,8 +35,8 @@
 											<thead>
 												<tr>
 													<th>MR ID</th>
-													<th>Manager ID</th>
-													<th>Company ID</th>
+													<th>Manager Name</th>
+													<th>Company Name</th>
 													<th>Profile Img</th>
 													<th>Company Name</th>
 													<th>Email</th>

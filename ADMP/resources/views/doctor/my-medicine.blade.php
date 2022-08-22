@@ -35,281 +35,107 @@
 							<!-- /Profile Sidebar -->
 							
 						</div>
-						<div class="col-md-7 col-lg-8 col-xl-9">
+                        <div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="card card-table">
 								<div class="card-body">
-								
-									<!-- Invoice Table -->
-									<div class="table-responsive">
-										<table class="table table-hover table-center mb-0">
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<h4>Add Medicines Form-list</h4>
+										@if(session()->has('success'))
+								            <i class="alert alert-success">{{session('success')}}</i>
+							            @endif
+										<form action="{{url('/addlistmedicine')}}" method="post" enctype="multipart/form-data">
+											@csrf
+										<div class="form-group">
+											<label>Medicines</label>
+											<select class="col-lg-9 form-control" name="medicine_name">
+											<option value="">Select</option>
+															<?php
+															foreach($medicine_arr as $data)
+															{
+															?>
+															<option value="<?php echo $data->medicine_name;?>">
+															       <?php echo $data->medicine_name ?></option>
+															<?php
+															}
+															?>			
+											</select>
+										</div>
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
+										</div>
+										</form>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<h4>Add Medicines </h4>
+										@if(session()->has('succes'))
+								            <i class="alert alert-success">{{session('succes')}}</i>
+							            @endif
+										<form action="{{url('/addmedicine')}}" method="post" enctype="multipart/form-data">
+											@csrf
+										<div class="form-group">
+											<label>Medicine </label>
+											<input type="text" class="form-control" name="medicine_name" placeholder="">
+										</div>
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
+										</div>
+										</form>
+									</div>
+								</div>
+								</div>
+								<hr>
+								@if(session()->has('suc'))
+									<i class="alert alert-success">{{session('suc')}}</i>
+								@endif
+								<div class="table-responsive">
+												<table id="table" class="table table-hover table-center mb-0">
 											<thead>
 												<tr>
-													<th>Invoice No</th>
-													<th>Patient</th>
-													<th>Amount</th>
-													<th>Paid On</th>
-													<th></th>
+													<th>Medicine ID</th>
+													<th>Medicine Name</th>
+													<th class="text-right">Actions</th>
 												</tr>
 											</thead>
 											<tbody>
+											<?php
+													foreach($medi_arr as $fetch) 
+													{
+												?>
 												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0010</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Richard Wilson <span>#PT0016</span></a>
-														</h2>
-													</td>
-													<td>$450</td>
-													<td>14 Nov 2019</td>
+													<td><?php echo $fetch->id?></td>
+													<td><?php echo $fetch->medicine_name?></td>
 													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
+														<div class="actions">
+															<a  href="{{url('doctor-my-medicine/'. $fetch->id)}}" class="btn btn-sm bg-danger-light">
+																<i class="fe fe-trash"></i> Delete
 															</a>
 														</div>
 													</td>
 												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0009</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient1.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Charlene Reed <span>#PT0001</span></a>
-														</h2>
-													</td>
-													<td>$200</td>
-													<td>13 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0008</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient2.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Travis Trimble <span>#PT0002</span></a>
-														</h2>
-													</td>
-													<td>$100</td>
-													<td>12 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0007</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient3.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Carl Kelly <span>#PT0003</span></a>
-														</h2>
-													</td>
-													<td>$350</td>
-													<td>11 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0006</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient4.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Michelle Fairfax <span>#PT0004</span></a>
-														</h2>
-													</td>
-													<td>$275</td>
-													<td>10 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0005</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient5.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Gina Moore <span>#PT0005</span></a>
-														</h2>
-													</td>
-													<td>$600</td>
-													<td>9 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0004</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient6.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Elsie Gilley <span>#PT0006</span></a>
-														</h2>
-													</td>
-													<td>$50</td>
-													<td>8 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0003</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient7.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Joan Gardner <span>#PT0007</span></a>
-														</h2>
-													</td>
-													<td>$400</td>
-													<td>7 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0002</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient8.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Daniel Griffing <span>#PT0008</span></a>
-														</h2>
-													</td>
-													<td>$550</td>
-													<td>6 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td>
-														<a href="{{url('/invoice-view')}}">#INV-0001</a>
-													</td>
-													<td>
-														<h2 class="table-avatar">
-															<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
-																<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient9.jpg')}}" alt="User Image">
-															</a>
-															<a href="{{url('/patient-profile')}}">Walter Roberson <span>#PT0009</span></a>
-														</h2>
-													</td>
-													<td>$100</td>
-													<td>5 Nov 2019</td>
-													<td class="text-right">
-														<div class="table-action">
-															<a href="{{url('/invoice-view')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-eye"></i> View
-															</a>
-															<a href="javascript:void(0);" class="btn btn-sm bg-primary-light">
-																<i class="fas fa-print"></i> Print
-															</a>
-														</div>
-													</td>
-												</tr>
+												<?php
+												}
+												?>
+												
+												
+												
+												
 											</tbody>
 										</table>
 									</div>
-									<!-- /Invoice Table -->
+								
 									
-								</div>
+									
+								
 							</div>
 						</div>
+                        
+
+						
+
+
+
+						
 					</div>
 
 				</div>
@@ -459,8 +285,7 @@
 		</div>
 		<!-- /Main Wrapper -->
 	  
-		<!-- jQuery -->
-		<script src="{{ url('Frontend/assets/js/jquery.min.js') }}"></script>
+		
 		
 		<!-- Bootstrap Core JS -->
 		<script src="{{  url('Frontend/assets/js/popper.min.js') }}"></script>

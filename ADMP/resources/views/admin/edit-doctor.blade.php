@@ -293,14 +293,14 @@
 															 	{
 															?>
 															<option value="<?php echo $d->id;?>"selected>
-															<?php echo $d->name ?></option>
+															<?php echo $d->state_name ?></option>
 															<?php
 															    }
 																else
                                                                 {
 															?>
 															<option value="<?php echo $d->id;?>" >
-															<?php echo $d->name ?></option>
+															<?php echo $d->state_name ?></option>
 															<?php
 															    }
 														    }

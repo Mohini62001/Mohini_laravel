@@ -11,46 +11,209 @@
 					<div class="page-header">
 						<div class="row">
 							<div class="col">
-								<h3 class="page-title">Add Location</h3>
+								<h3 class="page-title">Location</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="{{url('/admin')}}">Dashboard</a></li>
-									<li class="breadcrumb-item active">Add Specialities</li>
+									<li class="breadcrumb-item active">Add Location</li>
 								</ul>
 							</div>
-							@if(session()->has('success'))
-												
-								<i class="alert alert-success">{{session('success')}}</i>
-												
-							@endif
+							
 						</div>
 					</div>
 					<!-- /Page Header --->
 					
 					<div class="row">
-						<div class="col-xl-6 d-flex">
+						<div class="col-xl-4 d-flex">
 							<div class="card flex-fill">
-								
+							<h4 class="card-title">Add State</h4>
+							@if(session()->has('success'))
+												
+								<i class="alert alert-success">{{session('success')}}</i>
+												
+							@endif
 								<div class="card-body">
-									<form action="{{url('/')}}" method="post" enctype="multipart/form-data">
+									<form action="{{url('/addstate')}}" method="post" enctype="multipart/form-data">
 										@csrf
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label"> Name</label>
-											<div class="col-lg-9">
-												<input type="text" class="form-control" name="" placeholder="Urology, heart surgeon, etc.. ">
-											</div>
+										<div class="form-group">
+											<label>State</label>
+											<input type="text" class="col-lg-9 form-control" name="state_name" placeholder="Enter State">
 										</div>
-										<div class="form-group row">
-											<label class="col-lg-3 col-form-label"> Img</label>
-											<div class="col-lg-9">
-												<input type="file" class="form-control" name="img">
-											</div>
-										</div>
-										
-										
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
 										</div>
 									</form>
+									<hr>
+									<div class="table-responsive" style="margin-top:110px">
+										<table class="datatable table table-hover table-center mb-0" >
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>State Name</th>
+													<th class="text-right">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+											<?php
+													foreach($state_arr as $data) 
+													{
+												?>
+												<tr>
+													<td><?php echo $data->id?></td>
+													 <td><?php echo $data->state_name?></td>
+													<td class="text-right">
+														<div class="actions">
+															<a  href="{{url('addstate/'. $data->id)}}" class="btn btn-sm bg-danger-light">
+																<i class="fe fe-trash"></i>
+															</a>
+														</div>
+													</td>
+												</tr>
+												<?php
+												}
+												?>	
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-4 d-flex">
+							<div class="card flex-fill">
+							<h4 class="card-title">Add City</h4>
+							@if(session()->has('succes'))
+												
+								<i class="alert alert-success">{{session('succes')}}</i>
+												
+							@endif
+								<div class="card-body">
+									<form action="{{url('/addcity')}}" method="post" enctype="multipart/form-data">
+										@csrf
+										<div class="form-group">
+											<label>State</label>
+											<select class="col-lg-9 form-control" name="sid">
+											<option value="">Select</option>
+															<?php
+															foreach($state_arr as $d)
+															{
+															?>
+															<option value="<?php echo $d->id;?>">
+															       <?php echo $d->state_name ?></option>
+															<?php
+															}
+															?>			
+											</select>
+										</div>
+										<div class="form-group">
+											<label>City</label>
+											<input type="text" class="col-lg-9 form-control" name="city_name" placeholder="Enter City">
+										</div>
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
+										</div>
+									</form>
+									<hr>
+									<div class="table-responsive">
+										<table id="table" class="table table-hover table-center mb-0">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>City Name</th>
+													<th class="text-right">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+											<?php
+													foreach($city_arr as $data) 
+													{
+												?>
+												<tr>
+													<td><?php echo $data->id?></td>
+												    <td><?php echo $data->city_name?></td>
+													<td class="text-right">
+														<div class="actions">
+															<a  href="{{url('addcity/'. $data->id)}}" class="btn btn-sm bg-danger-light">
+																<i class="fe fe-trash"></i>
+															</a>
+														</div>
+													</td>
+												</tr>
+												<?php
+												}
+												?>	
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-4 d-flex">
+							<div class="card flex-fill">
+							<h4 class="card-title">Add Area</h4>
+							@if(session()->has('succe'))
+												
+								<i class="alert alert-success">{{session('succe')}}</i>
+												
+							@endif
+								<div class="card-body">
+									<form action="{{url('/addarea')}}" method="post" enctype="multipart/form-data">
+										@csrf
+										<div class="form-group">
+											<label>City</label>
+											<select class="col-lg-9 form-control" value="" name="city_id">
+											<option value="">Select</option>
+															<?php
+															foreach($city_arr as $c)
+															{
+															?>
+															<option value="<?php echo $c->id;?>">
+														       <?php echo $c->city_name ?></option>
+															<?php
+															}
+															?>			
+											</select>
+										</div>
+										<div class="form-group">
+											<label>Area</label>
+											<input type="text" name="area_name" class="col-lg-9 form-control" placeholder="Enter Area">
+										</div>
+										<div class="text-right">
+											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
+										</div>
+									</form>
+									<hr>
+									<div class="table-responsive">
+										<table class="datatable table table-hover table-center mb-0">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Area Name</th>
+													<th class="text-right">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+											<?php
+													foreach($area_arr as $data) 
+													{
+												?>
+												<tr>
+													<td><?php echo $data->id?></td>
+													 <td><?php echo $data->area_name?></td>
+													<td class="text-right">
+														<div class="actions">
+															<a  href="{{url('addarea/'. $data->id)}}" class="btn btn-sm bg-danger-light">
+																<i class="fe fe-trash"></i>
+															</a>
+														</div>
+													</td>
+												</tr>
+												<?php
+												}
+												?>	
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>

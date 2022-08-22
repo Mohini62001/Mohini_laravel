@@ -178,7 +178,7 @@
 									<img src="{{url('/Backend/assets/img/profiles/avatar-01.jpg')}}" alt="User Image" class="avatar-img rounded-circle">
 								</div>
 								<div class="user-text">
-									<h6>Ryan Taylor</h6>
+									<h6>{{session('name')}}</h6>
 									<p class="text-muted mb-0">Administrator</p>
 								</div>
 							</div>
@@ -205,6 +205,14 @@
 							</li>
 							<li class="active"> 
 								<a href="{{url('/admin')}}"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+							</li>
+
+							<li> 
+								<a href="{{url('/admin-medicine')}}"><i class="fe fe-plus"></i> <span>Medicine</span></a>
+							</li>
+
+							<li> 
+								<a href="{{url('/admin-contact')}}"><i class="fe fe-users"></i> <span>Contact</span></a>
 							</li>
 
 							<li> 
@@ -324,96 +332,9 @@
 							<li> 
 								<a href="{{url('/admin-stockiest')}}"><i class="fe fe-activity"></i> <span>Stockiest</span></a>
 							</li>
-							<li> 
-								<a href="{{url('/admin-product')}}"><i class="fe fe-cart"></i> <span>Product</span></a>
-							</li>
 							
-							<li> 
-								<a href="{{url('/admin-settings')}}"><i class="fe fe-vector"></i> <span>Settings</span></a>
-							</li>
-							<li> 
-								<a href="{{url('/admin-reviews')}}"><i class="fe fe-star-o"></i> <span>Reviews</span></a>
-							</li>
-							<li> 
-								<a href="{{url('/admin-transactions-list')}}"><i class="fe fe-activity"></i> <span>Transactions</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="fe fe-document"></i> <span> Reports</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="{{url('/admin-invoice-report')}}">Invoice Reports</a></li>
-								</ul>
-							</li>
-							<li class="menu-title"> 
-								<span>Pages</span>
-							</li>
-							<li> 
-								<a href="{{url('/admin-profile')}}"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="fe fe-document"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="{{url('/admin-login')}}"> Login </a></li>
-									
-									<li><a href="{{url('/admin-forgot-password')}}"> Forgot Password </a></li>
-									<li><a href="{{url('/admin-lock-screen')}}"> Lock Screen </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="fe fe-warning"></i> <span> Error Pages </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="{{url('/admin-error-404')}}">404 Error </a></li>
-									<li><a href="{{url('/admin-error-500')}}">500 Error </a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="{{url('/admin-blank-page')}}"><i class="fe fe-file"></i> <span>Blank Page</span></a>
-							</li>
-							<li class="menu-title"> 
-								<span>UI Interface</span>
-							</li>
-							<li> 
-								<a href="{{url('/admin-components')}}"><i class="fe fe-vector"></i> <span>Components</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="fe fe-layout"></i> <span> Forms </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="{{url('/admin-form-basic-inputs')}}">Basic Inputs </a></li>
-									<li><a href="{{url('/admin-form-input-groups')}}">Input Groups </a></li>
-									<li><a href="{{url('/admin-form-horizontal')}}">Horizontal Form </a></li>
-									<li><a href="{{url('/admin-form-vertical')}}"> Vertical Form </a></li>
-									<li><a href="{{url('/admin-form-mask')}}"> Form Mask </a></li>
-									<li><a href="{{url('/admin-form-validation')}}"> Form Validation </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="fe fe-table"></i> <span> Tables </span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="{{url('/admin-tables-basic')}}">Basic Tables </a></li>
-									<li><a href="{{url('/admin-data-tables')}}">Data Table </a></li>
-								</ul>
-							</li>
-							<li class="submenu">
-								<a href="javascript:void(0);"><i class="fe fe-code"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li class="submenu">
-										<a href="javascript:void(0);"> <span>Level 1</span> <span class="menu-arrow"></span></a>
-										<ul style="display: none;">
-											<li><a href="javascript:void(0);"><span>Level 2</span></a></li>
-											<li class="submenu">
-												<a href="javascript:void(0);"> <span> Level 2</span> <span class="menu-arrow"></span></a>
-												<ul style="display: none;">
-													<li><a href="javascript:void(0);">Level 3</a></li>
-													<li><a href="javascript:void(0);">Level 3</a></li>
-												</ul>
-											</li>
-											<li><a href="javascript:void(0);"> <span>Level 2</span></a></li>
-										</ul>
-									</li>
-									<li>
-										<a href="javascript:void(0);"> <span>Level 1</span></a>
-									</li>
-								</ul>
-							</li>
+							
+							
 						</ul>
 					</div>
                 </div>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\companie;
 use App\Models\manager;
+use App\Models\division;
 use Hash;
+use Session;
 
 class manager_controller extends Controller
 {
@@ -14,7 +16,7 @@ class manager_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function adminmanagerindex()
     {
         $data=manager::join('companies','managers.company_id','=','companies.id')->get();
 
@@ -26,7 +28,7 @@ class manager_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function adminmanagercreate()
     {
         $company_id_arr=companie::all();
         return view('admin.add-manager',["company_id_arr"=>$company_id_arr]);
@@ -38,7 +40,7 @@ class manager_controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function adminmanagerstore(Request $request)
     {  
          $data=$request->validate([
         'company_id'=>'required',
@@ -93,7 +95,7 @@ class manager_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function adminmanageredit($id)
     {
         $data=manager::find($id);
         $company_id_arr=companie::all();
@@ -107,7 +109,7 @@ class manager_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function adminmanagerupdate(Request $request, $id)
     {   
         
         $data=manager::find($id);
@@ -149,10 +151,196 @@ class manager_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function adminmanagerdestroy($id)
     {
         $data=manager::find($id);
         $data->delete();
         return redirect('admin-manager')->with("success","Manager deleted successfully");
     }
+
+/////////////////////////////////////Company Panel/////////////////////////////////////////
+
+public function companymanagercreate()
+{
+    $division_id_arr=division::where('company_id','=',Session('company_id'))->get();
+    return view('company.add-manager',["division_id_arr"=>$division_id_arr]);
+} 
+
+public function companymanagerstore(Request $request)
+{  
+     $data=$request->validate([
+    
+    'Manager_name'=>'required|regex:/[a-zA-z0-9\s]+/',
+    'division_id'=>'required',
+    'first_name'=>'required|alpha',
+    'last_name'=>'required|alpha',
+    'email'=>'required|email|unique:managers',
+    'password'=>'required|min:6|unique:managers',
+    'mprofile_img'=>'required|mimes:jpeg,png,jpg,gif,svg',
+    'visiting_card'=>'required|mimes:jpeg,png,jpg,gif,svg',
+    
+]);
+    $data=new manager;
+
+    $data->Manager_name=$request->Manager_name;
+    $data->company_id=Session('company_id');
+    $data->division_id=$request->division_id;
+    $data->first_name=$request->first_name;
+    $data->last_name=$request->last_name;
+    $data->email=$request->email;
+    $data->password=Hash::make($request->password);
+
+    // img upload
+    $file=$request->file('mprofile_img');  // get file
+    $file_name=time()."_mprofile_img.".$request->file('mprofile_img')->getClientOriginalExtension();// make file name
+    $file->move('upload/manager',$file_name); //file name move upload in public		
+    $data->mprofile_img=$file_name; // file name store in db
+
+    // visitingcard upload
+    $file2=$request->file('visiting_card');  // get file
+    $file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+    $file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+    $data->visiting_card=$file_name2; // file name store in db
+
+    $res=$data->save();
+    return redirect('company-add-manager')->with('success','Add Manager Success');
+}
+
+public function companymanagerindex()
+    {
+        $data=manager::where('company_id','=',session('company_id'))->get();
+        return view('company.manager',["comapany_arr"=>$data]);
+    }
+
+public function companymanageredit($id)
+    {
+        $data=manager::find($id);
+        $division_id_arr=division::all();
+        return view('company.edit-manager',["fetch"=>$data,"division_id_arr"=>$division_id_arr]);
+    }
+
+    public function companymanagerupdate(Request $request, $id)
+    {   
+        $data=manager::find($id);
+        $data->division_id=$request->division_id;
+        $data->Manager_name=$request->Manager_name;
+        $data->first_name=$request->first_name;
+        $data->last_name=$request->last_name;
+        $data->email=$request->email;
+        $old_img=$data->mprofile_img;
+        $old_img2=$data->visiting_card;
+
+        //img upload
+        if($request->hasFile('mprofile_img'))
+		{
+			$file=$request->file('mprofile_img');  // get file
+			$file_name=time() . "_mprofile_img." . $request->file('mprofile_img')->getClientOriginalExtension();// make file name
+			$file->move('upload/manager',$file_name); //file name move upload in public		
+			$data->mprofile_img=$file_name; // file name store in db
+			unlink('upload/manager/'.$old_img);
+		}
+         // visitingcard upload
+         if($request->hasFile('visiting_card'))
+		{
+            $file2=$request->file('visiting_card');  // get file
+            $file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+            $file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+            $data->visiting_card=$file_name2; // file name store in db
+            unlink('upload/visitingcard/'.$old_img2);
+        }
+
+        $data->save();
+		return redirect('/company-manager')->with('success','Update Success');
+    }
+
+    public function companymanagerdestroy($id)
+    {
+        $data=manager::find($id);
+        $data->delete();
+        return redirect('company-manager')->with("success","Manager deleted successfully");
+    }
+
+    ////////////////////////////////////////////manager panel//////////////////////////////////
+    public function login(Request $request)
+    {
+        return view('manager.login');
+    }
+
+    public function managerlogin(Request $request)
+    {
+        $data=manager::where("email","=","$request->email")->first();
+        if($data)
+        {
+            if(Hash::check($request->password, $data->password))
+            {
+                $request->Session()->put('manager_id',$data->id);
+                $request->Session()->put('email', $data->email);
+                return redirect('manager-dashboard');
+            }
+            else
+            {
+                return redirect('/manager')->with('fail','Login Failed due to Wrong Password');
+            }
+        }
+        else
+        {
+            return redirect('/manager')->with('fail','Login Failed due to Wrong email');
+        }
+    }
+
+    public function managerlogout()
+    {
+        Session()->pull('manager_id');
+        Session()->pull('email');
+        return redirect('/manager');
+    }
+
+    public function managerprofile()
+	{  
+		$data=manager::where("id","=",session('manager_id'))->first();
+		return view('manager.profile',["fetch"=>$data]);
+	}
+
+    public function editmanager($id)
+    {
+        $data=manager::where("id","=",session('manager_id'))->first();
+        return view('manager.profile',["fetch"=>$data]);
+    }
+
+    public function managerupdate(Request $request, $id)
+    {
+        $data=manager::find($id);
+
+        $data->first_name=$request->first_name;
+        $data->last_name=$request->last_name;
+        $data->Manager_name=$request->Manager_name;
+        $data->email=$request->email;
+        $old_img=$data->mprofile_img;
+        $old_img2=$data->visiting_card;
+
+        // img upload
+        if($request->hasFile('mprofile_img'))
+		{
+            $file=$request->file('mprofile_img');  // get file
+            $file_name=time()."_mprofile_img.".$request->file('mprofile_img')->getClientOriginalExtension();// make file name
+            $file->move('upload/manager',$file_name); //file name move upload in public		
+            $data->mprofile_img=$file_name; // file name store in db
+            unlink('upload/manager/'.$old_img);
+        }
+
+        // visitingcard upload
+        if($request->hasFile('visiting_card'))
+		{
+            $file2=$request->file('visiting_card');  // get file
+            $file_name2=time()."_visiting_card.".$request->file('visiting_card')->getClientOriginalExtension();// make file name
+            $file2->move('upload/visitingcard',$file_name2); //file name move upload in public		
+            $data->visiting_card=$file_name2; // file name store in db
+            unlink('upload/visitingcard/'.$old_img2);
+        }
+
+        $data->save();
+		return redirect('/manager-profile')->with('success','Update Success');
+    }
+
+
 }

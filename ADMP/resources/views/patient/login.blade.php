@@ -101,11 +101,11 @@
 										<form action="{{url('/patientlogin')}}" method="post" enctype="multipart/form-data">
 											@csrf
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating" name="email">
+												<input type="email" class="form-control floating" name="email" required>
 												<label class="focus-label">Email</label>
 											</div>
 											<div class="form-group form-focus">
-												<input type="password" class="form-control floating" name="password">
+												<input type="password" class="form-control floating" name="password" required>
 												<label class="focus-label">Password</label>
 											</div>
 											<div class="text-right">

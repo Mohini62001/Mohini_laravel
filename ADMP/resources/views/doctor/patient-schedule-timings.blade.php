@@ -37,31 +37,31 @@
 						</div>
 						
 						<div class="col-md-7 col-lg-8 col-xl-9">
-						@if(session()->has('success'))				
-							<i class="alert alert-success">{{session('success')}}</i>
-						@endif
+						 @if(session()->has('success'))
+						 	<i class="alert alert-success">{{session('success')}}</i>
+						 @endif
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="card">
 										<div class="card-body">
 											<h4 class="card-title">Schedule Timings</h4>
-											<form action="" method="post" enctype="multipart/form-data">
+											<form action="{{url('/doctor-patient-schedule-timings')}}" method="post" enctype="multipart/form-data">
 												@csrf
 											<div class="profile-box">
 												<div class="row">
 
 												<div class="col-lg-4">
 														<div class="form-group">               
-															<label> Days</label>
-															<select class="select form-control" name="days">
+															<label>Select Days</label>
+															<select class="select form-control" name="day">
 																<option selected="selected">---Select Days---</option>
-																<option>Monday</option>
-																<option>Tuesday</option>  
-																<option>Wednesday</option>
-																<option>Thursday</option>
-																<option>Friday</option>
-																<option>Saturday</option>
-																<option>Sunday</option>
+																<option value="Monday">Monday</option>
+																<option value="Tuesday">Tuesday</option>  
+																<option value="Wednesday">Wednesday</option>
+																<option value="Thursday">Thursday</option>
+																<option value="Friday">Friday</option>
+																<option value="Saturday">Saturday</option>
+																<option value="Sunday">Sunday</option>
 															</select>
 														</div>
 												</div>
@@ -69,11 +69,11 @@
 												<div class="col-lg-4">
 														<div class="form-group">               
 															<label>Select Timings</label>
-															<select class="select form-control" name="slot_timing">
+															<select class="select form-control" name="time">
 																<option selected="selected">---Select Timing---</option>
-																<option>Morning</option>
-																<option>Afternoon</option>  
-																<option>Evening</option>
+																<option value="Morning">Morning</option>
+																<option value="Afternoon">Afternoon</option>  
+																<option value="Evening">Evening</option>
 															</select>
 														</div>
 												</div>
@@ -81,34 +81,33 @@
 												<div class="col-lg-4">
 													<div class="form-group">
 														<label>Starting Time</label>
-														<input type="time" class="form-control" placeholder="Enter Starting Time" >
+														<input type="time" name="start_time" class="form-control" placeholder="Enter Starting Time">
 													</div>
 												</div>
 
-											 <br>
+											<br>
 
 												<div class="col-lg-4">
 													<div class="form-group">
 														<label>Total No. of Slots</label>
-														<input type="number" class="form-control" placeholder="Enter No. of Slots">
+														<input type="number" name="no_slots" class="form-control" placeholder="Enter No. of Slots">
 													</div>
 												</div>
 
 													<div class="col-lg-4">
 														<div class="form-group">               
 															<label>Timing Slot Duration</label>
-															<select class="select form-control">
+															<select class="select form-control" name="min">
 																<option selected="selected">---Select Slot Timing---</option>
-																<option>10 mins</option>
-																<option>15 mins</option>
-																<option>30 mins</option>  
-																<option>45 mins</option>
-																<option>1 Hour</option>
+																<option value="+10 minutes">10 mins</option>
+																<option value="+15 minutes">15 mins</option>
+																<option value="+30 minutes">30 mins</option>  
+																<option value="+45 minutes">45 mins</option>
+																<option value="+1 hour">1 Hour</option>
 															</select>
 														</div>
 													</div>
-											</div> 
-
+											</div>     
 											<div class="col-lg-4">
 												<div class="submit-section submit-btn-bottom">
 													<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Slots</button>
@@ -165,42 +164,57 @@
 																	<p class="text-muted mb-0">Not Available</p>
 																</div>
 																<!-- /Sunday Slot -->
-
 																<!-- Monday Slot -->
-																<div id="slot_monday" class="tab-pane fade show active">
-																	<h4 class="card-title d-flex justify-content-between">
-																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-edit mr-1"></i>Edit</a>
-																	</h4>
-																	
-																	<!-- Slot List -->
-																	<div class="doc-times">
-																		<div class="doc-slot-list">
-																			8:00 pm - 11:30 pm
-																			<a href="javascript:void(0)" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		<div class="doc-slot-list">
-																			11:30 pm - 1:30 pm
-																			<a href="javascript:void(0)" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		<div class="doc-slot-list">
-																			3:00 pm - 5:00 pm
-																			<a href="javascript:void(0)" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																		<div class="doc-slot-list">
-																			6:00 pm - 11:00 pm
-																			<a href="javascript:void(0)" class="delete_schedule">
-																				<i class="fa fa-times"></i>
-																			</a>
-																		</div>
-																	</div>
+																			<div id="slot_monday" class="tab-pane fade show active">
+																				<h4 class="card-title d-flex justify-content-between">
+																					<span>Time Slots</span> 
+																					<a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-edit mr-1"></i>Edit</a>
+																				</h4>
+																				
+																				<!-- Slot List -->
+																			<div class="row">
+																				<div class="form-group" style="margin-top:10px">
+																					Morning :
+																				</div>
+																				<div class="col-xl-10 doc-times" style="margin-left:14px">
+																				@foreach($morningmonday as $d)
+																					<div class="doc-slot-list">
+																						{{$d->}}
+																						<a href="javascript:void(0)" class="delete_schedule">
+																							<i class="fa fa-times"></i>
+																						</a>
+																					</div>
+																				@endforeach
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="form-group" style="margin-top:10px">
+																					Afternoon :
+																				</div>
+																				<div class="col-xl-10 doc-times">
+																					<div class="doc-slot-list">
+																						11:30 pm 
+																						<a href="javascript:void(0)" class="delete_schedule">
+																							<i class="fa fa-times"></i>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="form-group" style="margin-top:8px">
+																					Evening :
+																				</div>
+																				<div class="col-xl-10 doc-times" style="margin-left:18px">
+																					<div class="doc-slot-list">
+																						6:00 pm 
+																						<a href="javascript:void(0)" class="delete_schedule">
+																							<i class="fa fa-times"></i>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
 																	<!-- /Slot List -->
+																
 																	
 																</div>
 																<!-- /Monday Slot -->

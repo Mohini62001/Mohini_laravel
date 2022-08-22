@@ -15,8 +15,8 @@ class service_controller extends Controller
      */
     public function index()
     {
-        $data=service::all();
-        $data1=drspecialitie::all();
+        $data=service::where("doctor_id","=",Session('doctor_id'))->get();
+        $data1=drspecialitie::where("doctor_id","=",Session('doctor_id'))->get();
         return view('doctor.add-service-specialization',["service_arr"=>$data],["special_arr"=>$data1]);
     }
 
@@ -27,7 +27,6 @@ class service_controller extends Controller
      */
     public function create()
     {
-
         return view('doctor.add-service-specialization');
     }
 
@@ -96,8 +95,19 @@ class service_controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function servicedelete($id)
     {
-        //
+        $data=service::find($id);
+        $data->delete();
+        return redirect('/doctor-service-specialization')->with('success','service delete success');
+
+    }
+
+    public function specialdelete($id)
+    {
+        $data=drspecialitie::find($id);
+        $data->delete();
+        return redirect('/doctor-service-specialization')->with('succes','speciality delete success');
+
     }
 }

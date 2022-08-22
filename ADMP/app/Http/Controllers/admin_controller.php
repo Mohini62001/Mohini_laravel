@@ -67,9 +67,9 @@ class admin_controller extends Controller
 	}
 
 
-    public function editadmin($id)
+    public function editadmin()
     {
-        $data=admin::find($id);
+        $data=admin::where("id","=",session('admin_id'))->first();
         return view('admin.profile',["fetch"=>$data]);
     }
 
@@ -106,9 +106,9 @@ class admin_controller extends Controller
     {
         return view('Admin.login');
     }
-
+//
     public function profile()
-	{
+	{  
 		$data=admin::where("id","=",session('admin_id'))->first();
 		return view('admin.profile',["fetch"=>$data]);
 	}
@@ -132,7 +132,7 @@ class admin_controller extends Controller
        }
        else
        {
-        return redirect('/login')->with('fail','Login Failed due to Wrong user');
+        return redirect('/login')->with('fail','Login Failed due to Wrong email');
        }
     }
 

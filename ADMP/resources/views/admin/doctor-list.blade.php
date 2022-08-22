@@ -55,7 +55,7 @@
 												<tr>
 												<td><?php echo $data->id?></td>
 												<td><img src="{{asset('upload/doctor/' . $data->profile_img)}}" height="50px" width="50px"/></td>
-												<td><?php echo $data->name?></td>
+												<td><?php echo $data->specialist_id?></td>
 												<td><?php echo $data->first_name?></td>
 												<td><?php echo $data->last_name?></td>
 												<td><?php echo $data->doctor_status ?></td>
