@@ -486,7 +486,7 @@ public function managerdoctorindex()
 ////////////////////////Patient Panel//////////////////////////////////////////////////////////
     public function doctorlist()
     {
-        $data=doctor::join('specialists','doctors.specialist_id','=','specialists.id')->get();
+        $data=doctor::all();
 		return view('patient.search',["doctorlist_arr"=>$data]);
     }
 

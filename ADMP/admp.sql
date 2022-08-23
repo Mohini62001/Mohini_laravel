@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2022 at 06:20 PM
+-- Generation Time: Aug 23, 2022 at 09:23 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -43,6 +43,24 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `img`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@gmail.com', '$2y$10$nNJItlaUF084ywUf5lyYLusc.9CPgIJa7ubFYbufE/3ER53mRokOG', '1660111265_img.jpg', NULL, '2022-08-20 00:04:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `doc_id` bigint(20) UNSIGNED NOT NULL,
+  `patient_id` bigint(20) UNSIGNED NOT NULL,
+  `date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('Approved','Pending') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Pending',
+  `time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -267,6 +285,14 @@ CREATE TABLE `drspecialities` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `drspecialities`
+--
+
+INSERT INTO `drspecialities` (`id`, `created_at`, `updated_at`, `doctor_id`, `title`) VALUES
+(6, '2022-08-23 00:02:14', '2022-08-23 00:02:14', 7, 'teeth'),
+(7, '2022-08-23 00:02:43', '2022-08-23 00:02:43', 7, 'toungue');
+
 -- --------------------------------------------------------
 
 --
@@ -339,7 +365,8 @@ INSERT INTO `medicines` (`id`, `created_by`, `created_at`, `updated_at`, `compan
 (7, '', '2022-08-18 06:10:26', NULL, 5, 'Fabiflu'),
 (9, NULL, '2022-08-20 09:29:20', '2022-08-20 09:29:20', 7, 'corona'),
 (11, NULL, '2022-08-21 07:54:19', '2022-08-21 07:54:19', 8, 'Volini Gel'),
-(12, NULL, '2022-08-22 00:38:55', '2022-08-22 00:38:55', 7, 'Disprin');
+(12, NULL, '2022-08-22 00:38:55', '2022-08-22 00:38:55', 7, 'Disprin'),
+(15, '3', '2022-08-22 11:33:32', '2022-08-22 11:33:32', NULL, 'Dolo');
 
 -- --------------------------------------------------------
 
@@ -417,7 +444,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (73, '2022_08_20_160605_create_stockiests_table', 33),
 (74, '2022_08_20_160629_add_columns_to_stockiests_table', 33),
 (75, '2022_08_22_065119_create_contacts_table', 34),
-(76, '2022_08_22_065503_add_column_to_contacts_table', 34);
+(76, '2022_08_22_065503_add_column_to_contacts_table', 34),
+(77, '2022_08_23_052726_create_appointments_table', 35),
+(78, '2022_08_23_052741_add_columns_to_appointments_table', 36);
 
 -- --------------------------------------------------------
 
@@ -505,6 +534,18 @@ CREATE TABLE `patient_slots` (
   `time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `patient_slots`
+--
+
+INSERT INTO `patient_slots` (`id`, `created_at`, `updated_at`, `doc_id`, `day`, `slot_timing`, `time`) VALUES
+(5, '2022-08-23 06:57:40', '2022-08-23 06:57:40', 7, 'Tuesday', '13:10', 'Afternoon'),
+(6, '2022-08-23 06:57:40', '2022-08-23 06:57:40', 7, 'Tuesday', '13:20', 'Afternoon'),
+(7, '2022-08-23 06:57:40', '2022-08-23 06:57:40', 7, 'Tuesday', '13:30', 'Afternoon'),
+(8, '2022-08-23 06:57:40', '2022-08-23 06:57:40', 7, 'Tuesday', '13:40', 'Afternoon'),
+(9, '2022-08-23 06:57:40', '2022-08-23 06:57:40', 7, 'Tuesday', '13:50', 'Afternoon'),
+(10, '2022-08-23 06:57:40', '2022-08-23 06:57:40', 7, 'Tuesday', '14:00', 'Afternoon');
+
 -- --------------------------------------------------------
 
 --
@@ -553,6 +594,14 @@ CREATE TABLE `services` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `created_at`, `updated_at`, `doctor_id`, `title`) VALUES
+(9, '2022-08-23 00:00:26', '2022-08-23 00:00:26', 7, 'tooth clean'),
+(10, '2022-08-23 00:01:07', '2022-08-23 00:01:07', 7, 'cavity checkup');
+
 -- --------------------------------------------------------
 
 --
@@ -573,8 +622,10 @@ CREATE TABLE `specialists` (
 
 INSERT INTO `specialists` (`id`, `name`, `img`, `created_at`, `updated_at`) VALUES
 (1, 'Dentist', '1659193869_img.png', NULL, '2022-07-30 09:41:09'),
-(2, 'heart suergon', '1659193836_img.png', NULL, '2022-07-30 09:40:36'),
-(5, 'Urology', '1659194312_img.png', '2022-07-30 09:48:32', '2022-07-30 09:48:32');
+(2, 'Cardiologist', '1659193836_img.png', NULL, '2022-08-23 01:08:39'),
+(5, 'Urology', '1659194312_img.png', '2022-07-30 09:48:32', '2022-07-30 09:48:32'),
+(8, 'Orthopedic', '1661236767_img.png', '2022-08-23 01:09:27', '2022-08-23 01:09:27'),
+(9, 'Neurology', '1661236801_img.png', '2022-08-23 01:10:01', '2022-08-23 01:10:01');
 
 -- --------------------------------------------------------
 
@@ -637,6 +688,14 @@ INSERT INTO `stockiests` (`id`, `created_at`, `updated_at`, `company_id`, `manag
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `appointments_doc_id_foreign` (`doc_id`),
+  ADD KEY `appointments_patient_id_foreign` (`patient_id`);
 
 --
 -- Indexes for table `areas`
@@ -805,6 +864,12 @@ ALTER TABLE `admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `areas`
 --
 ALTER TABLE `areas`
@@ -850,7 +915,7 @@ ALTER TABLE `doc_fav_medicines`
 -- AUTO_INCREMENT for table `drspecialities`
 --
 ALTER TABLE `drspecialities`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `hospital_daytimes`
@@ -868,13 +933,13 @@ ALTER TABLE `managers`
 -- AUTO_INCREMENT for table `medicines`
 --
 ALTER TABLE `medicines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `mrs`
@@ -898,7 +963,7 @@ ALTER TABLE `patient_favs`
 -- AUTO_INCREMENT for table `patient_slots`
 --
 ALTER TABLE `patient_slots`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -916,13 +981,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `specialists`
 --
 ALTER TABLE `specialists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `states`
@@ -939,6 +1004,13 @@ ALTER TABLE `stockiests`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `appointments_doc_id_foreign` FOREIGN KEY (`doc_id`) REFERENCES `doctors` (`id`),
+  ADD CONSTRAINT `appointments_patient_id_foreign` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
 
 --
 -- Constraints for table `areas`

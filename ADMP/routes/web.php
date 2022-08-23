@@ -18,6 +18,8 @@ use App\Http\Controllers\patient_controller;
 use App\Http\Controllers\patient_slots_controller;
 use App\Http\Controllers\doc_fav_medicines_controller;
 use App\Http\Controllers\contact_controller;
+use App\Http\Controllers\book_by_otp_controller;
+use App\Http\Controllers\appointment_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +73,14 @@ Route::get('/forgot-password', function (){return view('patient.forgot-password'
 
 Route::get('/search',[doctor_controller::class,'doctorlist']);
 
+//Route::get('/booking', function (){return view('patient.booking');});
+Route::get('/booking/{id}',[patient_slots_controller::class,'showpatient']);
+Route::post('/booking/{id}',[patient_slots_controller::class,'showpatient']);
+
+Route::post('/book_appointment',[patient_slots_controller::class,'book_appointment']);
+Route::post('/book_by_otp',[book_by_otp_controller::class,'book_by_otp']);
+Route::get('/book_by_otp',[book_by_otp_controller::class,'book_by_otp']);
+//Route::post('/book_appointment/{id}',[patient_slots_controller::class,'book_appointment']);
 
 Route::get('/chat', function (){return view('patient.chat');});
 Route::get('/voice-call', function (){return view('patient.voice-call');});

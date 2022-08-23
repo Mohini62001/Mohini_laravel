@@ -169,7 +169,7 @@
 											</div>
 											<div class="clinic-booking">
 												<a class="view-pro-btn" href="{{url('doctor-profile/'.$data->id)}}">View Profile</a>
-												<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
+												<a class="apt-btn" href="{{url('/booking/'.$data->id)}}">Book Appointment</a>
 											</div>
 										</div>
 									</div>

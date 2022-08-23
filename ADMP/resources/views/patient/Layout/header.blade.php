@@ -165,9 +165,15 @@
 								<p class="contact-info-header"> +1 315 369 5943</p>
 							</div>
 						</li>
+						@if(Session('patient_id'))
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{{url('/patientlogout')}}">Logout</a>
+						</li>
+						@else
 						<li class="nav-item">
 							<a class="nav-link header-login" href="{{url('/login')}}">login / Signup </a>
 						</li>
+						@endif
 					</ul>
 				</nav>
 			</header>
