@@ -38,8 +38,12 @@ class service_controller extends Controller
      */
     public function addservice(Request $request)
     {
+        $data=$request->validate([
+            'service'=>'required',
+            
+        ]);
         $data=new service;
-        $data->title=$request->title;
+        $data->title=$request->service;
         $data->doctor_id=session('doctor_id');
         $data->save();
 		return redirect('/doctor-service-specialization')->with('success','Update Success');
@@ -47,12 +51,15 @@ class service_controller extends Controller
 
     public function addspecialitie(Request $request)
     {
+        $data=$request->validate([
+            'specialization'=>'required',
+            
+        ]);
         $data=new drspecialitie;
-        $data->title=$request->title;
+        $data->title=$request->specialization;
         $data->doctor_id=session('doctor_id');
         $data->save();
 		return redirect('/doctor-service-specialization')->with('success','Update Success');
-        
     }
     
     /**

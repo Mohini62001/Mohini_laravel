@@ -34,6 +34,9 @@
 											<div class="form-group">
 												<label>Division</label>
 												<input type="text" class="form-control" name="division_name" >
+												@if ($errors->has('division_name'))
+            										<span class="text-danger">{{ $errors->first('division_name') }}</span>
+       											@endif
 											</div>
 											<div class="submit-section">
 												<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Division</button>

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('medicines', function (Blueprint $table) {
             $table->unsignedBigInteger('company_id');
-			$table->foreign('company_id')->references('id')->on('companies')->after('id');
+			$table->foreign('company_id')->references('id')->on('companies')->default('null')->after('id');
             $table->string('created_by')->default('null')->after('company_id');
             $table->string('medicine_name')->after('created_by');
         });

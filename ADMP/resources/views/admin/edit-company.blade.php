@@ -1,8 +1,6 @@
 @extends('admin.Layout.main_layout') 	
 @section('main_container')
 			
-			
-			
 			<!-- Page Wrapper -->
             <div class="page-wrapper">
                 <div class="content container-fluid">

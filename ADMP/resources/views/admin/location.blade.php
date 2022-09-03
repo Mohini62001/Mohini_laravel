@@ -37,6 +37,9 @@
 										<div class="form-group">
 											<label>State</label>
 											<input type="text" class="col-lg-9 form-control" name="state_name" placeholder="Enter State">
+											@if ($errors->has('state_name'))
+            									<span class="text-danger">{{ $errors->first('state_name') }}</span>
+       										@endif
 										</div>
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
@@ -82,16 +85,14 @@
 							<div class="card flex-fill">
 							<h4 class="card-title">Add City</h4>
 							@if(session()->has('succes'))
-												
 								<i class="alert alert-success">{{session('succes')}}</i>
-												
 							@endif
 								<div class="card-body">
 									<form action="{{url('/addcity')}}" method="post" enctype="multipart/form-data">
 										@csrf
 										<div class="form-group">
 											<label>State</label>
-											<select class="col-lg-9 form-control" name="sid">
+											<select class="col-lg-9 form-control" name="state">
 											<option value="">Select</option>
 															<?php
 															foreach($state_arr as $d)
@@ -103,10 +104,16 @@
 															}
 															?>			
 											</select>
+											@if ($errors->has('state'))
+            									<span class="text-danger">{{ $errors->first('state') }}</span>
+       										@endif
 										</div>
 										<div class="form-group">
 											<label>City</label>
 											<input type="text" class="col-lg-9 form-control" name="city_name" placeholder="Enter City">
+											@if ($errors->has('city_name'))
+            									<span class="text-danger">{{ $errors->first('city_name') }}</span>
+       										@endif
 										</div>
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
@@ -161,7 +168,7 @@
 										@csrf
 										<div class="form-group">
 											<label>City</label>
-											<select class="col-lg-9 form-control" value="" name="city_id">
+											<select class="col-lg-9 form-control" value="" name="city">
 											<option value="">Select</option>
 															<?php
 															foreach($city_arr as $c)
@@ -173,10 +180,16 @@
 															}
 															?>			
 											</select>
+											@if ($errors->has('city'))
+            									<span class="text-danger">{{ $errors->first('city') }}</span>
+       										@endif
 										</div>
 										<div class="form-group">
 											<label>Area</label>
 											<input type="text" name="area_name" class="col-lg-9 form-control" placeholder="Enter Area">
+											@if ($errors->has('area_name'))
+            									<span class="text-danger">{{ $errors->first('area_name') }}</span>
+       										@endif
 										</div>
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>

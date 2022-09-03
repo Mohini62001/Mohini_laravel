@@ -80,7 +80,7 @@
 								<div class="col-xl-10 doc-times" style="margin-left:18px">
 									@if(!$Morningsearchdate->isEmpty())
 									@foreach($Morningsearchdate as $d)
-									<form action="{{url('/book_appointment')}}" method="post">
+									<form action="{{url('/book_app_sess')}}" method="post">
 										@csrf
 										<input type="hidden" value="{{$d->slot_timing}}" name="slot_timing">
 										<input type="hidden" value="{{$doctordata->id}}" name="doc_id">
@@ -101,7 +101,7 @@
 								<div class="col-xl-10 doc-times" style="margin-left:6px">
 									@if(!$afternoonsearchdate->isEmpty())
 									@foreach($afternoonsearchdate as $d)
-									<form action="{{url('/book_appointment')}}" method="post">
+									<form action="{{url('/book_app_sess')}}" method="post">
 										@csrf
 										<input type="hidden" value="{{$d->slot_timing}}" name="slot_timing">
 										<input type="hidden" value="{{$doctordata->id}}" name="doc_id">
@@ -122,7 +122,7 @@
 								<div class="col-xl-10 doc-times" style="margin-left:20px">
 									@if(!$eveningsearchdate->isEmpty())
 									@foreach($eveningsearchdate as $d)
-									<form action="{{url('/book_appointment')}}" method="post">
+									<form action="{{url('/book_app_sess')}}" method="post">
 										@csrf
 										<input type="hidden" value="{{$d->slot_timing}}" name="slot_timing">
 										<input type="hidden" value="{{$doctordata->id}}" name="doc_id">

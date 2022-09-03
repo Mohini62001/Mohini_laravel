@@ -268,6 +268,11 @@ public function companymanageredit($id)
 
     public function managerlogin(Request $request)
     {
+        $data=$request->validate([
+            
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+        ]);
         $data=manager::where("email","=","$request->email")->first();
         if($data)
         {
@@ -275,6 +280,7 @@ public function companymanageredit($id)
             {
                 $request->Session()->put('manager_id',$data->id);
                 $request->Session()->put('email', $data->email);
+                $request->Session()->put('mprofile_img', $data->mprofile_img);
                 return redirect('manager-dashboard');
             }
             else
@@ -292,6 +298,7 @@ public function companymanageredit($id)
     {
         Session()->pull('manager_id');
         Session()->pull('email');
+        Session()->pull('mprofile_img');
         return redirect('/manager');
     }
 

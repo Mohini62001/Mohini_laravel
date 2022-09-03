@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\customer;
+use Hash;
 
 class customer_controller extends Controller
 {
@@ -23,7 +25,7 @@ class customer_controller extends Controller
      */
     public function create()
     {
-        //
+        return view('Frontend.Layout.header');
     }
 
     /**
@@ -34,7 +36,49 @@ class customer_controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=new customer;
+        $data->username=$request->username;
+        $data->email=$request->email;
+        $data->password=Hash::make($request->password);
+
+        $res=$data->save();
+        //return redirect('/customerlogin');
+    }
+
+    public function customercreate()
+    {
+        return view('Frontend.Layout.header');
+    }
+
+    public function customerlogin(Request $request)
+    {
+        $data=customer::where("email","=",$request->email)->first();
+        if($data)
+        {
+            if(Hash::check($request->password,$data->password))
+            {
+                $status=$data->status;
+                if($status=="Unblock")
+                {
+                    $request->Session()->put('customer_id',$data->id);
+                    $request->Session()->put('email',$data->email);
+                    return redirect('/index');
+                }
+                else
+                {
+                    return redirect('/customerlogin');
+                }
+            }
+            else
+            {
+                return redirect('/customerlogin');
+            }
+        }
+        else
+        {
+            return redirect('/customerlogin');
+        }
+       
     }
 
     /**

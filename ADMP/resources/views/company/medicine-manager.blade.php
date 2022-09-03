@@ -37,6 +37,9 @@
 											<div class="form-group">
 												<label>Medicine</label>
 												<input type="text" class="form-control" name="medicine_name" >
+												@if ($errors->has('medicine_name'))
+            										<span class="text-danger">{{ $errors->first('medicine_name') }}</span>
+       											@endif
 											</div>
 											<div class="submit-section">
 												<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Medicine</button>

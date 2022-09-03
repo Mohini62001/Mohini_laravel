@@ -80,29 +80,30 @@
 													<div class="modal-body">
 														<h4>Create Account</h4>
 														<div class="cs-login-form">
-															<form>
+															<form action="{{url('/signup')}}" method="post" enctype="multipart/form-data">
+																@csrf
 																<div class="input-holder">
 																	<label for="cs-username"> <strong>USERNAME</strong> <i class="icon-user-plus2"></i>
-																		<input type="text" class="" id="cs-username" placeholder="Type desired username">
+																		<input type="text" class="" name="username" id="cs-username" placeholder="Type desired username">
 																	</label>
 																</div>
 																<div class="input-holder">
 																	<label for="cs-email"> <strong>Email</strong> <i class="icon-envelope"></i>
-																		<input type="email" class="" id="cs-email" placeholder="Type desired username">
+																		<input type="email" class="" name="email" id="cs-email" placeholder="Enter your email">
 																	</label>
 																</div>
 																<div class="input-holder">
 																	<label for="cs-login-password"> <strong>Password</strong> <i class="icon-unlock40"></i>
-																		<input type="password" id="cs-login-password" placeholder="******">
+																		<input type="password" name="password" id="cs-login-password" placeholder="******">
 																	</label>
 																</div>
 																<div class="input-holder">
 																	<label for="cs-confirm-password"> <strong>confirm password</strong> <i class="icon-unlock40"></i>
-																		<input type="password" id="cs-confirm-password" placeholder="******">
+																		<input type="password" name="password" id="cs-confirm-password" placeholder="******">
 																	</label>
 																</div>
 																<div class="input-holder">
-																	<input class="cs-color csborder-color" type="submit" value="Create Account">
+																	<input class="cs-color csborder-color" type="submit" name="submit"  placeholder="Create Account" value="Send">
 																</div>
 															</form>
 														</div>
@@ -129,20 +130,21 @@
 													<div class="modal-body">
 														<h4>User Sign in</h4>
 														<div class="cs-login-form">
-															<form>
+															<form action="{{url('/customerlogin')}}" method="post" enctype="multipart/form-data">
+																@csrf
 																<div class="input-holder">
-																	<label for="cs-username-1"> <strong>USERNAME</strong> <i class="icon-user-plus2"></i>
-																		<input type="text" class="" id="cs-username-1" placeholder="Type desired username">
+																	<label for="cs-email"> <strong>Email</strong> <i class="icon-envelope"></i>
+																		<input type="email" class="" name="email" id="cs-email" placeholder="enter your email">
 																	</label>
 																</div>
 																<div class="input-holder">
 																	<label for="cs-login-password-1"> <strong>Password</strong> <i class="icon-unlock40"></i>
-																		<input type="password" id="cs-login-password-1" placeholder="******">
+																		<input type="password" name="password" id="cs-login-password-1" placeholder="******">
 																	</label>
 																</div>
 																<div class="input-holder"> <a class="btn-forgot-pass" data-dismiss="modal" data-target="#user-forgot-pass" data-toggle="modal" href="javascript:;" aria-hidden="true"><i class=" icon-question-circle"></i> Forgot password?</a> </div>
 																<div class="input-holder">
-																	<input class="cs-color csborder-color" type="submit" value="SIGN IN">
+																	<input class="cs-color csborder-color" type="submit" name="submit" value="SIGN IN">
 																</div>
 															</form>
 														</div>

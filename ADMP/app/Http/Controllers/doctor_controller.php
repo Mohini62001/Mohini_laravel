@@ -10,6 +10,8 @@ use App\Models\area;
 use App\Models\specialist;
 use App\Models\service;
 use App\Models\drspecialitie;
+use App\Models\visitor_slots;
+use App\Models\company_fav_doc;
 use Hash;
 use session;
 
@@ -20,6 +22,7 @@ class doctor_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //////////////////////////////////////////admin panel////////////////////////////////////////////////
     public function index()
     {
         $data=doctor::all();
@@ -137,8 +140,6 @@ class doctor_controller extends Controller
             $data->hospital_img=implode(",",$filesarr);
         }
 
-
-
         // visiting card upload
 		$file3=$request->file('visit_card');  // get file
 		$file_name3=time()."_visit_card_img.".$request->file('visit_card')->getClientOriginalExtension();// make file name
@@ -216,8 +217,6 @@ class doctor_controller extends Controller
             'visit_card'=>'mimes:jpeg,png,jpg,gif',
 
         ]);
-
-
 
         $data=doctor::find($id);
         $data->first_name=$request->first_name;
@@ -317,6 +316,12 @@ public function login(Request $request)
 
     public function doctorlogin(Request $request)
     {
+        $data=$request->validate([
+            
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+        ]);
+
         $data=doctor::where("email","=",$request->email)->first();
         if($data)
         {
@@ -327,6 +332,7 @@ public function login(Request $request)
                 {
                     $request->Session()->put('doctor_id',$data->id);
                     $request->Session()->put('email',$data->email);
+                    $request->Session()->put('profile_img',$data->profile_img);
                     return redirect('/doctor-dashboard');
 
                 }
@@ -351,6 +357,7 @@ public function login(Request $request)
     {
         Session()->pull('doctor_id');
         Session()->pull('email');
+        Session()->pull('profile_img');
         return redirect('/doctor');
     }
 
@@ -467,6 +474,101 @@ public function login(Request $request)
         $data->save();
 		return redirect('/editdoctor')->with('success','Update Success');
     }
+
+    public function visitor_timings()//visitor slots show
+    {
+        $data=visitor_slots::where('doc_id','=',Session('doctor_id'))->get();
+        return view('doctor.visitor_timings',["slots_arr"=>$data]);
+    }
+
+    public function visitor_slots(Request $request)//visitor slots page
+    {
+        return view('/doctor.visitor_slots');
+    }
+    
+    public function add_visitor_slots1(Request $request)//visitor slots add1
+    {
+        $data=$request->validate([
+            'start_time'=>'required',
+            'end_time'=>'required',
+            'mr_allowed'=>'required',
+            'manager_allowed'=>'required',
+            'company_allowed'=>'required',
+            'day'=>'required',
+        ]);
+
+        $data=new visitor_slots;
+        $data->start_time=$request->start_time;
+        $data->visitor_slot=$request->visitor_slot;
+        $data->end_time=$request->end_time;
+        $data->mr_allowed=$request->mr_allowed;
+        $data->manager_allowed=$request->manager_allowed;
+        $data->company_allowed=$request->company_allowed;
+        $data->day=$request->day;
+        $data->doc_id=Session("doctor_id");
+        $res=$data->save();
+        return redirect('/doctor-visitor_slots')->with('success1','Add Success');
+    }
+
+    public function add_visitor_slots2(Request $request)//visitor slots add2
+    {
+        $data=$request->validate([
+            'start_time2'=>'required',
+            'end_time2'=>'required',
+            'mr_allowed2'=>'required',
+            'manager_allowed2'=>'required',
+            'company_allowed2'=>'required',
+            'day2'=>'required',
+        ]);
+
+        $data=new visitor_slots;
+        $data->start_time=$request->start_time2;
+        $data->visitor_slot=$request->visitor_slot2;
+        $data->end_time=$request->end_time2;
+        $data->mr_allowed=$request->mr_allowed2;
+        $data->manager_allowed=$request->manager_allowed2;
+        $data->company_allowed=$request->company_allowed2;
+        $data->day=$request->day2;
+        $data->doc_id=Session("doctor_id");
+        $res=$data->save();
+        return redirect('/doctor-visitor_slots')->with('success2','Add Success');
+    }
+
+    public function editslots($id)
+    {  
+        $data=visitor_slots::find($id);
+        return view('doctor.edit_visitor_slot',["fetch"=>$data]);
+    }
+
+    public function update_visitor_slots(Request $request,$id)//visitor slots update
+    {
+        $data=$request->validate([
+            'start_time'=>'required',
+            'end_time'=>'required',
+            'mr_allowed'=>'required',
+            'manager_allowed'=>'required',
+            'company_allowed'=>'required',
+            'day'=>'required',
+        ]);
+
+        $data=visitor_slots::find($id);
+        $data->start_time=$request->start_time;
+        $data->end_time=$request->end_time;
+        $data->mr_allowed=$request->mr_allowed;
+        $data->manager_allowed=$request->manager_allowed;
+        $data->company_allowed=$request->company_allowed;
+        $data->day=$request->day;
+        $res=$data->update();
+        return redirect('/doctor-visitor_timings')->with('success','Update Success');
+    }
+
+    public function delete_slots($id)
+    {
+        $data=visitor_slots::find($id);
+		$data->delete();
+		return redirect('/doctor-visitor_timings')->with("success","Slots deleted successfully");
+    }
+    
 //////////////////////////Company panel////////////////////////////////////////////////////////////
 
 public function companydoctorindex()
@@ -475,7 +577,37 @@ public function companydoctorindex()
     return view('company.doctor-list',["companydoctor_arr"=>$data]);
 }
 
-//////////////////////////Company panel////////////////////////////////////////////////////////////
+public function company_fav_doc(Request $request)
+{
+    $data=new company_fav_doc;
+    $data->company_id=Session("company_id");
+    $data->doctor_id=
+
+    $res=$data->save();
+    return redirect('/company-doctor');
+}
+
+
+/*--public function visitor_slots(Request $request)//visitor slots add
+    {
+       $data=new visitor_slots;
+        $data->start_time=$request->start_time;
+        $data->end_time=$request->end_time;
+        $data->mr_allowed=$request->mr_allowed;
+        $data->manager_allowed=$request->manager_allowed;
+        $data->company_allowed=$request->company_allowed;
+        $data->day=$request->day;
+        $data->doc_id=$request->doc_id;
+
+        $res=$data->save();
+        return redirect('/visitor_slots');
+    }
+
+    public function visitor_timings()//visitor slots show
+    {
+            return view('doctor.visitor_timings');
+    }*/
+//////////////////////////manager panel////////////////////////////////////////////////////////////
 
 public function managerdoctorindex()
 {
@@ -498,5 +630,9 @@ public function managerdoctorindex()
         $special_arr=drspecialitie::where('doctor_id','=',$doctor_id)->get();
         return view('patient.doctor-profile',["fetch"=>$data,"servicelist_arr"=>$servicelist_arr,"special_arr"=>$special_arr]);
     }
+
+
+
+
 
 } 

@@ -54,7 +54,7 @@
 													
 													<td><?php echo $data->company_name?></td>
 													
-													<td><?php echo $data->company_name?></td>
+													<td><?php echo $data->email?></td>
 													
 													<td>
 													<img src="{{asset('upload/visitingcard/' . $data->visiting_card)}}" height="50px" width="50px"/>

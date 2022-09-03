@@ -16,17 +16,18 @@
 									</div>
 									<div class="col-md-12 col-lg-6 login-right">
 										<div class="login-header">
-											<h3>Forgot Password?</h3>
-											<p class="small text-muted">Enter OTP to Conform your Appointment</p>
+											<h3>Enter OTP to Conform your Appointment</h3>
+											<p class="small text-muted"><a href="">Resend OTP</a></p>
 										</div>
 										
 										<!-- Forgot Password Form -->
-										<form action="https://dreamguys.co.in/demo/doccure/{{url('/login')}}">
+										<form action="{{url('/matchotp')}}" method="post" enctype="multipart/form-data">
+											@csrf
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating">
-												<label class="focus-label">Email</label>
+												<input type="text" name="userotp" class="form-control floating">
+												<label class="focus-label">Enter OTP</label>
 											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Conform OTP</button>
+											<button class="btn btn-primary btn-block btn-lg login-btn" value="send" name="submit" type="submit">Conform OTP</button>
 										</form>
 										<!-- /Forgot Password Form -->
 										

@@ -50,7 +50,10 @@
 												@csrf
 													<div class="form-group">
 														<label>Service </label>
-														<input type="text" class="form-control" name="title" placeholder="Tooth cleaning">
+														<input type="text" class="form-control" name="service" placeholder="Tooth cleaning">
+														@if ($errors->has('service'))
+            												<span class="text-danger">{{ $errors->first('service') }}</span>
+       													@endif
 													</div>
 													<div class="submit-section">
 														<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Service</button>
@@ -103,7 +106,10 @@
 													@csrf
 													<div class="form-group">
 														<label>Specialization</label>
-														<input type="text" class="form-control" name="title" placeholder="Oral and Maxillofacial Surgery">
+														<input type="text" class="form-control" name="specialization" placeholder="Oral and Maxillofacial Surgery">
+														@if ($errors->has('specialization'))
+            												<span class="text-danger">{{ $errors->first('specialization') }}</span>
+       													@endif
 													</div>
 													<div class="submit-section">
 														<button type="submit" class="btn btn-primary submit-btn" name="submit" value="send">Add Specialities</button>

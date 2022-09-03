@@ -40,7 +40,7 @@
 										<div class="clinic-details">
 											<p class="doc-location"><i class="fas fa-map-marker-alt"></i><?php echo $fetch->city?>, <?php echo $fetch->state?> <a href="<?php echo $fetch->google_map?>" target="_blank">Get Directions</a></p>
 											<ul class="clinic-gallery">
-											<?php
+														<?php
 														$hospital_img=$fetch->hospital_img;
 														$hosp_img_arr=explode(",",$hospital_img);
 								

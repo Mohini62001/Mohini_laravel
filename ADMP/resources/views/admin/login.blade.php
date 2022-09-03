@@ -43,10 +43,16 @@
 								<form action="{{url('/adminlogin')}}" method="post" enctype="multipart/form-data">
 									@csrf
 									<div class="form-group">
-										<input class="form-control" type="text" name="email" placeholder="Email" required>
+										<input class="form-control" type="text" name="email" placeholder="Email">
+										@if ($errors->has('email'))
+            								<span class="text-danger">{{ $errors->first('email') }}</span>
+       									@endif
 									</div>
 									<div class="form-group">
-										<input class="form-control" type="text" name="password" placeholder="Password" required>
+										<input class="form-control" type="password" name="password" placeholder="Password">
+										@if ($errors->has('password'))
+            								<span class="text-danger">{{ $errors->first('password') }}</span>
+       									@endif
 									</div>
 									<div class="form-group">
 										<button class="btn btn-primary btn-block" type="submit" name="submit" value="Send">Login</button>

@@ -60,6 +60,9 @@
 															}
 															?>			
 											</select>
+											@if ($errors->has('medicine_name'))
+            									<span class="text-danger">{{ $errors->first('medicine_name') }}</span>
+       										@endif
 										</div>
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
@@ -75,7 +78,10 @@
 											@csrf
 										<div class="form-group">
 											<label>Medicine </label>
-											<input type="text" class="form-control" name="medicine_name" placeholder="">
+											<input type="text" class="form-control" name="medicine_name1" placeholder="">
+											@if ($errors->has('medicine_name1'))
+            									<span class="text-danger">{{ $errors->first('medicine_name1') }}</span>
+       										@endif
 										</div>
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>

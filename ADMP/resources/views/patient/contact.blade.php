@@ -18,27 +18,42 @@
 										<div class="login-header">
 											<h3>Contact</h3>
 										</div>
-										
+										@if(session()->has('success'))
+											<i class="alert alert-success">{{session('success')}}</i>
+										@endif
 										<!-- Forgot Password Form -->
-										<form action="https://dreamguys.co.in/demo/doccure/{{url('/login')}}">
+										<form action="{{url('/contact')}}" method="post" enctype="multipart/form-data">
+											@csrf
 											<div class="form-group form-focus">
-												<input type="text" name="name" class="form-control floating">
+												<input type="text" name="name" class="form-control floating" value="{{old('name')}}">
 												<label class="focus-label">Name</label>
+												@if ($errors->has('name'))
+            										<span class="text-danger">{{ $errors->first('name') }}</span>
+       											@endif
 											</div>
 											<div class="form-group form-focus">
-												<input type="email" name="email" class="form-control floating">
+												<input type="email" name="email" class="form-control floating" value="{{old('email')}}">
 												<label class="focus-label">Email</label>
+												@if ($errors->has('email'))
+            										<span class="text-danger">{{ $errors->first('email') }}</span>
+       											@endif
 											</div>
 											<div class="form-group form-focus">
-												<input type="mobileno" name="mobileno" class="form-control floating">
+												<input type="mobileno" name="mobileno" class="form-control floating" value="{{old('mobileno')}}">
 												<label class="focus-label">Mobile No</label>
+												@if ($errors->has('mobileno'))
+            										<span class="text-danger">{{ $errors->first('mobileno') }}</span>
+       											@endif
 											</div>
 											<div class="form-group form-focus">
 												<textarea name="comment" class="form-control floating" rows="3"></textarea>
 												<label class="focus-label">Comment</label>
+												@if ($errors->has('comment'))
+            										<span class="text-danger">{{ $errors->first('comment') }}</span>
+       											@endif
 											</div>
 											
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit" name="submit" value="Send">Reset Password</button>
+											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit" name="submit" value="Send">Send</button>
 										</form>
 										<!-- /Forgot Password Form -->
 										

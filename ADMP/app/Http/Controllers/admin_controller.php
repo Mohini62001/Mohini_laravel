@@ -94,7 +94,7 @@ class admin_controller extends Controller
 			$file_name=time() . "_img." . $request->file('img')->getClientOriginalExtension();// make file name
 			$file->move('upload/admin',$file_name); //file name move upload in public		
 			$data->img=$file_name; // file name store in db
-            unlink('upload/admin/'.$old_img);
+            //unlink('upload/admin/'.$old_img);
 			
 		}
 
@@ -115,6 +115,11 @@ class admin_controller extends Controller
 
     public function adminlogin(Request $request)
     {
+        $data=$request->validate([
+            
+            'email'=>'required|email',
+            'password'=>'required',
+        ]);
        $data=admin::where("email","=",$request->email)->first();
        if($data)
        {
@@ -122,6 +127,7 @@ class admin_controller extends Controller
            {
                     $request->Session()->put('admin_id',$data->id);
                     $request->Session()->put('email',$data->email);
+                    $request->Session()->put('img',$data->img);
                    return redirect('/admin');
                
            }
@@ -140,6 +146,7 @@ class admin_controller extends Controller
     {
         Session()->pull('admin_id');
         Session()->pull('email');
+        Session()->pull('img');
         return redirect('/admin-login');
     }
 

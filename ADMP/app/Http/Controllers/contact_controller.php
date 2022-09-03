@@ -25,7 +25,7 @@ class contact_controller extends Controller
      */
     public function create()
     {
-        //
+        return view('patient.contact');
     }
 
     /**
@@ -36,7 +36,22 @@ class contact_controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'mobileno'=>'required|numeric|digits:10',
+            'comment'=>'required',
+        ]);
+        $data=new contact;
+
+        $data->name=$request->name;
+        $data->email=$request->email;
+        $data->mobileno=$request->mobileno;
+        $data->comment=$request->comment;
+
+        $res=$data->save();
+
+        return redirect('contact')->with('success','Contact Sent Success');
     }
 
     /**
@@ -81,6 +96,8 @@ class contact_controller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data=contact::find($id);
+        $data->delete();
+        return redirect('admin-contact')->with('success','Deleted successfully');
     }
 }

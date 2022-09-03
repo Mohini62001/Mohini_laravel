@@ -43,12 +43,12 @@ return new class extends Migration
             $table->string('pincode')->after('address');
             $table->string('google_map')->after('pincode');
             $table->string('day')->after('google_map');
-            $table->string('hospital_morning_to')->after('day');
-            $table->string('hospital_morning_from')->after('hospital_morning_to');
-            $table->string('hospital_afternoon_to')->after('hospital_morning_from');
-            $table->string('hospital_afternoon_from')->after('hospital_afternoon_to');
-            $table->string('hospital_evening_to')->after('hospital_afternoon_from');
-            $table->string('hospital_evening_from')->after('hospital_evening_to');
+            $table->string('hospital_morning_to')->default('Null')->after('day');
+            $table->string('hospital_morning_from')->default('Null')->after('hospital_morning_to');
+            $table->string('hospital_afternoon_to')->default('Null')->after('hospital_morning_from');
+            $table->string('hospital_afternoon_from')->default('Null')->after('hospital_afternoon_to');
+            $table->string('hospital_evening_to')->default('Null')->after('hospital_afternoon_from');
+            $table->string('hospital_evening_from')->default('Null')->after('hospital_evening_to');
             $table->string('consulting_fees')->after('hospital_evening_from');
             $table->string('followup_fees')->after('consulting_fees');
             $table->string('notification')->after('followup_fees');

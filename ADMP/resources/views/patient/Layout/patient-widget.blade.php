@@ -1,7 +1,7 @@
 <div class="widget-profile pro-widget-content">
 									<div class="profile-info-widget">
 										<a href="#" class="booking-doc-img">
-											<img src="{{url('upload/patient/<?php echo session('profile_img')?>')}}" alt="User Image">
+											<img src="{{url('upload/patient/'. Session('ptprofile_img'))}}" alt="User Image">
 										</a>
 										<div class="profile-det-info">
 											<h3>Richard Wilson</h3>

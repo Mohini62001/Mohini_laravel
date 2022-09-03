@@ -91,7 +91,7 @@ class stockiest_controller extends Controller
     //////////////////////////////////////company panel//////////////////////////
     public function companystockiestindex()
     {
-        $data=stockiest::all();
+        $data=stockiest::where('company_id','=',Session('company_id'))->get();
         return view('company.stockiest',["stockiest_arr"=>$data]);
     }
 
@@ -105,6 +105,14 @@ class stockiest_controller extends Controller
 
     public function companystockieststore(Request $request)
     {
+        $data=$request->validate([
+            'name'=>'required',
+            'state'=>'required',
+            'city'=>'required',
+            'area'=>'required',
+            'address'=>'required',
+            'pincode'=>'required|numeric|digits:6',
+        ]);
         $data=new stockiest;
         $data->company_id=Session('company_id');
         $data->name=$request->name;
@@ -123,7 +131,7 @@ class stockiest_controller extends Controller
 
     public function managerstockiestindex()
     {
-        $data=stockiest::all();
+        $data=stockiest::where('manager_id','=',Session('manager_id'))->get();
         return view('manager.stockiest',["stockiest_arr"=>$data]);
     }
 
@@ -137,8 +145,16 @@ class stockiest_controller extends Controller
 
     public function managerstockieststore(Request $request)
     {
+        $data=$request->validate([
+            'name'=>'required',
+            'state'=>'required',
+            'city'=>'required',
+            'area'=>'required',
+            'address'=>'required',
+            'pincode'=>'required|numeric|digits:6',
+        ]);
        $data=new stockiest;
-       $data->manager_id=Session('manager_id ');
+       $data->manager_id=Session('manager_id');
        $data->name=$request->name;
        $data->state=$request->state;
        $data->city=$request->city;

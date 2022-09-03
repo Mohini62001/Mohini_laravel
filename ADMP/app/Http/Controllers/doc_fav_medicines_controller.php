@@ -53,6 +53,10 @@ class doc_fav_medicines_controller extends Controller
 
     public function addlistmedicine(Request $request)
     {
+        $data=$request->validate([
+            'medicine_name'=>'required',
+            
+        ]);
         $data=new doc_fav_medicine;
         $data->medicine_name=$request->medicine_name;
         $data->doctor_id=session('doctor_id');
@@ -62,8 +66,12 @@ class doc_fav_medicines_controller extends Controller
 
     public function addmedicine(Request $request)
     {
+        $data=$request->validate([
+            'medicine_name1'=>'required',
+            
+        ]);
         $data=new doc_fav_medicine;
-        $data->medicine_name=$request->medicine_name;
+        $data->medicine_name=$request->medicine_name1;
         $data->doctor_id=session('doctor_id');
         $data->save();
         return redirect('/doctor-my-medicine')->with('succes','Medicine Add Success');
@@ -127,6 +135,10 @@ class doc_fav_medicines_controller extends Controller
    
     public function companyaddmedicine(Request $request)
     {
+        $data=$request->validate([
+            'medicine_name'=>'required',
+            
+        ]);
         $data=new medicine;
         $data->medicine_name=$request->medicine_name;
         $data->company_id=session('company_id');
@@ -150,6 +162,10 @@ class doc_fav_medicines_controller extends Controller
 
     public function companyadddivision(Request $request)
     {
+        $data=$request->validate([
+            'division_name'=>'required',
+            
+        ]);
         $data=new division;
         $data->division_name=$request->division_name;
         $data->company_id=session('company_id');
@@ -175,6 +191,10 @@ class doc_fav_medicines_controller extends Controller
    
     public function manageraddmedicine(Request $request)
     {
+        $data=$request->validate([
+            'medicine_name'=>'required',
+            
+        ]);
         $data=new medicine;
         $data->medicine_name=$request->medicine_name;
         $data->created_by=Session('manager_id');

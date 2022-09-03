@@ -25,6 +25,12 @@ Route::get('/', function () {
 
 ///////////////////////Frontend////////////////////////
 
+Route::get('/signup',[customer_controller::class,'create']);
+Route::post('/signup',[customer_controller::class,'store']);
+
+Route::get('/customerlogin',[customer_controller::class,'customercreate']);
+Route::post('/customerlogin',[customer_controller::class,'customerlogin']);
+
 Route::view('/index','Frontend.index');
 Route::view('/error','Frontend.404');
 Route::view('/about','Frontend.about');

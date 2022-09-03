@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::table('stockiests', function (Blueprint $table) {
             $table->unsignedBigInteger('company_id');
-			$table->foreign('company_id')->references('id')->on('companies')->after('id');
+			$table->foreign('company_id')->references('id')->on('companies')->default('Null')->after('id');
             $table->unsignedBigInteger('manager_id');
-			$table->foreign('manager_id')->references('id')->on('managers')->after('company_id');
+			$table->foreign('manager_id')->references('id')->on('managers')->default('Null')->after('company_id');
             $table->string('name')->after('manager_id');
             $table->string('state')->after('name');
             $table->string('city')->after('state');

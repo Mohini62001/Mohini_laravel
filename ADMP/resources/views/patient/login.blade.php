@@ -101,12 +101,18 @@
 										<form action="{{url('/patientlogin')}}" method="post" enctype="multipart/form-data">
 											@csrf
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating" name="email" required>
+												<input type="email" class="form-control floating" name="email">
 												<label class="focus-label">Email</label>
+												@if ($errors->has('email'))
+            										<span class="text-danger">{{ $errors->first('email') }}</span>
+       											@endif
 											</div>
 											<div class="form-group form-focus">
-												<input type="password" class="form-control floating" name="password" required>
+												<input type="password" class="form-control floating" name="password">
 												<label class="focus-label">Password</label>
+												@if ($errors->has('password'))
+            										<span class="text-danger">{{ $errors->first('password') }}</span>
+       											@endif
 											</div>
 											<div class="text-right">
 												<a class="forgot-link" href="{{url('/forgot-password')}}">Forgot Password ?</a>

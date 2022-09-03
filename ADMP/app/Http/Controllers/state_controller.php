@@ -43,6 +43,9 @@ class state_controller extends Controller
     ///state
     public function addstate(Request $request)
     {
+        $data=$request->validate([
+            'state_name'=>'required', 
+        ]);
         $data=new state;
         $data->state_name=$request->state_name;
 
@@ -53,8 +56,12 @@ class state_controller extends Controller
     ////city
     public function addcity(Request $request)
     {
+        $data=$request->validate([
+            'state'=>'required',
+            'city_name'=>'required',
+            ]);
         $data=new citie;
-        $data->sid=$request->sid;
+        $data->sid=$request->state;
         $data->city_name=$request->city_name;
 
         $data->save();
@@ -64,8 +71,12 @@ class state_controller extends Controller
     ////area
     public function addarea(Request $request)
     {
+        $data=$request->validate([
+            'city'=>'required',
+            'area_name'=>'required',
+         ]);
         $data=new area;
-        $data->city_id=$request->city_id;
+        $data->city_id=$request->city;
         $data->area_name=$request->area_name;
 
         $data->save();

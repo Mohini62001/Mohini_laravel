@@ -42,8 +42,10 @@
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Name</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control" name="name">
-														
+														<input type="text" class="form-control" name="name" value="{{old('name')}}">
+														@if ($errors->has('name'))
+            												<span class="text-danger">{{ $errors->first('name') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
@@ -61,7 +63,9 @@
 															}
 															?>
 														</select>
-														
+														@if ($errors->has('state'))
+            												<span class="text-danger">{{ $errors->first('state') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
@@ -79,7 +83,9 @@
 															}
 															?>
 														</select>
-														
+														@if ($errors->has('city'))
+            												<span class="text-danger">{{ $errors->first('city') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
@@ -97,7 +103,9 @@
 															}
 															?>
 														</select>
-														
+														@if ($errors->has('area'))
+            												<span class="text-danger">{{ $errors->first('area') }}</span>
+       													@endif
 													</div>
 												</div>
 											</div>
@@ -107,15 +115,19 @@
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Address</label>
 													<div class="col-lg-9">
-														<textarea name="address" rows="4"  class="form-control"></textarea>
-														
+														<textarea name="address" rows="4"  class="form-control"value="{{old('address')}}" ></textarea>
+														@if ($errors->has('address'))
+            												<span class="text-danger">{{ $errors->first('address') }}</span>
+       													@endif
 													</div>
 												</div>
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Postal Code</label>
 													<div class="col-lg-9">
-														<input type="text" class="form-control"  name="pincode">
-														
+														<input type="text" class="form-control"  name="pincode" value="{{old('pincode')}}">
+														@if ($errors->has('pincode'))
+            												<span class="text-danger">{{ $errors->first('pincode') }}</span>
+       													@endif
 													</div>
 												</div>
 												
@@ -124,6 +136,7 @@
 										<div class="text-right">
 											<button type="submit" class="btn btn-primary" name="submit" value="send">Submit</button>
 										</div>
+									</div>
 									</form>
 								</div>
 							</div>

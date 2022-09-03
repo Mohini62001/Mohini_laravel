@@ -161,6 +161,11 @@ class companie_controller extends Controller
 
     public function companylogin(Request $request)
     {
+        $data=$request->validate([
+            
+            'email'=>'required|email',
+            'password'=>'required|min:6',
+        ]);
         $data=companie::where("email","=","$request->email")->first();
         if($data)
         {
@@ -168,6 +173,7 @@ class companie_controller extends Controller
             {
                 $request->Session()->put('company_id',$data->id);
                 $request->Session()->put('email', $data->email);
+                $request->Session()->put('cprofile_img', $data->cprofile_img);
                 return redirect('company-dashboard');
             }
             else
@@ -185,6 +191,7 @@ class companie_controller extends Controller
     {
         Session()->pull('company_id');
         Session()->pull('email');
+        Session()->pull('cprofile_img');
         return redirect('/company');
     }
 
