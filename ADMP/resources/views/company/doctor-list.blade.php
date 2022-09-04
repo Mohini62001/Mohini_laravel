@@ -62,7 +62,7 @@
 												<td class="text-right">
 														<div class="actions">
 														<a class="btn btn-sm bg-success-light"  href="{{url('company_fav_doc/'.$data->id)}}">
-																<i class="fe fe-pencil"></i> Add to Fav.
+																<i class="fe fe-bookmark"></i> Add to Fav.
 															</a>
 															<a  href="{{url('admin-add-doctor/'. $data->id)}}" class="btn btn-sm bg-danger-light">
 																<i class="fe fe-trash"></i> Delete

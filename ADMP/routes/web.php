@@ -133,7 +133,8 @@ Route::group(['middleware'=>['doctorafterlogin']], function(){
 Route::get('/doctor-change-password', function (){return view('doctor.change-password');});
 Route::get('/doctor-forgot-password', function (){return view('doctor.forgot-password');});
 
-Route::get('/doctor-dashboard', function (){return view('doctor.doctor-dashboard');});
+//Route::get('/doctor-dashboard', function (){return view('doctor.doctor-dashboard');});
+Route::get('/doctor-dashboard',[appointment_controller::class,'index']);
 Route::get('/editdoctor',[doctor_controller::class,'editdoctor']);
 Route::post('/editdoctor/{doctor_id}',[doctor_controller::class,'updatedoctor']);
 //Route::get('/doctor-profile-settings', function (){return view('doctor.doctor-profile-settings');});

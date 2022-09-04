@@ -18,7 +18,8 @@ class appointment_controller extends Controller
      */
     public function index()
     {
-        //
+        $data=appointments::join('patients','patients.id','=','appointments.patient_id')->where('doc_id','=',Session('doctor_id'))->get();
+        return view('doctor.doctor-dashboard',["appointments_arr"=>$data]);
     }
 
     /**

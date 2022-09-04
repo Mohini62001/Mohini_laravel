@@ -18,7 +18,7 @@ class manager_controller extends Controller
      */
     public function adminmanagerindex()
     {
-        $data=manager::join('companies','managers.company_id','=','companies.id')->get();
+        $data=manager::all();
 
         return view('admin.manager',["comapany_arr"=>$data]);
     }

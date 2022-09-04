@@ -25,7 +25,7 @@ class doctor_controller extends Controller
     //////////////////////////////////////////admin panel////////////////////////////////////////////////
     public function index()
     {
-        $data=doctor::all();
+        $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();
 		return view('admin.doctor-list',["doctor_arr"=>$data]);
     }
 
@@ -577,11 +577,12 @@ public function companydoctorindex()
     return view('company.doctor-list',["companydoctor_arr"=>$data]);
 }
 
-public function company_fav_doc(Request $request)
+public function company_fav_doc(Request $request,$id)
 {
     $data=new company_fav_doc;
     $data->company_id=Session("company_id");
-    $data->doctor_id=
+    $data=doctor::
+    $data->doctor_id=$request->id;
 
     $res=$data->save();
     return redirect('/company-doctor');

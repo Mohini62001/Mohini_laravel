@@ -18,7 +18,7 @@ class mr_controller extends Controller
      */
     public function index()
     {
-        $data=mr::all();
+        $data=mr::join('managers','managers.id','=','mrs.manager_id')->join('companies','companies.id','=','mrs.company_id')->get();
         //$data=mr::join2('managers','companies','mrs.manager_id','=','managers.id','mrs.company_id','=','companies.id')->get();
         return view('admin.mr',["mr_arr"=>$data]);
     }

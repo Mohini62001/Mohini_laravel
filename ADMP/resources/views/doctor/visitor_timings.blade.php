@@ -73,7 +73,7 @@
 														</td>
 														<td>
 															<h2 class="table-avatar">
-																<a href="{{url('/patient-profile')}}" class="badge bg-success p-2"> <?php echo $data->start_time?> to <?php echo $data->end_time?> </a>
+																<a href="" class="badge bg-success p-2"> <?php echo $data->start_time?> to <?php echo $data->end_time?> </a>
 															</h2>
 														</td>
 														<td class="text-center">

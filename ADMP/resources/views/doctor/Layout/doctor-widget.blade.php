@@ -25,7 +25,7 @@
 											<li class="">
 												<a href="{{url('/editdoctor')}}">
 													<i class="fas fa-user-cog"></i>
-													<span>Hospital Profile</span>
+													<span>Doctor Profile</span>
 												</a>
 											</li>
 

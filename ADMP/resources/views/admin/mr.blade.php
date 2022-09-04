@@ -53,9 +53,9 @@
 												<tr>
 													<td><?php echo $data->id?></td>
 
-													<td><?php echo $data->manager_id?></td>
+													<td><?php echo $data->Manager_name?></td>
 
-													<td><?php echo $data->company_id?></td>
+													<td><?php echo $data->company_name?></td>
 
 													<td><img src="{{asset('upload/mr/' . $data->mrprofile_img)}}" height="50px" width="50px"/></td>
 
