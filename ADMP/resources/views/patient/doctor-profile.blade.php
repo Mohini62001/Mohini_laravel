@@ -69,7 +69,7 @@
 										</ul>
 									</div>
 									<div class="doctor-action">
-										<a href="javascript:void(0)" onclick="" class="btn btn-white fav-btn">
+										<a href="{{url('patient_fav_doc/'.$fetch->id)}}" onclick="" class="btn btn-white fav-btn">
 											<i class="far fa-bookmark"></i>
 										</a>
 										<a href="{{url('/chat')}}" class="btn btn-white msg-btn">

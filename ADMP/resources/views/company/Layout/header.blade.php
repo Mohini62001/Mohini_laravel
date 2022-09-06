@@ -169,6 +169,7 @@
 					
 					<!-- User Menu -->
 					<li class="nav-item dropdown has-arrow">
+						
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 							<span class="user-img"><img class="rounded-circle" src="{{url('upload/companyprofile/'. Session('cprofile_img'))}}" width="31" alt="Ryan Taylor"></span>
 						</a>
@@ -220,6 +221,9 @@
 								<ul style="display: none;">
 									<li>
 											<a href="{{url('/company-doctor')}}"><i class="fe fe-user"></i> <span>Manage Doctors</span></a>
+									</li>
+									<li>
+											<a href="{{url('/company-fav-doctor')}}"><i class="fe fe-user"></i> <span>My Doctors</span></a>
 									</li>
 									<li class="submenu">
 										<a href="javascript:void(0);"><i class="fe fe-calendar"></i> <span>Appointment</span> <span class="menu-arrow"></span></a>

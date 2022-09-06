@@ -133,7 +133,7 @@ class doctor_controller extends Controller
         {
             foreach($request->file('hospital_img') as $file)
             {
-                $name = time().rand(100000,99999).'hospital_img.'.$file->extension();
+                $name = time().rand(111111,999999).'hospital_img.'.$file->extension();
                 $file->move('upload/hospital/',$name);
                 $filesarr[] = $name;       
             }
@@ -332,6 +332,8 @@ public function login(Request $request)
                 {
                     $request->Session()->put('doctor_id',$data->id);
                     $request->Session()->put('email',$data->email);
+                    $drname=$data->first_name." ".$data->last_name; 
+                    $request->Session()->put('drname',$drname);
                     $request->Session()->put('profile_img',$data->profile_img);
                     return redirect('/doctor-dashboard');
 
@@ -358,6 +360,7 @@ public function login(Request $request)
         Session()->pull('doctor_id');
         Session()->pull('email');
         Session()->pull('profile_img');
+        Session()->pull('drname');
         return redirect('/doctor');
     }
 
@@ -454,7 +457,7 @@ public function login(Request $request)
         {
             foreach($request->file('hospital_img') as $file)
             {
-                $name = time().rand(1000,9999).'hospital_img.'.$file->extension();
+                $name = time().rand(111111,999999).'hospital_img.'.$file->extension();
                 $file->move('upload/hospital/',$name);
                 $filesarr[] = $name;
                 
@@ -573,20 +576,12 @@ public function login(Request $request)
 
 public function companydoctorindex()
 {
-    $data=doctor::all();
-    return view('company.doctor-list',["companydoctor_arr"=>$data]);
+    $alldoctor_arr=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();
+    $favdoctor_arr=company_fav_doc::where('company_id','=',Session('company_id'))->get();
+    return view('company.doctor-list',["alldoctor_arr"=>$alldoctor_arr,"favdoctor_arr"=>$favdoctor_arr]);
 }
 
-public function company_fav_doc(Request $request,$id)
-{
-    $data=new company_fav_doc;
-    $data->company_id=Session("company_id");
-    $data=doctor::
-    $data->doctor_id=$request->id;
 
-    $res=$data->save();
-    return redirect('/company-doctor');
-}
 
 
 /*--public function visitor_slots(Request $request)//visitor slots add
@@ -612,14 +607,14 @@ public function company_fav_doc(Request $request,$id)
 
 public function managerdoctorindex()
 {
-    $data=doctor::all();
+    $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();
     return view('manager.doctor-list',["companydoctor_arr"=>$data]);
 }
 
 ////////////////////////Patient Panel//////////////////////////////////////////////////////////
     public function doctorlist()
     {
-        $data=doctor::all();
+        $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();
 		return view('patient.search',["doctorlist_arr"=>$data]);
     }
 

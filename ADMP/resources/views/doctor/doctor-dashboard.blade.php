@@ -104,9 +104,7 @@
 											<li class="nav-item">
 												<a class="nav-link active" href="#today-appointments" data-toggle="tab">Today</a>
 											</li>
-											<li class="nav-item">
-												<a class="nav-link" href="#upcoming-appointments" data-toggle="tab">Upcoming</a>
-											</li>
+											
 											 
 										</ul>
 										<!-- /Appointment Tab -->
@@ -114,7 +112,7 @@
 										<div class="tab-content">
 										
 											<!-- Upcoming Appointment Tab -->
-											<div class="tab-pane show active" id="upcoming-appointments">
+											<div class="tab-pane show active" id="today-appointments">
 												<div class="card card-table mb-0">
 													<div class="card-body">
 														<div class="table-responsive">
@@ -151,12 +149,10 @@
 																					<i class="far fa-eye"></i> View
 																				</a>
 																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
+																				<a href="{{url('add-prescription/'.$data->id)}}" class="btn btn-sm bg-success-light">
+																					<i class="fas fa-plus"></i> Add prescription
 																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
+																				
 																			</div>
 																		</td>
 																	</tr>

@@ -17,10 +17,14 @@ use App\Http\Controllers\drspecialitie_controller;
 use App\Http\Controllers\patient_controller;
 use App\Http\Controllers\patient_slots_controller;
 use App\Http\Controllers\doc_fav_medicines_controller;
+use App\Http\Controllers\company_fav_doc_controller;
 use App\Http\Controllers\contact_controller;
 use App\Http\Controllers\book_by_otp_controller;
 use App\Http\Controllers\appointment_controller;
 use App\Http\Controllers\company_slots_controller;
+use App\Http\Controllers\diagnoses_controller;
+use App\Http\Controllers\prescriptions_controller;
+use App\Http\Controllers\patient_favs_controller;
 
 
 /*
@@ -62,6 +66,7 @@ Route::get('/favourites', function (){return view('patient.favourites');});
 
 //Route::get('/doctor-profile', function (){return view('patient.doctor-profile');});
 Route::get('/doctor-profile/{id}',[doctor_controller::class,'doctorview']);
+Route::get('/patient_fav_doc/{id}',[patient_favs_controller::class,'patient_fav_doc']);
 
 //Route::get('/booking', function (){return view('patient.booking');});
 Route::get('/booking/{id}',[patient_slots_controller::class,'showpatient']);
@@ -132,6 +137,11 @@ Route::group(['middleware'=>['doctorafterlogin']], function(){
 
 Route::get('/doctor-change-password', function (){return view('doctor.change-password');});
 Route::get('/doctor-forgot-password', function (){return view('doctor.forgot-password');});
+
+Route::get('/add-prescription/{id}',[diagnoses_controller::class,'create']);//visitor slots update
+Route::post('/add-prescription/{id}',[diagnoses_controller::class,'diagnosis_store']);//diagnosis_store 
+
+Route::post('/prescription_store/{id}',[diagnoses_controller::class,'prescription_store']);//diagnosis_store 
 
 //Route::get('/doctor-dashboard', function (){return view('doctor.doctor-dashboard');});
 Route::get('/doctor-dashboard',[appointment_controller::class,'index']);
@@ -305,7 +315,9 @@ Route::group(['middleware'=>['afterlogincompany']], function(){
     Route::post('/company-profile/{id}',[companie_controller::class,'companyupdate']);
     
     Route::get('/company-doctor',[doctor_controller::class,'companydoctorindex']);
-    Route::post('/company-doctor',[doctor_controller::class,'company_fav_doc']);
+    Route::get('/company_fav_doc/{id}',[company_fav_doc_controller::class,'company_fav_doc']);
+    Route::get('/company-fav-doctor',[company_fav_doc_controller::class,'companyfavdoctor']);
+    
     Route::get('/company-doctor-appointment', function (){return view('company.doctor-appointment');});
     Route::get('/company-doctor-cancel-appointment', function (){return view('company.doctor-cancel-appointment');});
     
