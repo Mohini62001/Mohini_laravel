@@ -62,7 +62,9 @@ Route::get('/index', function (){return view('patient.index');});
 Route::get('/patient-dashboard', function (){return view('patient.patient-dashboard');});
 
 //Route::get('/search', function (){return view('patient.search');});
-Route::get('/favourites', function (){return view('patient.favourites');});
+//Route::get('/favourites', function (){return view('patient.favourites');});
+
+Route::get('/favourites',[patient_favs_controller::class,'patientfavdoctor']);
 
 //Route::get('/doctor-profile', function (){return view('patient.doctor-profile');});
 Route::get('/doctor-profile/{id}',[doctor_controller::class,'doctorview']);

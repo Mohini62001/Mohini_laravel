@@ -45,9 +45,27 @@
 											<div class="col-12 col-md-12">
 												<div class="form-group">
 													<div class="change-avatar">
+														
+
+													<?php
+														$ptprofile_img=$fetch->ptprofile_img;
+														if($ptprofile_img=="null")
+														{
+													?>
 														<div class="profile-img">
-														<img src="{{asset('upload/patient/'.$fetch->ptprofile_img)}}" height="50px" width="50px"> 
-													</div>
+															<img src="{{url('Frontend/assets/img/patients/user.png')}}" height="50px" width="50px">
+														</div>
+													<?php
+														}
+														else
+														{
+													?>
+														<div class="profile-img">
+															<img src="{{asset('upload/patient/'.$fetch->ptprofile_img)}}" height="50px" width="50px">
+														</div>
+													<?php
+														}
+													?>
 														<div class="upload-img">
 															<div class="change-photo-btn">
 																<span><i class="fa fa-upload"></i> Upload Photo</span>

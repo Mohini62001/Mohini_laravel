@@ -12,6 +12,7 @@ use App\Models\service;
 use App\Models\drspecialitie;
 use App\Models\visitor_slots;
 use App\Models\company_fav_doc;
+use App\Models\patient_favs;
 use Hash;
 use session;
 
@@ -624,7 +625,8 @@ public function managerdoctorindex()
         $doctor_id=$data->id;
         $servicelist_arr=service::where('doctor_id','=',$doctor_id)->get();
         $special_arr=drspecialitie::where('doctor_id','=',$doctor_id)->get();
-        return view('patient.doctor-profile',["fetch"=>$data,"servicelist_arr"=>$servicelist_arr,"special_arr"=>$special_arr]);
+        $fav_doctor=patient_favs::where('doctor_id','=',$doctor_id)->where('patient_id','=',Session('patient_id'))->first();
+        return view('patient.doctor-profile',["fetch"=>$data,"servicelist_arr"=>$servicelist_arr,"special_arr"=>$special_arr,"fav_doctor"=>$fav_doctor]);
     }
 
 

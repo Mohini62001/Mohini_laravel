@@ -24,6 +24,7 @@
 											@csrf
 											<div class="form-group form-focus">
 												<input type="text" class="form-control floating" value="{{old('name')}}" name="name">
+												
 												<label class="focus-label">Name</label>
 												@if ($errors->has('name'))
             										<span class="text-danger">{{ $errors->first('name') }}</span>

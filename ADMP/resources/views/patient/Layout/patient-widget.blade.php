@@ -1,13 +1,21 @@
 <div class="widget-profile pro-widget-content">
 									<div class="profile-info-widget">
-										<a href="#" class="booking-doc-img">
-											<img src="{{url('upload/patient/'. Session('ptprofile_img'))}}" alt="User Image">
-										</a>
+										
+												@if(Session('ptprofile_img'))
+												<a href="#" class="booking-doc-img">
+													<img src="{{url('upload/patient/'. Session('ptprofile_img'))}}" alt="User Image">
+												</a>
+												@else
+												<a href="#" class="booking-doc-img">
+													<img src="{{url('Frontend/assets/img/patients/user.png')}}" alt="User Image">
+												</a>
+												@endif
+										
 										<div class="profile-det-info">
-											<h3>Richard Wilson</h3>
+											<h3>{{Session('name')}}</h3>
 											<div class="patient-details">
-												<h5><i class="fas fa-birthday-cake"></i> 24 Jul 1983, 38 years</h5>
-												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Newyork, USA</h5>
+										<!--		<h5><i class="fas fa-birthday-cake"></i> 24 Jul 1983, 38 years</h5>
+												<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Newyork, USA</h5>-->
 											</div>
 										</div>
 									</div>

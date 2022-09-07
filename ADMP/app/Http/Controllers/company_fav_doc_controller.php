@@ -14,11 +14,11 @@ class company_fav_doc_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function companyfavdoctor()
-{
-    $data=company_fav_doc::join('doctors','doctors.id','=','company_fav_docs.doctor_id')->join('specialists','specialists.id','=','doctors.specialist_id')->get();
-    return view('company.fav-doctor',["companyfavdoctor_arr"=>$data]);
-}
+    public function companyfavdoctor()  
+    {
+        $data=company_fav_doc::join('doctors','doctors.id','=','company_fav_docs.doctor_id')->join('specialists','specialists.id','=','doctors.specialist_id')->get();
+        return view('company.fav-doctor',["companyfavdoctor_arr"=>$data]);
+    }
 
     /**
      * Show the form for creating a new resource.

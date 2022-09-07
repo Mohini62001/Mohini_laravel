@@ -69,9 +69,16 @@
 										</ul>
 									</div>
 									<div class="doctor-action">
-										<a href="{{url('patient_fav_doc/'.$fetch->id)}}" onclick="" class="btn btn-white fav-btn">
-											<i class="far fa-bookmark"></i>
-										</a>
+										@if($fav_doctor)
+										
+											<a href="#" onclick="" class="btn btn-success fav-btn">
+												<i class="far fa-bookmark"></i>
+											</a>
+										@else
+											<a href="{{url('patient_fav_doc/'.$fetch->id)}}" onclick="" class="btn btn-white fav-btn">
+												<i class="far fa-bookmark"></i>
+											</a>
+										@endif
 										<a href="{{url('/chat')}}" class="btn btn-white msg-btn">
 											<i class="far fa-comment-alt"></i>
 										</a>
@@ -83,7 +90,7 @@
 										</a>
 									</div>
 									<div class="clinic-booking">
-										<a class="apt-btn" href="{{url('/booking')}}">Book Appointment</a>
+										<a class="apt-btn" href="{{url('/booking/'.$fetch->id)}}">Book Appointment</a>
 									</div>
 								</div>
 							</div>

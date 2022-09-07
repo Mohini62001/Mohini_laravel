@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 06, 2022 at 06:44 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Sep 07, 2022 at 10:17 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -163,8 +163,7 @@ CREATE TABLE `company_fav_docs` (
 --
 
 INSERT INTO `company_fav_docs` (`id`, `created_at`, `updated_at`, `doctor_id`, `company_id`) VALUES
-(5, '2022-09-06 06:22:59', '2022-09-06 06:22:59', 2, 1),
-(6, '2022-09-06 09:29:16', '2022-09-06 09:29:16', 4, 1);
+(7, '2022-09-07 14:01:29', '2022-09-07 14:01:29', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -554,7 +553,9 @@ CREATE TABLE `patients` (
 INSERT INTO `patients` (`id`, `name`, `mobileno`, `email`, `password`, `gender`, `ptprofile_img`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Vishv Unjiya', '2514789630', 'vishvunjiya3058822@gmail.com', '$2y$10$CndUF4fiquoYMKic4/mZZOsj21/GJELPmEuVNB3YMbJ8Y54U5CNe.', 'Male', '1662191213_ptprofile_img.jpg', 'Unblock', '2022-09-03 13:49:24', '2022-09-03 14:46:53'),
 (2, 'Reena Valekar', 'null', 'riyavalekar19@gmail.com', '$2y$10$5v6NfBYh61vch2ieIy0QOe.Ih2ilsuBol1poYDKmwLNxe/i5F0OsC', 'Female', '1662207863_ptprofile_img.jpg', 'Unblock', '2022-09-03 19:18:54', '2022-09-03 19:24:23'),
-(3, 'Anchal Maurya', '8790654312', 'mohinimaurya062@gmail.com', '$2y$10$AVd3Kwe3uqnejDv2NebHluZe9hbf0WUF8ZU6LMs26nAkX0k55bbum', 'Female', '1662299753_ptprofile_img.jpg', 'Unblock', '2022-09-04 08:22:51', '2022-09-04 08:26:59');
+(3, 'Anchal Maurya', '8790654312', 'mohinimaurya062@gmail.com', '$2y$10$AVd3Kwe3uqnejDv2NebHluZe9hbf0WUF8ZU6LMs26nAkX0k55bbum', 'Female', '1662299753_ptprofile_img.jpg', 'Unblock', '2022-09-04 08:22:51', '2022-09-04 08:26:59'),
+(5, 'Mishti Maurya', 'null', 'mohinimaurya026@gmail.com', '$2y$10$8nx92y1lJKaFpAOjlnXFh.WYrTw.ZhAZmkV.u6lAmYJbJjPJqtOwy', 'null', 'null', 'Unblock', '2022-09-07 11:57:37', '2022-09-07 11:57:37'),
+(6, 'Keerti Maurya', 'null', 'mohini.maurya6201@gmail.com', '$2y$10$Ex64/Krc8bUxQfmoq7Gxpej7fHw2p1uHB7fxgVVt7z1WTtrEsJG06', 'null', 'null', 'Unblock', '2022-09-07 13:07:57', '2022-09-07 13:07:57');
 
 -- --------------------------------------------------------
 
@@ -576,7 +577,10 @@ CREATE TABLE `patient_favs` (
 
 INSERT INTO `patient_favs` (`id`, `created_at`, `updated_at`, `doctor_id`, `patient_id`) VALUES
 (1, '2022-09-06 09:08:47', '2022-09-06 09:08:47', 1, 1),
-(2, '2022-09-06 09:10:23', '2022-09-06 09:10:23', 4, 3);
+(2, '2022-09-06 09:10:23', '2022-09-06 09:10:23', 4, 3),
+(3, '2022-09-07 11:26:00', '2022-09-07 11:26:00', 3, 2),
+(4, '2022-09-07 12:15:53', '2022-09-07 12:15:53', 1, 5),
+(5, '2022-09-07 14:06:30', '2022-09-07 14:06:30', 2, 6);
 
 -- --------------------------------------------------------
 
@@ -1080,7 +1084,7 @@ ALTER TABLE `companies`
 -- AUTO_INCREMENT for table `company_fav_docs`
 --
 ALTER TABLE `company_fav_docs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `company_slots`
@@ -1158,13 +1162,13 @@ ALTER TABLE `mrs`
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `patient_favs`
 --
 ALTER TABLE `patient_favs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `patient_slots`

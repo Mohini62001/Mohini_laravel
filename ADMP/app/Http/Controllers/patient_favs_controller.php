@@ -14,9 +14,10 @@ class patient_favs_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function patientfavdoctor()  
     {
-        //
+        $data=patient_favs::join('doctors','doctors.id','=','patient_favs.doctor_id')->join('cities','cities.id','=','doctors.city')->join('states','states.id','=','doctors.state')->where('patient_id','=',Session('patient_id'))->get();
+        return view('patient.favourites',["patientfavdoctor_arr"=>$data]);
     }
 
     /**
