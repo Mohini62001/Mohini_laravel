@@ -28,60 +28,118 @@
 					</div>
 					<!-- /Page Header -->
 					
+					<div class="content">
+				<div class="container-fluid">
+
 					<div class="row">
-						<div class="col-sm-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="table-responsive">
-										<table id="table" class=" table table-hover table-center mb-0">
-											<thead>
-												<tr>
-													<th>Doctor ID</th>
-													<th>Profile Img</th>
-													<th>Specialist</th>
-													<th>First Name</th>
-													<th>Last Name</th>
-												   
-													
-													
-													
-												</tr>
-											</thead>
-											<tbody>
-												<?php
-													foreach($companyfavdoctor_arr as $data) 
-													{
+						
+						<div class="col-md-12 col-lg-12 col-xl-12">
+						    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+							<br>
+							<div class="myclass row row-grid">
+							
+							@if(!$companyfavdoctor_arr->isEmpty())
+							@foreach($companyfavdoctor_arr as $data)
+
+								<div class="col-md-6 col-lg-4 col-xl-3">
+									<div class="card widget-profile pat-widget-profile">
+										<div class="card-body">
+											<div class="pro-widget-content">
+												<div class="profile-info-widget">
+													<a href="{{url('company-doctor-profile/'.$data->doctor_id)}}" class="booking-doc-img">
+														<img class="rounded-circle" src="{{asset('upload/doctor/'.$data->profile_img)}}" style="margin-left:30px;height:120px;width:120px;" alt="User Image">
+													</a>
+													<div class="profile-det-info">
+														<br><h5 style="margin-left:25px"><a href="">Dr. <?php echo $data->first_name?> <?php echo $data->last_name?></a></h5>
 														
-												?>
-													<tr>
-													<td><?php echo $data->doctor_id?></td>
-													<td><img src="{{asset('upload/doctor/' . $data->profile_img)}}" height="50px" width="50px"/></td>
-													<td><?php echo $data->name?></td>
-													<td><?php echo $data->first_name?></td>
-													<td><?php echo $data->last_name?></td>
-													
-													
-													</tr>
-												<?php
-												}
-												?>
-												
+														<div class="patient-details">
+															<h6 style="margin-left:50px"><b>Doctor ID :</b> <?php echo $data->doctor_id?></h6>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="patient-info ">
+											<br><ul>
+											@php
+											$current=date('d-m-Y');
+											$timestamp = strtotime($current);
+											$day=date('l',$timestamp);
 											
-													
-													
-											</tbody>
-										</table>
+											@endphp	
+											@if(!$slot_company_arr->isEmpty())
+											<form action="{{url('/company_app_book')}}" method="post" enctype="multipart/form-data">
+												@csrf
+											@foreach($slot_company_arr as $slots)
+												@if($slots->doc_id==$data->doctor_id && $slots->day==$day)
+												<div class="radio">
+													<label><input type="radio" value="<?php echo $slots->id?>" name="slot_id" checked /> <?php echo $slots->start_time?> to <?php echo $slots->end_time?></label>
+													<input type="hidden" name="doctor_id" value="<?php echo $slots->doc_id?>">
+												</div>
+											@endif	
+											@endforeach
+											<td class="text-center">
+											<div class="table-action">
+												<button type="submit" value="send" name="submit" class="btn btn-sm bg-info-light">
+													<i class="far fa-save"></i> Save
+												</button>
+											</div>
+											</td>
+											</form>
+											@endif
+
+												</ul>
+											</div>
+											
+										</div>
 									</div>
 								</div>
+								@endforeach
+								@else
+									<p class="text-danger mt-2">No Favourite Doctors Available</p>
+								@endif
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 							</div>
-						</div>			
+
+						</div>
 					</div>
+
+				</div>
+
+			</div>
 					
 				</div>			
 			</div>
 			<!-- /Page Wrapper -->
 		
         </div>
+		<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".myclass .card").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 		<!-- /Main Wrapper -->
 		
 		<!-- jQuery -->

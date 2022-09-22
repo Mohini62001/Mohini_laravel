@@ -26,6 +26,9 @@
 											<div class="form-group form-focus">
 												<input type="text" name="userotp" class="form-control floating">
 												<label class="focus-label">Enter OTP</label>
+												@if ($errors->has('userotp'))
+            										<span class="text-danger">{{ $errors->first('userotp') }}</span>
+       											@endif
 											</div>
 											<button class="btn btn-primary btn-block btn-lg login-btn" value="send" name="submit" type="submit">Conform OTP</button>
 										</form>

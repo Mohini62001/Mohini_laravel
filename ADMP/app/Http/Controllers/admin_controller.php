@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\admin;
+use App\Models\doctor;
+use App\Models\patient;
+use App\Models\companie;
+use App\Models\appointments;
+use App\Models\manager;
+use App\Models\mr;
 use Hash;
 use Session;
+use Alert;
+use Exception;
 
 class admin_controller extends Controller
 {
@@ -99,7 +107,8 @@ class admin_controller extends Controller
 		}
 
         $data->save();
-		return redirect('/admin-profile')->with('success','Update Success');
+        Alert::success('Congrats', 'You\'ve Successfully Update You\'re Profile');
+		return redirect('/admin-profile');
     }
     
     public function login(Request $request)
@@ -127,25 +136,60 @@ class admin_controller extends Controller
            {
                     $request->Session()->put('admin_id',$data->id);
                     $request->Session()->put('email',$data->email);
+                    $request->Session()->put('name',$data->name);
                     $request->Session()->put('img',$data->img);
+                    Alert::success('Congrats', 'You\'ve Successfully Login');
                    return redirect('/admin');
                
            }
            else
            {
-            return redirect('/login')->with('fail','Login Failed due to Wrong Password');
+            Alert::error('Fail', 'Login Failed due to Wrong email');
+            return redirect('/admin-login');//->with('fail','Login Failed due to Wrong Password');
            }
        }
        else
        {
-        return redirect('/login')->with('fail','Login Failed due to Wrong email');
+        Alert::error('Fail', 'Login Failed due to Wrong email');
+        return redirect('/admin-login');//->with('fail','Login Failed due to Wrong email');
        }
     }
+
+///////////////change password
+public function adminchangepassword(Request $request)
+{
+    $data=$request->validate([
+        'oldpassword' => 'required',
+        'newpassword' => 'required|string|min:6',
+        'confirm_password' => 'required|same:newpassword|min:6',
+    
+    ]);
+    $data=admin::where("id","=",Session('admin_id'))->first();
+    if(Hash::check($request->oldpassword, $data->password))
+       {
+        $data->password=Hash::make($request->newpassword);
+        $data->dpass=$request->newpassword;
+        $data->update();
+        Alert::success('Done', 'You\'re Password Change Success');
+        return back();
+       }
+       else
+       {
+        Alert::error('fail', 'Please Enter Correct Old Password');
+        return back();
+       }
+}
+
+public function adminchangecreate()
+{
+    return view('admin.settings');
+}
 
     public function logout()
     {
         Session()->pull('admin_id');
         Session()->pull('email');
+        Session()->pull('name');
         Session()->pull('img');
         return redirect('/admin-login');
     }
@@ -159,5 +203,23 @@ class admin_controller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dashboard()
+    {
+        $data=patient::all();
+        $data1=doctor::all();
+        $data2=companie::all();
+        $data3=manager::all();
+        $data4=appointments::all();
+        $data5=mr::all();
+        $total_patient=count($data);
+        $total_doctor=count($data1);
+        $total_company=count($data2);
+        $total_manager=count($data3);
+        $total_appointment=count($data4);
+        $total_mr=count($data5);
+        return view('admin.index',['total_patient'=>$total_patient,'total_doctor'=>$total_doctor,'total_company'=>$total_company,
+        'total_manager'=>$total_manager,'total_appointment'=>$total_appointment,'total_mr'=>$total_mr]);
     }
 }

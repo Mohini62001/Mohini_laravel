@@ -129,9 +129,18 @@
 										<div class="col-md-6">
 											<div class="form-group mb-0">
 												<label>Date of Birth</label>
-												<input type="text" class="form-control" name="dob" value="<?php echo $fetch->dob?>">
+												<input type="date" class="form-control" name="dob" value="<?php echo $fetch->dob?>">
 												@if ($errors->has('dob'))
             										<span class="text-danger">{{ $errors->first('dob') }}</span>
+       											@endif
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group mb-0">
+												<label>Date of Anniversary</label>
+												<input type="date" class="form-control" name="doa" value="<?php echo $fetch->doa?>">
+												@if ($errors->has('doa'))
+            										<span class="text-danger">{{ $errors->first('doa') }}</span>
        											@endif
 											</div>
 										</div>
@@ -259,8 +268,28 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Hospital Image</label>
-												<input type="file" value="{{asset('upload/hospital/'.$fetch->hospital_img)}}" class="form-control" name="hospital_img">
-												<img src="{{asset('upload/hospital/'.$fetch->hospital_img)}}" height="50px" width="50px"> 
+												<input type="file" value="{{asset('upload/hospital/'.$fetch->hospital_img)}}" class="form-control" name="hospital_img[]" multiple>
+												
+												<div class="clinic-details">
+													<ul class="clinic-gallery">
+													<?php
+														$hospital_img=$fetch->hospital_img;
+														$img_arr=explode(",",$hospital_img);
+														foreach($img_arr as $d)
+														{
+														?>
+														<li>
+															<a href="{{asset('upload/hospital/'.$d)}}" data-fancybox="gallery">
+																<img src="{{asset('upload/hospital/'.$d)}}" style="height:50px;width:50px;" alt="Feature">
+															</a>
+														</li>
+														<?php
+														}
+														?>
+													</ul>
+													
+												</div>
+												
 												@if ($errors->has('hospital_img'))
             										<span class="text-danger">{{ $errors->first('hospital_img') }}</span>
        											@endif
@@ -269,25 +298,22 @@
        											@endif--->
 											</div>
 										</div>
-                                 <!---
-									<div class="col-md-12">
+										<div class="col-md-6">
 											<div class="form-group">
-												<label>Hospital Images</label>
-												<form action="#" class="dropzone"></form>
-											</div>
-											<div class="upload-wrap">
-												<div class="upload-images">
-													<img src="{{url('Frontend/assets/img/features/feature-01.jpg')}}" alt="Upload Image">
-													<a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-												</div>
-												<div class="upload-images">
-													<img src="{{url('Frontend/assets/img/features/feature-02.jpg')}}" alt="Upload Image">
-													<a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
-												</div>
+												<label>Visitor Pharma Schedule</label>
+												<select class="form-control select" name="visit_pharma_per">
+												
+														<option selected>Select Schedule</option>
+														<option value="1-1">Once in a Month</option>
+														<option value="1-2">Twice in a Month</option>
+														<option value="1-3">Thrice in a Month</option>
+														<option value="2-1">Once Visit in a 2 Month</option>
+														<option value="3-1">Once Visit in a 3 Month</option>
+												
+												</select>
+												
 											</div>
 										</div>
-									</div>
-									--->
 								</div>
 							</div>
 							<!-- /Clinic Info -->

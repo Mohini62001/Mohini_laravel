@@ -72,6 +72,12 @@
 		$('#table').DataTable();
 	} );
 </script>
+<script>
+	$(document).ready(function() 
+	{
+		$('#table1').DataTable();
+	} );
+</script>
 
 		
 		
@@ -125,19 +131,17 @@
 							<li class="">
 								<a href="{{url('/contact')}}">Contact</a>
 							</li>
+							@if(Session('patient_id'))
+							<li class="">
+								<a href="{{url('/patient-dashboard')}}">My Dashboard</a>
+							</li>
+							<li class="" style="padding-left:100px">
+							<a href="{{url('/patient-dashboard')}}"><i class="fa fa-user"> </i><span>  Hii.. {{ Session('name')}}</span></a>
+							</li>
+							@else
+							@endif
 							
-							<li class="has-submenu">
-								<a href="#">Patient Dashboard <i class="fas fa-chevron-down"></i></a>
-								<ul class="submenu">
-									<li><a href="{{url('/patient-dashboard')}}">Dashboard</a></li>
-									<li><a href="{{url('/favourites')}}">My Doctor</a></li>
-									<li><a href="{{url('/appointments')}}">Appointment</a></li>
-									<li><a href="{{url('/prescription')}}">Prescription</a></li>
-									<li><a href="{{url('/report')}}">Medical Report</a></li>
-									<li><a href="{{url('/profile-settings')}}">Profile Settings</a></li>
-								</ul>
-							</li>	
-							<li class="has-submenu">
+			<!--			<li class="has-submenu">
 								<a href="#">Pages <i class="fas fa-chevron-down"></i></a>
 								<ul class="submenu">
 									<li><a href="{{url('/voice-call')}}">Voice Call</a></li>
@@ -150,7 +154,7 @@
 									
 									<li><a href="{{url('/forgot-password')}}">Forgot Password</a></li>
 								</ul>
-							</li>
+							</li>-->
 							
 							
 						</ul>		 

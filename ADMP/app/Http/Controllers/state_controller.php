@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\state;
 use App\Models\citie;
 use App\Models\area;
+use Alert;
+use Exception;
 
 class state_controller extends Controller
 {
@@ -50,7 +52,8 @@ class state_controller extends Controller
         $data->state_name=$request->state_name;
 
         $data->save();
-        return redirect('/admin-location')->with('success','State Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add State');
+        return redirect('/admin-location');
     }
 
     ////city
@@ -65,7 +68,8 @@ class state_controller extends Controller
         $data->city_name=$request->city_name;
 
         $data->save();
-        return redirect('/admin-location')->with('succes','City Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add City');
+        return redirect('/admin-location');
     }
 
     ////area
@@ -80,7 +84,8 @@ class state_controller extends Controller
         $data->area_name=$request->area_name;
 
         $data->save();
-        return redirect('/admin-location')->with('succe','City Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Area');
+        return redirect('/admin-location');
     }
     /**
      * Display the specified resource.
@@ -126,21 +131,24 @@ class state_controller extends Controller
     {
         $data=state::find($id);
         $data->delete();
-        return redirect('admin-location')->with("success"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete State');
+        return redirect('admin-location');
     }
 
     public function citydelete($id)
     {
         $data=citie::find($id);
         $data->delete();
-        return redirect('admin-location')->with("succes"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete City');
+        return redirect('admin-location');
     }
 
     public function areadelete($id)
     {
         $data=area::find($id);
         $data->delete();
-        return redirect('admin-location')->with("succe"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Area');
+        return redirect('admin-location');
     }
 
 }

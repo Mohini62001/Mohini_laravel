@@ -39,343 +39,69 @@
 						<input class="form-control" id="myInput" type="text" placeholder="Search..">
 							<br>
 							<div class="myclass row row-grid">
+							<?php
+							if(!empty($mypatient))
+							{
+								foreach($mypatient as $data) 
+								{
+							?>
 								<div class="col-md-6 col-lg-4 col-xl-3">
 									<div class="card widget-profile pat-widget-profile">
 										<div class="card-body">
 											<div class="pro-widget-content">
 												<div class="profile-info-widget">
-													<a href="{{url('/doctor-patient-profile')}}" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient.jpg')}}" alt="User Image">
+												<?php
+													$ptprofile_img=$data->ptprofile_img;
+													if($ptprofile_img=="null")
+													{
+												?>
+													<a href="#" class="booking-doc-img">
+														<img src="{{url('Frontend/assets/img/patients/user.png')}}" alt="User Image">
 													</a>
+												<?php
+													}
+													else
+													{
+												?>
+													<a href="#" class="booking-doc-img">
+														<img src="{{asset('upload/patient/' . $data->ptprofile_img)}}" alt="User Image">
+													</a>
+												<?php
+													}
+												?>
+													
 													<div class="profile-det-info">
-														<h3><a href="{{url('/doctor-patient-profile')}}">Richard Wilson</a></h3>
+														<h3><a href="{{url('doctor-patient-profile/'.$data->patient_id)}}"><?php echo $data->name?></a></h3>
 														
 														<div class="patient-details">
-															<h5><b>Patient ID :</b> P0016</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Alabama, USA</h5>
+															<h5><b>Patient ID :</b> PT<?php echo $data->patient_id?></h5>
+															<h5 class="mb-0"></i> <?php echo $data->email?></h5>
 														</div>
 													</div>
 												</div>
 											</div>
 											<div class="patient-info">
 												<ul>
-													<li>Phone <span>+1 952 001 8563</span></li>
-													<li>Age <span>38 Years, Male</span></li>
-													<li>Blood Group <span>AB+</span></li>
+													<li>Phone <span><?php echo $data->mobileno?></span></li>
+													<li>Gender<span> <?php echo $data->gender?></span></li>
+													
 												</ul>
 											</div>
 										</div>
 									</div>
 								</div>
+							<?php
+								}
+
+							}
+							else
+							{
+								?>
+								<?php
 								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="{{url('/doctor-patient-profile')}}" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient1.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3><a href="{{url('/doctor-patient-profile')}}">Charlene Reed</a></h3>
-														
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> P0001</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> North Carolina, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 828 632 9170</span></li>
-													<li>Age <span>29 Years, Female</span></li>
-													<li>Blood Group <span>O+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient2.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Travis Trimble </h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0002</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Maine, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 207 729 9974</span></li>
-													<li>Age <span>23 Years, Male</span></li>
-													<li>Blood Group <span>B+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient3.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Carl Kelly</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0003</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Indiana, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 260 724 7769</span></li>
-													<li>Age <span>32 Years, Male</span></li>
-													<li>Blood Group <span>A+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient4.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Michelle Fairfax</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0004</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Indiana, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 504 368 6874</span></li>
-													<li>Age <span>25 Years, Female</span></li>
-													<li>Blood Group <span>B+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient5.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Gina Moore</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0005</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Florida, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 954 820 7887</span></li>
-													<li>Age <span>25 Years, Female</span></li>
-													<li>Blood Group <span>AB-</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient6.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Elsie Gilley</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0006</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Kentucky, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 315 384 4562</span></li>
-													<li>Age <span>14 Years, Female</span></li>
-													<li>Blood Group <span>O-</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient7.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Joan Gardner</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0007</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> California, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 707 2202 603</span></li>
-													<li>Age <span>25 Years, Female</span></li>
-													<li>Blood Group <span>A-</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient8.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Daniel Griffing</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0007</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> New Jersey, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 973 773 9497</span></li>
-													<li>Age <span>28 Years, Male</span></li>
-													<li>Blood Group <span>O+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient9.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Walter Roberson</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0009</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Florida, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 850 358 4445</span></li>
-													<li>Age <span>28 Years, Male</span></li>
-													<li>Blood Group <span>A+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient10.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Robert Rhodes</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0010</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> California, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 858 259 5285</span></li>
-													<li>Age <span>19 Years, Male</span></li>
-													<li>Blood Group <span>B+</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
-								
-								<div class="col-md-6 col-lg-4 col-xl-3">
-									<div class="card widget-profile pat-widget-profile">
-										<div class="card-body">
-											<div class="pro-widget-content">
-												<div class="profile-info-widget">
-													<a href="#" class="booking-doc-img">
-														<img src="{{url('Frontend/assets/img/patients/patient11.jpg')}}" alt="User Image">
-													</a>
-													<div class="profile-det-info">
-														<h3>Harry Williams</h3>
-														<div class="patient-details">
-															<h5><b>Patient ID :</b> PT0011</h5>
-															<h5 class="mb-0"><i class="fas fa-map-marker-alt"></i> Colorado, USA</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="patient-info">
-												<ul>
-													<li>Phone <span>+1 303 607 7075</span></li>
-													<li>Age <span>9 Years, Male</span></li>
-													<li>Blood Group <span>A-</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
+							}
+							?>		
+						
 								
 							</div>
 

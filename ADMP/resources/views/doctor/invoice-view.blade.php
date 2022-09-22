@@ -1,6 +1,5 @@
 @extends('doctor.Layout.main_layout') 	
 @section('main_container')
-			
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
 				<div class="container-fluid">
@@ -35,8 +34,8 @@
 										</div>
 										<div class="col-md-6">
 											<p class="invoice-details">
-												<strong>Order:</strong> #00124 <br>
-												<strong>Issued:</strong> 20/07/2019
+												<strong>Appointment id : {{$app_data->id}}</strong> <br>
+												<strong>Issued:</strong> <?php echo (new DateTime())->format('d-m-Y'); ?>
 											</p>
 										</div>
 									</div>
@@ -49,9 +48,13 @@
 											<div class="invoice-info">
 												<strong class="customer-text">Invoice From</strong>
 												<p class="invoice-details invoice-details-two">
-													Dr. Darren Elder <br>
-													806  Twin Willow Lane, Old Forge,<br>
-													Newyork, USA <br>
+												
+													
+													Dr. {{$doctor_data->first_name}} {{$doctor_data->last_name}} <br>
+													{{$doctor_data->address}},<br>
+													{{$doctor_data->city}}, {{$doctor_data->state}} <br>
+													
+															
 												</p>
 											</div>
 										</div>
@@ -59,80 +62,47 @@
 											<div class="invoice-info invoice-info2">
 												<strong class="customer-text">Invoice To</strong>
 												<p class="invoice-details">
-													Walter Roberson <br>
-													299 Star Trek Drive, Panama City, <br>
-													Florida, 32405, USA <br>
+													{{$patient_data->name}} <br>
+													{{$patient_data->email}}<br>
+													{{$patient_data->mobileno}}<br>
 												</p>
 											</div>
 										</div>
 									</div>
 								</div>
 								<!-- /Invoice Item -->
-								
-								<!-- Invoice Item -->
-								<div class="invoice-item">
-									<div class="row">
-										<div class="col-md-12">
-											<div class="invoice-info">
-												<strong class="customer-text">Payment Method</strong>
-												<p class="invoice-details invoice-details-two">
-													Debit Card <br>
-													XXXXXXXXXXXX-2541 <br>
-													HDFC Bank<br>
-												</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- /Invoice Item -->
-								
+								<br>
+								<br>
 								<!-- Invoice Item -->
 								<div class="invoice-item invoice-table-wrap">
 									<div class="row">
 										<div class="col-md-12">
+											<strong>Patient Reports and Diagnosis</strong>
+											<br>
+											<br>
 											<div class="table-responsive">
 												<table class="invoice-table table table-bordered">
 													<thead>
 														<tr>
-															<th>Description</th>
-															<th class="text-center">Quantity</th>
-															<th class="text-center">VAT</th>
-															<th class="text-right">Total</th>
+															<th class="text-center">problems</th>
+															<th class="text-center">diagnosis</th>
+															<th class="text-center">care suggestion</th>
+															<th class="text-center">reports</th>
 														</tr>
 													</thead>
 													<tbody>
+													@if(!$diagnoses_data->isEmpty())
+															@foreach($diagnoses_data as $diagnoses_data)
 														<tr>
-															<td>General Consultation</td>
-															<td class="text-center">1</td>
-															<td class="text-center">$0</td>
-															<td class="text-right">$100</td>
+															<td class="text-center">{{$diagnoses_data->problems}}</td>
+															<td class="text-center">{{$diagnoses_data->diagnosis}}</td>
+															<td class="text-center">{{$diagnoses_data->care_suggestion}}</td>
+															<td class="text-center">{{$diagnoses_data->reports}}</td>
 														</tr>
-														<tr>
-															<td>Video Call Booking</td>
-															<td class="text-center">1</td>
-															<td class="text-center">$0</td>
-															<td class="text-right">$250</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-										<div class="col-md-6 col-xl-4 ml-auto">
-											<div class="table-responsive">
-												<table class="invoice-table-two table">
-													<tbody>
-													<tr>
-														<th>Subtotal:</th>
-														<td><span>$350</span></td>
-													</tr>
-													<tr>
-														<th>Discount:</th>
-														<td><span>-10%</span></td>
-													</tr>
-													<tr>
-														<th>Total Amount:</th>
-														<td><span>$315</span></td>
-													</tr>
+														@endforeach
+														@else
+														<p class="text-danger mt-2">No data added</p>
+														@endif
 													</tbody>
 												</table>
 											</div>
@@ -140,14 +110,47 @@
 									</div>
 								</div>
 								<!-- /Invoice Item -->
-								
-								<!-- Invoice Information -->
-								<div class="other-info">
-									<h4>Other information</h4>
-									<p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed dictum ligula, cursus blandit risus. Maecenas eget metus non tellus dignissim aliquam ut a ex. Maecenas sed vehicula dui, ac suscipit lacus. Sed finibus leo vitae lorem interdum, eu scelerisque tellus fermentum. Curabitur sit amet lacinia lorem. Nullam finibus pellentesque libero.</p>
+								<br>
+								<br>
+								<!-- Invoice Item -->
+								<div class="invoice-item invoice-table-wrap">
+									<div class="row">
+										<div class="col-md-12">
+											<strong>Patient Reports and Diagnosis</strong>
+											<br>
+											<br>
+											<div class="table-responsive">
+												<table class="invoice-table table table-bordered">	
+													<thead>
+														<tr>
+															<th class="text-center">medicine name</th>
+															<th class="text-center">medicine Quantity</th>
+															<th class="text-center">medicine take Days</th>
+															<th class="text-center">medicine take Time</th>
+															<th class="text-center">medicine dose</th>
+														</tr>
+													</thead>
+													<tbody>
+													@if(!$prescriptions_data->isEmpty())
+															@foreach($prescriptions_data as $prescriptions_data)
+														<tr>
+															<td class="text-center">{{$prescriptions_data->medicine_name}}</td>
+															<td class="text-center">{{$prescriptions_data->medicine_Quantity}}</td>
+															<td class="text-center">{{$prescriptions_data->medicine_take_Days}}</td>
+															<td class="text-center">{{$prescriptions_data->medicine_take_Time}}</td>
+															<td class="text-center">{{$prescriptions_data->medicine_dose}}</td>
+														</tr>
+														@endforeach
+														@else
+														<p class="text-danger mt-2">No data added</p>
+														@endif
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
 								</div>
-								<!-- /Invoice Information -->
-								
+								<!-- /Invoice Item -->
 							</div>
 						</div>
 					</div>
@@ -156,7 +159,26 @@
 
 			</div>		
 			<!-- /Page Content -->
-   
+			<div class="container" id="box">
+			
+				<div class="row well">     
+
+					<center>
+					<a class="btn btn-primary" href="{{url('/doctor-dashboard')}}" role="button">Back</a>
+						<button class="btn btn-primary hidden-print" onclick="myFunction()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+					</center>
+					<br>
+					<br>
+					<br>
+					<br>
+					
+				</div>
+			</div>
+   <script>
+	 function myFunction() {
+        window.print();
+    }
+   </script>
 			<!-- Footer -->
 			<footer class="footer">
 				

@@ -73,10 +73,8 @@
 															</tr>
 														</thead>
 														<tbody>
-														<?php
-																foreach($service_arr as $data) 
-																{
-															?>
+															@if(!$service_arr->isEmpty())
+											   				@foreach($service_arr as $data)
 															<tr>
 																<td><?php echo $data->id?></td>
 																<td><?php echo $data->title?></td>
@@ -88,13 +86,10 @@
 																	</div>
 																</td>
 															</tr>
-															<?php
-															}
-															?>
-															
-															
-															
-															
+															@endforeach
+															@else
+																<p class="text-danger mt-2">No Service Available</p>
+															@endif
 														</tbody>
 													</table>
 												</div>
@@ -131,10 +126,8 @@
 															</tr>
 														</thead>
 														<tbody>
-															<?php
-																foreach($special_arr as $data1) 
-																{
-															?>
+															@if(!$special_arr->isEmpty())
+											  				@foreach($special_arr as $data1)
 															<tr>
 																<td><?php echo $data1->id?></td>
 																<td><?php echo $data1->title?></td>
@@ -146,9 +139,10 @@
 																	</div>
 																</td>
 															</tr>
-															<?php
-															}
-															?>	
+															@endforeach
+															@else
+																<p class="text-danger mt-2">No Speciality Available</p>
+															@endif
 														</tbody>
 													</table>
 												</div>

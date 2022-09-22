@@ -1,6 +1,6 @@
 @extends('patient.Layout.main_layout') 	
 @section('main_container')
-			
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>		
 			<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
 				<div class="container-fluid">
@@ -12,22 +12,8 @@
 									<li class="breadcrumb-item active" aria-current="page">Search</li>
 								</ol>
 							</nav>
-							<h2 class="breadcrumb-title">2245 matches found for : Dentist In Bangalore</h2>
 						</div>
-						<div class="col-md-4 col-12 d-md-block d-none">
-							<div class="sort-by">
-								<span class="sort-title">Sort by</span>
-								<span class="sortby-fliter">
-									<select class="select">
-										<option>Select</option>
-										<option class="sorting">Rating</option>
-										<option class="sorting">Popular</option>
-										<option class="sorting">Latest</option>
-										<option class="sorting">Free</option>
-									</select>
-								</span>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -49,26 +35,42 @@
 								
 								<div class="filter-widget">
 									<label>State</label>
-									<select class="col-lg-11 form-control" name="state">
-										<option value="">Select</option>
+									<select class="col-lg-11 form-control select" id="sid" value="" name="sid">
+										<option value="">Select State</option>
+										<?php
+										foreach($state_id_arr as $d)
+										{
+										?>
+										<option value="<?php echo $d->id;?>">
+												<?php echo $d->state_name ?></option>
+										<?php
+										}
+										?>
 									</select>
 								</div>
 								<div class="filter-widget">
 									<label>City</label>
-									<select class="col-lg-11 form-control" name="state">
-										<option value="">Select</option>
+									<select class="col-lg-11 form-control select" id="city_id" value="" name="city_id">
 									</select>
 								</div>
 								<div class="filter-widget">
 									<label>Area</label>
-									<select class="col-lg-11 form-control" name="state">
-										<option value="">Select</option>
+									<select class="col-lg-11 form-control select"  id="area_id" value="" name="area_id">
 									</select>
 								</div>
 								<div class="filter-widget">
 									<label>Specialist</label>
-									<select class="col-lg-11 form-control" name="state">
-										<option value="">Select</option>
+									<select class="col-lg-11 form-control select" value="" name="specialist_id">
+										<option value="">Select Specialist</option>
+										<?php
+										foreach($special_id_arr as $data)
+										{
+										?>
+										<option value="<?php echo $data->id;?>">
+											<?php echo $data->name ?></option>
+										<?php
+										}
+										?>
 									</select>
 								</div>
 
@@ -83,10 +85,19 @@
 						
 						<div class="col-md-12 col-lg-8 col-xl-9">
 
+						<table id="table" class="table table-hover table-center mb-0" >
+						<thead>
+							<tr>
+								<td></td>
+							</tr>
+						</thead>
+						<tbody>
 						<?php
 						foreach($doctorlist_arr as $data)
 						{
 						?>
+						<tr>
+							<td>
 							<!-- Doctor Widget -->
 							<div class="card">
 								<div class="card-body">
@@ -103,7 +114,7 @@
 												<h5 class="doc-department"><img src="{{asset('upload/specialities/' . $data->img)}}" class="img-fluid" alt="Speciality"><?php echo $data->name?></h5>
 												
 												<div class="clinic-details">
-													<p class="doc-location"><i class="fas fa-map-marker-alt"></i> <?php echo $data->city?>, <?php echo $data->state?></p>
+													<p class="doc-location"><i class="far fa-hospital"></i> <?php echo $data->hospital_name?></p>
 													<ul class="clinic-gallery">
 													<?php
 														$hospital_img=$data->hospital_img;
@@ -114,7 +125,7 @@
 														?>
 														<li>
 															<a href="{{asset('upload/hospital/'.$d)}}" data-fancybox="gallery">
-																<img src="{{asset('upload/hospital/'.$d)}}" alt="Feature">
+																<img src="{{asset('upload/hospital/'.$d)}}" style="height:50px;width:50px;" alt="Feature">
 															</a>
 														</li>
 														<?php
@@ -128,7 +139,7 @@
 										<div class="doc-info-right">
 											<div class="clini-infos">
 												<ul>
-													<li><i class="fas fa-map-marker-alt"></i> <?php echo $data->city?>, <?php echo $data->state?></li>
+													<li><i class="fas fa-map-marker-alt"></i> <?php echo $data->address?></li>
 													<li><i class="far fa-money-bill-alt"></i> Consulting Fees: <?php echo $data->consulting_fees?>  </li>
 													<li><i class="far fa-money-bill-alt"></i> Followup Fees: <?php echo $data->followup_fees?>  </li>
 												
@@ -143,15 +154,14 @@
 								</div>
 							</div>
 							<!-- /Doctor Widget -->
+							</td>
+						</tr>
 							<?php
 							}
 							?>
-
-							
-
-							<div class="load-more text-center">
-								<a class="btn btn-primary btn-sm" href="javascript:void(0);">Load More</a>	
-							</div>	
+							</tbody>
+							</table>
+							<br>
 						</div>
 					</div>
 
@@ -159,14 +169,55 @@
 
 			</div>		
 			<!-- /Page Content -->
-			@endsection	
+			<script>
+$('#sid').on('change', function () {
+                var sid = this.value;
+                $('#city_id').html('');
+                $.ajax({
+				url:"{{url('/getdtCity')}}",
+				type: "POST",
+				data: {
+				sid: sid,
+				_token: '{{csrf_token()}}'
+				},
+				
+				success: function(result) {
+                        $('#city_id').html('<option value="">Select City</option>');
+                        $.each(result.cities, function (key, value) {
+                            $('#city_id').append('<option value="' + value.id + '">' + value.city_name + '</option>');
+                        });
+                        
+                    }
+                });
+            });
+			
+$('#city_id').on('change', function () {
+                var city_id = this.value;
+                $('#area_id').html('');
+                $.ajax({
+				url:"{{url('/getdtArea')}}",
+				type: "POST",
+				data: {
+				city_id: city_id,
+				_token: '{{csrf_token()}}'
+				},
+				
+				success: function(result) {
+                        $('#area_id').html('<option value="">Select Area</option>');
+                        $.each(result.areas, function (key, value) {
+                            $('#area_id').append('<option value="' + value.id + '">' + value.area_name + '</option>');
+                        });
+                        
+                    }
+                });
+            });			
+</script>			
 			
 
 		</div>
 		<!-- /Main Wrapper -->
 	  
 		<!-- jQuery -->
-		<script src="{{ url('Frontend/assets/js/jquery.min.js') }}"></script>
 		
 		<!-- Bootstrap Core JS -->
 		<script src="{{  url('Frontend/assets/js/popper.min.js') }}"></script>
@@ -192,3 +243,4 @@
 	</body>
 
 </html>
+@endsection	

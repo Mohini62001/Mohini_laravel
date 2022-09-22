@@ -124,13 +124,7 @@
 							</li>
 							
 							<li class="">
-								<a href="{{url('/doctor-mr-dashboard')}}">MR</a>
-							</li>
-							<li class="">
-								<a href="{{url('/doctor-manager-dashboard')}}">Health Manager</a>
-							</li>
-							<li class="">
-								<a href="{{url('/doctor-company-dashboard')}}">Company</a>
+								<a href="{{url('/doctor-company-dashboard')}}">Pharma</a>
 							</li>
 							
 							
@@ -147,9 +141,16 @@
 								<p class="contact-info-header"> +1 315 369 5943</p>
 							</div>
 						</li>
+						@if(Session('doctor_id'))
+						<li class="nav-item">
+							<a class="nav-link header-login" href="{{url('/doctorlogout')}}">Logout</a>
+						</li>
+						@else
 						<li class="nav-item">
 							<a class="nav-link header-login" href="{{url('/doctor')}}">login / Signup </a>
 						</li>
+						@endif
+						
 					</ul>
 				</nav>
 			</header>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\drspecialitie;
+use Alert;
+use Exception;
 
 class drspecialitie_controller extends Controller
 {
@@ -39,7 +41,8 @@ class drspecialitie_controller extends Controller
         $data->title=$request->title;
 
         $data->save();
-		return redirect('/addservice')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Add Speciality');
+		return redirect('/addservice');
         
     }
 

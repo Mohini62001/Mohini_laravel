@@ -51,7 +51,22 @@
 												?>
 												<tr>
 													<td><?php echo $data->id?></td>
+													<?php
+														$ptprofile_img=$data->ptprofile_img;
+														if($ptprofile_img=="null")
+														{
+													?>
+													<td><img src="{{url('Frontend/assets/img/patients/user.png')}}" height="50px" width="50px"/></td>
+													<?php
+														}
+														else
+														{
+													?>
 													<td><img src="{{asset('upload/patient/' . $data->ptprofile_img)}}" height="50px" width="50px"/></td>
+													<?php
+														}
+													?>
+													
 													<td><?php echo $data->name?></td>
 													<td><?php echo $data->gender?></td>
 													<td><?php echo $data->email?></td>

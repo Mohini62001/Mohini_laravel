@@ -54,7 +54,7 @@
 														<div class="form-group">               
 															<label>Select Days</label>
 															<select class="select form-control" name="day">
-																<option selected="selected">---Select Days---</option>
+																<option value="" selected="selected">---Select Days---</option>
 																<option value="Monday">Monday</option>
 																<option value="Tuesday">Tuesday</option>  
 																<option value="Wednesday">Wednesday</option>
@@ -63,6 +63,9 @@
 																<option value="Saturday">Saturday</option>
 																<option value="Sunday">Sunday</option>
 															</select>
+															@if ($errors->has('day'))
+																<span class="text-danger">{{ $errors->first('day') }}</span>
+															@endif
 														</div>
 												</div>
 
@@ -70,11 +73,14 @@
 														<div class="form-group">               
 															<label>Select Timings</label>
 															<select class="select form-control" name="time">
-																<option selected="selected">---Select Timing---</option>
+																<option value="" selected="selected">---Select Timing---</option>
 																<option value="Morning">Morning</option>
 																<option value="Afternoon">Afternoon</option>  
 																<option value="Evening">Evening</option>
 															</select>
+															@if ($errors->has('time'))
+																<span class="text-danger">{{ $errors->first('time') }}</span>
+															@endif
 														</div>
 												</div>
 
@@ -82,6 +88,9 @@
 													<div class="form-group">
 														<label>Starting Time</label>
 														<input type="time" name="start_time" class="form-control" placeholder="Enter Starting Time">
+														@if ($errors->has('start_time'))
+																<span class="text-danger">{{ $errors->first('start_time') }}</span>
+														@endif
 													</div>
 												</div>
 
@@ -91,6 +100,9 @@
 													<div class="form-group">
 														<label>Total No. of Slots</label>
 														<input type="number" name="no_slots" class="form-control" placeholder="Enter No. of Slots">
+														@if ($errors->has('no_slots'))
+																<span class="text-danger">{{ $errors->first('no_slots') }}</span>
+														@endif
 													</div>
 												</div>
 
@@ -98,13 +110,16 @@
 														<div class="form-group">               
 															<label>Timing Slot Duration</label>
 															<select class="select form-control" name="min">
-																<option selected="selected">---Select Slot Timing---</option>
+																<option value="" selected="selected">---Select Slot Timing---</option>
 																<option value="+10 minutes">10 mins</option>
 																<option value="+15 minutes">15 mins</option>
 																<option value="+30 minutes">30 mins</option>  
 																<option value="+45 minutes">45 mins</option>
 																<option value="+1 hour">1 Hour</option>
 															</select>
+															@if ($errors->has('min'))
+																<span class="text-danger">{{ $errors->first('min') }}</span>
+															@endif
 														</div>
 													</div>
 											</div>     
@@ -160,7 +175,9 @@
 																<div id="slot_sunday" class="tab-pane fade">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	<!-- Slot List -->
 																	<div class="row m-2">
@@ -172,9 +189,6 @@
 																			@foreach($morningSunday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -192,9 +206,6 @@
 																			@foreach($afternoonSunday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -212,9 +223,6 @@
 																			@foreach($eveningSunday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -231,7 +239,9 @@
 																<div id="slot_monday" class="tab-pane fade show active">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#edit_time_slot"><i class="fa fa-edit mr-1"></i>Edit</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	
 																	<!-- Slot List -->
@@ -244,9 +254,6 @@
 																			@foreach($morningMonday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -264,9 +271,6 @@
 																			@foreach($afternoonMonday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -284,9 +288,6 @@
 																			@foreach($eveningMonday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -304,7 +305,9 @@
 																<div id="slot_tuesday" class="tab-pane fade">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	<!-- Slot List -->
 																	<div class="row m-2">
@@ -316,9 +319,6 @@
 																			@foreach($morningTuesday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -336,9 +336,6 @@
 																			@foreach($afternoonTuesday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -356,9 +353,6 @@
 																			@foreach($eveningTuesday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -375,7 +369,9 @@
 																<div id="slot_wednesday" class="tab-pane fade">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	<!-- Slot List -->
 																	<div class="row m-2">
@@ -387,9 +383,6 @@
 																			@foreach($morningWednesday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -407,9 +400,6 @@
 																			@foreach($afternoonWednesday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -427,9 +417,6 @@
 																			@foreach($eveningWednesday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -446,7 +433,9 @@
 																<div id="slot_thursday" class="tab-pane fade">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	<!-- Slot List -->
 																	<div class="row m-2">
@@ -458,9 +447,6 @@
 																			@foreach($morningThursday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -478,9 +464,6 @@
 																			@foreach($afternoonThursday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -498,9 +481,6 @@
 																			@foreach($eveningThursday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -517,7 +497,9 @@
 																<div id="slot_friday" class="tab-pane fade">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	<!-- Slot List -->
 																	<div class="row m-2">
@@ -529,9 +511,6 @@
 																			@foreach($morningFriday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -549,9 +528,6 @@
 																			@foreach($afternoonFriday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -569,9 +545,6 @@
 																			@foreach($eveningFriday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -588,7 +561,9 @@
 																<div id="slot_saturday" class="tab-pane fade">
 																	<h4 class="card-title d-flex justify-content-between">
 																		<span>Time Slots</span> 
-																		<a class="edit-link" data-toggle="modal" href="#add_time_slot"><i class="fa fa-plus-circle"></i> Add Slot</a>
+																		<a href="" class="btn btn-sm bg-info-light">
+																			<i class="fa fa-trash"></i> Delete
+																		</a>
 																	</h4>
 																	<!-- Slot List -->
 																	<div class="row m-2">
@@ -600,9 +575,6 @@
 																			@foreach($morningSaturday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -620,9 +592,6 @@
 																			@foreach($afternoonSaturday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else
@@ -640,9 +609,6 @@
 																			@foreach($eveningSaturday as $d)
 																			<div class="doc-slot-list">
 																				{{$d->slot_timing}} 
-																				<a href="javascript:void(0)" class="delete_schedule">
-																					<i class="fa fa-times"></i>
-																				</a>
 																			</div>
 																			@endforeach
 																		@else

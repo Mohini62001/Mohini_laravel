@@ -35,10 +35,10 @@
 									<div class="doc-info-cont">
 										<h4 class="doc-name">Dr. <?php echo $fetch->first_name?> <?php echo $fetch->last_name?></h4>
 										<p class="doc-speciality"><?php echo $fetch->short_tittle?></p>
-										<p class="doc-department"><img src="{{asset('upload/specialities/' . $fetch->img)}}" class="img-fluid" alt="Speciality"><?php echo $fetch->specialist_id?></p>
+										<p class="doc-department"><img src="{{asset('upload/specialities/' . $fetch->img)}}" class="img-fluid" alt="Speciality"><?php echo $fetch->name?></p>
 										
 										<div class="clinic-details">
-											<p class="doc-location"><i class="fas fa-map-marker-alt"></i><?php echo $fetch->city?>, <?php echo $fetch->state?> <a href="<?php echo $fetch->google_map?>" target="_blank">Get Directions</a></p>
+										<p class="doc-location"><i class="far fa-hospital"></i> <?php echo $fetch->hospital_name?></p>
 											<ul class="clinic-gallery">
 														<?php
 														$hospital_img=$fetch->hospital_img;
@@ -63,7 +63,7 @@
 								<div class="doc-info-right">
 									<div class="clini-infos">
 										<ul>
-											<li><i class="fas fa-map-marker-alt"></i> <?php echo $fetch->city?>, <?php echo $fetch->state?></li>
+											<li><i class="fas fa-map-marker-alt"></i> <?php echo $fetch->address?></li>
 											<li><i class="far fa-money-bill-alt"></i> Consulting Fees: <?php echo $fetch->consulting_fees?></li>
 											<li><i class="far fa-money-bill-alt"></i> Followup Fees: <?php echo $fetch->followup_fees?></li>
 										</ul>
@@ -71,23 +71,20 @@
 									<div class="doctor-action">
 										@if($fav_doctor)
 										
-											<a href="#" onclick="" class="btn btn-success fav-btn">
+											<a href="{{url('patient_fav_doc_del/'.$fetch->id)}}" onclick="" class="btn btn-success fav-btn">
 												<i class="far fa-bookmark"></i>
 											</a>
 										@else
 											<a href="{{url('patient_fav_doc/'.$fetch->id)}}" onclick="" class="btn btn-white fav-btn">
 												<i class="far fa-bookmark"></i>
 											</a>
+											
 										@endif
-										<a href="{{url('/chat')}}" class="btn btn-white msg-btn">
-											<i class="far fa-comment-alt"></i>
-										</a>
+										
 										<a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#voice_call">
 											<i class="fas fa-phone"></i>
 										</a>
-										<a href="javascript:void(0)" class="btn btn-white call-btn" data-toggle="modal" data-target="#video_call">
-											<i class="fas fa-video"></i>
-										</a>
+										
 									</div>
 									<div class="clinic-booking">
 										<a class="apt-btn" href="{{url('/booking/'.$fetch->id)}}">Book Appointment</a>
@@ -194,7 +191,6 @@
 											<div class="col-md-6">
 												<div class="clinic-content">
 													<h4 class="clinic-name"><a href="#"><?php echo $fetch->hospital_name?></a></h4>
-													<p class="doc-speciality"><?php echo $fetch->specialist_id?></p>
 													<div class="clinic-details mb-0">
 														<h5 class="clinic-direction"> <i class="fas fa-map-marker-alt"></i> <?php echo $fetch->address?>, <?php echo $fetch->city?>, <?php echo $fetch->pincode?>, <?php echo $fetch->state?> <br><a href="<?php echo $fetch->google_map?>">Get Directions</a></h5>
 														<ul>

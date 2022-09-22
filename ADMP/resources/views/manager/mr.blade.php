@@ -46,10 +46,8 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-												 foreach($mr_arr as $data)
-												 {
-												?>
+												@if(!$mr_arr->isEmpty())
+											   @foreach($mr_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 
@@ -77,10 +75,10 @@
 												    </td>
 													
 												</tr>
-												
-												<?php
-												 }
-												?>
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No MRs Available</p>
+												@endif
 												
 											</tbody>
 										</table>

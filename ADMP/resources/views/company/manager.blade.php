@@ -46,10 +46,8 @@
 											</thead>
 											<tbody>
 
-											<?php
-											   foreach($comapany_arr as $data)
-											   {
-											?>
+											@if(!$comapany_arr->isEmpty())
+											   @foreach($comapany_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 
@@ -77,9 +75,10 @@
 													
 												</tr>
 												
-												<?php
-												}
-												?>
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Managers Available</p>
+												@endif
 											</tbody>
 										</table>
 									</div>

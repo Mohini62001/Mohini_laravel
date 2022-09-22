@@ -28,7 +28,7 @@
 	
 	</head>
 	<body class="account-page">
-
+	@include('sweetalert::alert')
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
 		
@@ -120,16 +120,12 @@
        											@endif
 											</div>
 											<div class="text-right">
-												<a class="forgot-link" href="{{url('/doctor-forgot-password')}}">Forgot Password ?</a>
+												<a class="forgot-link" href="{{url('/dtforget_password')}}">Forgot Password ?</a>
 											</div>
 											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit" name="submit" value="send">Login</button>
-											<div class="login-or">
-												<span class="or-line"></span>
-												<span class="span-or">or</span>
-											</div>
 											
-											<div class="text-center dont-have">Don’t have an account? <a href="{{url('/contact')}}">Contact Us</a></div>
-										</form>
+											
+											</form>
 									</div>
 								</div>
 							</div>

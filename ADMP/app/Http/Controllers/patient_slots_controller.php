@@ -93,6 +93,13 @@ class patient_slots_controller extends Controller
      */
     public function store(Request $request)
     {
+        $data=$request->validate([
+            'time'=>'required',
+            'day'=>'required',
+            'no_slots'=>'required',
+            'min'=>'required',
+            'start_time'=>'required',
+        ]);
         $time=$request->time;
         $day=$request->day;
         $no_slots=$request->no_slots;
@@ -111,7 +118,8 @@ class patient_slots_controller extends Controller
             $data->save();
             $i++;
         }
-        return redirect('doctor-patient-schedule-timings')->with('success','Schedule add success');
+        Alert::success('Done', 'You\'ve Successfully Add Schedule');
+        return redirect('doctor-patient-schedule-timings');
     }
 
 
@@ -153,14 +161,18 @@ class patient_slots_controller extends Controller
     public function book_app_sess(Request $request)
     {   
          $slot_timing=$request->slot_timing;
+         $slot_id=$request->slot_id;
          $doc_id=$request->doc_id;
          $appointment_date=$request->appointment_date;
          
         
+        $request->Session()->put('slot_id_session',$slot_id);
         $request->Session()->put('slot_timing_session',$slot_timing);
         $request->Session()->put('appo_date_session',$appointment_date);
         $request->Session()->put('book_doc_session',$doc_id);
         
+       
+
         return redirect('/book_appointment');
     }
 
@@ -169,13 +181,14 @@ class patient_slots_controller extends Controller
     {  
        if(session('slot_timing_session'))
         {
+            $slot_id=Session('slot_id_session');
             $slot_timing=Session('slot_timing_session');
             $appointment_date=Session('appo_date_session');
             $doc_id=Session('book_doc_session');
             $patient_data=patient::where('id','=',Session('patient_id'))->first();
             $doctor_data=doctor::where('id','=',$doc_id)->first();
 
-            return view('patient.book_appointment',['patient_data'=>$patient_data,'doctor_data'=>$doctor_data,'appointment_date'=>$appointment_date,'slot_timing'=>$slot_timing]);    
+            return view('patient.book_appointment',['patient_data'=>$patient_data,'doctor_data'=>$doctor_data,'appointment_date'=>$appointment_date,'slot_timing'=>$slot_timing,'slot_id'=>$slot_id]);    
             
         }
         else
@@ -215,7 +228,11 @@ class patient_slots_controller extends Controller
     }
 
     public function matchotp(Request $request)
-    {
+        { 
+            $data=$request->validate([
+                
+            'userotp'=>'required|numeric',
+        ]);
         $userotp=$request->userotp;
         $ptbookotp=session('ptbookotp');
         if($userotp==$ptbookotp)
@@ -224,15 +241,18 @@ class patient_slots_controller extends Controller
            // $data->ptbookotp=$request->ptbookotp;
             $data=new appointments;
             $data->time=session('slot_timing_session');
+            $data->slot_id=session('slot_id_session');
             $data->date=session('appo_date_session');
             $data->doc_id=session('book_doc_session');
             $data->patient_id=session('patient_id');
             $data->comment=session('comment');
             $data->save();
 
+            Session()->pull('slot_id_session');
             Session()->pull('slot_timing_session');
             Session()->pull('appo_date_session');
             Session()->pull('book_doc_session');
+            Session()->pull('ptbookotp');
             Session()->pull('comment');
             Alert::success('Congrats', 'You\'ve Successfully Booked Appointment ');
             
@@ -244,6 +264,7 @@ class patient_slots_controller extends Controller
         {
             
             Alert::error('Error OTP', 'Entered OTP Does not match'); 
+            return back();
         }
     }
     

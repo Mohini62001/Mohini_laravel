@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\specialist;
+use Alert;
+use Exception;
 
 class specialist_controller extends Controller
 {
@@ -50,7 +52,8 @@ class specialist_controller extends Controller
 		$data->img=$file_name; // file name store in db
 
         $res=$data->save();
-        return redirect('admin-add-specialities')->with('success','Add Specialist Success');
+        Alert::success('Done', 'You\'ve Successfully Add Specialist');
+        return redirect('admin-add-specialities');
     }
 
     /**
@@ -100,7 +103,8 @@ class specialist_controller extends Controller
 		}
 
         $data->save();
-		return redirect('/admin-specialities')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Update Specialist');
+		return redirect('/admin-specialities');
     }
 
     /**
@@ -113,6 +117,7 @@ class specialist_controller extends Controller
     {
         $data=specialist::find($id);
 		$data->delete();
-		return redirect('admin-specialities')->with("success","Specialist deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Specialist');
+		return redirect('admin-specialities');
     }
 }

@@ -45,10 +45,8 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-												 foreach($stockiest_arr as $data)
-												 {
-												?>
+												@if(!$stockiest_arr->isEmpty())
+											   @foreach($stockiest_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 
@@ -68,10 +66,10 @@
 													
 												</tr>
 												
-												<?php
-												 }
-												?>
-												
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Stockiest Available</p>
+												@endif
 											</tbody>
 										</table>
 									</div>

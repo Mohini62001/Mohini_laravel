@@ -35,8 +35,6 @@
 											<thead>
 												<tr>
 													<th>MR ID</th>
-													<th>Manager Name</th>
-													<th>Company Name</th>
 													<th>Profile Img</th>
 													<th>Company Name</th>
 													<th>Email</th>
@@ -46,17 +44,11 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-												 foreach($mr_arr as $data)
-												 {
-												?>
+												@if(!$mr_arr->isEmpty())
+											   @foreach($mr_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
-
-													<td><?php echo $data->Manager_name?></td>
-
-													<td><?php echo $data->company_name?></td>
-
+													
 													<td><img src="{{asset('upload/mr/' . $data->mrprofile_img)}}" height="50px" width="50px"/></td>
 
 													<td><?php echo $data->company_name?></td>
@@ -77,10 +69,10 @@
 												    </td>
 													
 												</tr>
-												
-												<?php
-												 }
-												?>
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Mr Available</p>
+												@endif
 												
 											</tbody>
 										</table>

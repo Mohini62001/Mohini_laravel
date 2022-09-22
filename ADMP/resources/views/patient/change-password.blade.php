@@ -42,18 +42,28 @@
 										<div class="col-md-12 col-lg-6">
 										
 											<!-- Change Password Form -->
-											<form>
-												<div class="form-group">
+											<form action="{{url('/change-password')}}" method="post" enctype="multipart/form-data">
+											@csrf	
+											<div class="form-group">
 													<label>Old Password</label>
-													<input type="password" class="form-control">
+													<input type="password" class="form-control" name="oldpassword">
+														@if($errors->has('oldpassword'))	
+															<span class="text-danger" >{{($errors->first('oldpassword'))}}</span>
+														@endif
 												</div>
 												<div class="form-group">
 													<label>New Password</label>
-													<input type="password" class="form-control">
+													<input type="password" class="form-control" name="newpassword">
+														@if($errors->has('newpassword'))	
+															<span class="text-danger" >{{($errors->first('newpassword'))}}</span>
+														@endif
 												</div>
 												<div class="form-group">
 													<label>Confirm Password</label>
-													<input type="password" class="form-control">
+													<input type="password" class="form-control"  name="confirm_password">
+														@if($errors->has('confirm_password'))	
+															<span class="text-danger" >{{($errors->first('confirm_password'))}}</span>
+														@endif
 												</div>
 												<div class="submit-section">
 													<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>

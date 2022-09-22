@@ -9,10 +9,10 @@
 							<nav aria-label="breadcrumb" class="page-breadcrumb">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="{{url('/index')}}">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Invoices</li>
+									<li class="breadcrumb-item active" aria-current="page">Visitor Timings</li>
 								</ol>
 							</nav>
-							<h2 class="breadcrumb-title">Invoices</h2>
+							<h2 class="breadcrumb-title"> Visitor Timings</h2>
 						</div>
 					</div>
 				</div>
@@ -39,12 +39,13 @@
 							<div class="card card-table">
 								<div class="card-body">
 								<td class="text-center">
-														<div class="table-action" align="right">
-															<a href="{{url('/doctor-visitor_slots')}}" class="btn btn-sm bg-info-light">
-																<i class="far fa-edit"></i> Add Slots Timings for Visitors
-															</a>
-														</div>
-												</td>
+								<div class="p-2"><h4><b>Add Visitor Slots</b></h4></div>
+									<div class="table-action" align="right">
+										<a href="{{url('/doctor-visitor_slots')}}" class="btn btn-sm bg-info-light">
+											<i class="far fa-edit"></i> Add Slots Timings for Visitors
+										</a>
+									</div>
+								</td>
 									<!-- Invoice Table -->
 									<div class="table-responsive">
 									<table class="table table-hover table-center mb-0">

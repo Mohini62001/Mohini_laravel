@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\companie;
+use App\Models\company_fav_doc;
+use App\Models\manager;
 use Hash;
 use Session;
+use Alert;
+use Exception;
 
 class companie_controller extends Controller
 {
@@ -35,7 +39,7 @@ class companie_controller extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+     *///
     public function admincompanystore(Request $request)
     {   
         $data=$request->validate([
@@ -54,6 +58,7 @@ class companie_controller extends Controller
         $data->last_name=$request->last_name;
         $data->company_name=$request->company_name;
         $data->email=$request->email;
+        $data->dpass=$request->password;
         $data->password=Hash::make($request->password);
 
         // img upload
@@ -69,7 +74,8 @@ class companie_controller extends Controller
 		$data->visiting_card=$file_name2; // file name store in db
 
         $res=$data->save();
-        return redirect('admin-add-company')->with('success','Add Company Success');
+        Alert::success('Done', 'You\'ve Successfully Add Company');
+        return redirect('admin-add-company');
 
     }
 
@@ -137,8 +143,11 @@ class companie_controller extends Controller
         }
 
         $data->save();
+        Alert::success('Done', 'You\'ve Successfully Update Company');
 		return redirect('/admin-company')->with('success','Update Success');
     }
+
+    
 
     /**
      * Remove the specified resource from storage.
@@ -150,7 +159,8 @@ class companie_controller extends Controller
     {
         $data=companie::find($id);
         $data->delete();
-        return redirect('admin-company')->with("success","Company deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Company');
+        return redirect('admin-company');
     }
 
     ///=====================company panel================================================================
@@ -173,25 +183,60 @@ class companie_controller extends Controller
             {
                 $request->Session()->put('company_id',$data->id);
                 $request->Session()->put('email', $data->email);
+                $cname=$data->first_name." ".$data->last_name; 
+                $request->Session()->put('cname',$cname);
                 $request->Session()->put('cprofile_img', $data->cprofile_img);
+                Alert::success('Congrats', 'You\'ve Successfully Login');
                 return redirect('company-dashboard');
             }
             else
             {
-                return redirect('/company')->with('fail','Login Failed due to Wrong Password');
+                Alert::error('Fail', 'Login Failed due to Wrong Password');
+                return redirect('/company');
             }
         }
         else
         {
-            return redirect('/company')->with('fail','Login Failed due to Wrong email');
+            Alert::error('Fail', 'Login Failed due to Wrong email');
+            return redirect('/company');
         }
     }
+
+///////////////change password
+public function companychangepassword(Request $request)
+{
+    $data=$request->validate([
+        'oldpassword' => 'required',
+        'newpassword' => 'required|string|min:6',
+        'confirm_password' => 'required|same:newpassword|min:6',
+    
+    ]);
+    $data=companie::where("id","=",Session('company_id'))->first();
+    if(Hash::check($request->oldpassword, $data->password))
+       {
+        $data->password=Hash::make($request->newpassword);
+        $data->update();
+        Alert::success('Done', 'You\'re Password Change Success');
+        return back();
+       }
+       else
+       {
+        Alert::error('fail', 'Please Enter Correct Old Password');
+        return back();
+       }
+}
+
+public function companychangecreate()
+{
+    return view('company.setting');
+}
 
     public function companylogout()
     {
         Session()->pull('company_id');
         Session()->pull('email');
         Session()->pull('cprofile_img');
+        Session()->pull('cname');
         return redirect('/company');
     }
 
@@ -239,7 +284,34 @@ class companie_controller extends Controller
         }
 
         $data->save();
-		return redirect('/company-profile')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Update Company Profile');
+		return redirect('/company-profile');
+    }
+
+    public function companydashboard()
+    {
+        $data1=company_fav_doc::where('company_id','=',Session('company_id'))->get();
+        if(!empty($data1))
+        {
+            $total_company_fav_doc=count($data1);
+        }
+        else
+        {
+            $total_company_fav_doc="0";
+        }     
+
+        $data2=manager::where('company_id','=',Session('company_id'))->get();
+        if(!empty($data2))
+        {
+            $total_manager=count($data2);
+        }
+        else
+        {
+            $total_manager="0";
+        }   
+        //$total_company_fav_doc=count($data1);
+        //$total_manager=count($data2);
+        return view('company.index',['total_company_fav_doc'=>$total_company_fav_doc,'total_manager'=>$total_manager]);
     }
 
 }

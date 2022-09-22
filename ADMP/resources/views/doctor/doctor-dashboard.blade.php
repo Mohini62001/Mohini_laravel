@@ -8,7 +8,7 @@
 						<div class="col-md-12 col-12">
 							<nav aria-label="breadcrumb" class="page-breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="{{url('/index')}}">Home</a></li>
+									<li class="breadcrumb-item"><a href="{{url('/doctor-dashboard')}}">Home</a></li>
 									<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
 								</ol>
 							</nav>
@@ -52,9 +52,8 @@
 															</div>
 														</div>
 														<div class="dash-widget-info">
-															<h6>Total Patient</h6>
-															<h3>1500</h3>
-															<p class="text-muted">Till Today</p>
+															<h6>My Patient</h6>
+															<h3>{{$total_fav_patient}}</h3>
 														</div>
 													</div>
 												</div>
@@ -68,8 +67,25 @@
 														</div>
 														<div class="dash-widget-info">
 															<h6>Today Patient</h6>
-															<h3>160</h3>
-															<p class="text-muted">06, Nov 2019</p>
+															<h3>
+															<?php
+															if(!empty($appointments_arr))
+															{
+																echo count($appointments_arr);
+															}
+															else
+															{
+																echo "0";
+															}
+															
+															?>
+															
+															</h3>
+															<p class="text-muted">
+																<?php
+																echo date('d - m -y');
+																?>
+															</p>
 														</div>
 													</div>
 												</div>
@@ -83,8 +99,7 @@
 														</div>
 														<div class="dash-widget-info">
 															<h6>Appoinments</h6>
-															<h3>85</h3>
-															<p class="text-muted">06, Apr 2019</p>
+															<h3>{{$total_appointment}}</h3>
 														</div>
 													</div>
 												</div>
@@ -104,7 +119,9 @@
 											<li class="nav-item">
 												<a class="nav-link active" href="#today-appointments" data-toggle="tab">Today</a>
 											</li>
-											
+											<li class="nav-item">
+												<a class="nav-link" href="#upcomming-appointments" data-toggle="tab">Upcomming</a>
+											</li>
 											 
 										</ul>
 										<!-- /Appointment Tab -->
@@ -124,31 +141,43 @@
 																		<th>Gender</th>
 																		<th>Appt Date</th>
 																		<th>Mobile No</th>
-																		<th class="text-center">Paid Amount</th>
+																		<th class="text-center">Add Prescription</th>
 																		<th></th>
 																	</tr>
 																</thead>
 																<tbody>
-																<?php
-																	foreach($appointments_arr as $data)
-																	{
-																	?>
+																   @if(!$appointments_arr->isEmpty())
+											   						@foreach($appointments_arr as $data)
 																	<tr>
 																		<td>
 																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('upload/patient/'. $data->ptprofile_img)}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}"><?php echo $data->name?><span>#PT0016</span></a>
+																			<?php
+																				$ptprofile_img=$data->ptprofile_img;
+																				if($ptprofile_img=="null")
+																				{
+																			?>
+																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
+																					<img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/user.png')}}" alt="dammy Image">
+																				</a>
+																			<?php
+																				}
+																				else
+																				{
+																			?>
+																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2">
+																					<img class="avatar-img rounded-circle" src="{{url('upload/patient/'. $data->ptprofile_img)}}" alt="User Image">
+																				</a>
+																			<?php
+																				}
+																			?>
+																				<a href="{{url('/patient-profile')}}"><?php echo $data->name?><span>#PT{{$data->patient_id}}</span></a>
 																			</h2>
 																		</td>
 																		<td><?php echo $data->gender?></td>
-																		<td><?php echo $data->date?> <span class="d-block text-info"><?php echo $data->time?></span></td>
+																		<td><?php echo $data->date?> <span class="d-block text-info">Time : <?php echo $data->time?></span></td>
 																		<td><?php echo $data->mobileno?></td>
 																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
+																			<div class="table-action">			
 																				<a href="{{url('add-prescription/'.$data->id)}}" class="btn btn-sm bg-success-light">
 																					<i class="fas fa-plus"></i> Add prescription
 																				</a>
@@ -156,9 +185,10 @@
 																			</div>
 																		</td>
 																	</tr>
-																<?php
-																}
-																?>
+																	@endforeach
+																	@else
+																		<p class="text-danger mt-2">No Appointments Available</p>
+																	@endif
 																	
 																	
 																	
@@ -171,178 +201,61 @@
 											<!-- /Upcoming Appointment Tab -->
 									   
 											<!-- Today Appointment Tab -->
-											<div class="tab-pane" id="today-appointments">
+											<div class="tab-pane" id="upcomming-appointments">
 												<div class="card card-table mb-0">
 													<div class="card-body">
 														<div class="table-responsive">
-															<table id="table1" class="table table-hover table-center mb-0">
+														<table id="table1" class="table table-hover table-center mb-0">
 																<thead>
+																	
 																	<tr>
 																		<th>Patient Name</th>
+																		<th>Gender</th>
 																		<th>Appt Date</th>
-																		<th>Purpose</th>
-																		<th>Type</th>
-																		<th class="text-center">Paid Amount</th>
+																		<th>Mobile No</th>
 																		<th></th>
 																	</tr>
 																</thead>
 																<tbody>
+																<?php
+																	foreach($appointments_upc_arr as $data)
+																	{
+																	?>
 																	<tr>
 																		<td>
 																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient6.jpg')}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}">Elsie Gilley <span>#PT0006</span></a>
+
+																			<?php
+																				$ptprofile_img=$data->ptprofile_img;
+																				if($ptprofile_img=="null")
+																				{
+																				?>
+																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/user.png')}}" alt="dammy Image">
+																				</a>
+																				<?php
+																				}
+																				else
+																				{
+																				?>
+																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('upload/patient/'. $data->ptprofile_img)}}" alt="User Image"></a>
+																				<?php
+																				}
+																				?>
+																				
+																				<a href="{{url('/patient-profile')}}"><?php echo $data->name?><span>#PT{{$data->patient_id}}</span></a>
 																			</h2>
 																		</td>
-																		<td>14 Nov 2019 <span class="d-block text-info">6.00 PM</span></td>
-																		<td>Fever</td>
-																		<td>Old Patient</td>
-																		<td class="text-center">$300</td>
-																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
-																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
-																			</div>
-																		</td>
+																		<td><?php echo $data->gender?></td>
+																		<td><?php echo $data->date?> <span class="d-block text-info">Time : <?php echo $data->time?></span></td>
+																		<td><?php echo $data->mobileno?></td>
+																		
 																	</tr>
-																	<tr>
-																		<td>
-																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient7.jpg')}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}">Joan Gardner <span>#PT0006</span></a>
-																			</h2>
-																		</td>
-																		<td>14 Nov 2019 <span class="d-block text-info">5.00 PM</span></td>
-																		<td>General</td>
-																		<td>Old Patient</td>
-																		<td class="text-center">$100</td>
-																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
-																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient8.jpg')}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}">Daniel Griffing <span>#PT0007</span></a>
-																			</h2>
-																		</td>
-																		<td>14 Nov 2019 <span class="d-block text-info">3.00 PM</span></td>
-																		<td>General</td>
-																		<td>New Patient</td>
-																		<td class="text-center">$75</td>
-																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
-																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient9.jpg')}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}">Walter Roberson <span>#PT0008</span></a>
-																			</h2>
-																		</td>
-																		<td>14 Nov 2019 <span class="d-block text-info">1.00 PM</span></td>
-																		<td>General</td>
-																		<td>Old Patient</td>
-																		<td class="text-center">$350</td>
-																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
-																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient10.jpg')}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}">Robert Rhodes <span>#PT0010</span></a>
-																			</h2>
-																		</td>
-																		<td>14 Nov 2019 <span class="d-block text-info">10.00 AM</span></td>
-																		<td>General</td>
-																		<td>New Patient</td>
-																		<td class="text-center">$175</td>
-																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
-																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
-																			</div>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td>
-																			<h2 class="table-avatar">
-																				<a href="{{url('/patient-profile')}}" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{url('Frontend/assets/img/patients/patient11.jpg')}}" alt="User Image"></a>
-																				<a href="{{url('/patient-profile')}}">Harry Williams <span>#PT0011</span></a>
-																			</h2>
-																		</td>
-																		<td>14 Nov 2019 <span class="d-block text-info">11.00 AM</span></td>
-																		<td>General</td>
-																		<td>New Patient</td>
-																		<td class="text-center">$450</td>
-																		<td class="text-right">
-																			<div class="table-action">
-																				<a href="javascript:void(0);" class="btn btn-sm bg-info-light">
-																					<i class="far fa-eye"></i> View
-																				</a>
-																				
-																				<a href="javascript:void(0);" class="btn btn-sm bg-success-light">
-																					<i class="fas fa-check"></i> Accept
-																				</a>
-																				<a href="javascript:void(0);" class="btn btn-sm bg-danger-light">
-																					<i class="fas fa-times"></i> Cancel
-																				</a>
-																			</div>
-																		</td>
-																	</tr>
+																<?php
+																}
+																?>
+																	
+																	
+																	
 																</tbody>
 															</table>		
 														</div>	

@@ -56,10 +56,8 @@
 															</tr>
 														</thead>
 														<tbody>
-															<?php
-																foreach($division as $division) 
-																{
-															?>
+															@if(!$division->isEmpty())
+											   				@foreach($division as $division)
 															<tr>
 																<td><?php echo $division->id?></td>
 																<td><?php echo $division->division_name?></td>
@@ -71,9 +69,10 @@
 																	</div>
 																</td>
 															</tr>
-															<?php
-															}
-															?>	
+															@endforeach
+															@else
+																<p class="text-danger mt-2">No Divisions Available</p>
+															@endif	
 														</tbody>
 													</table>
 												</div>		

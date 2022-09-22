@@ -8,8 +8,12 @@ use App\Models\diagnoses;
 use App\Models\prescriptions;
 use App\Models\patient;
 use App\Models\appointments;
+use App\Models\doc_fav_medicine;
+use App\Models\doc_fav_patient;
 use Hash;
 use session;
+use Alert;
+use Exception;
 
 class diagnoses_controller extends Controller
 {
@@ -20,7 +24,10 @@ class diagnoses_controller extends Controller
      */
     public function index()
     {
-        //
+        /*$diagnoses_arr=appointments::join('diagnoses','diagnoses.appoinment_id','=','appointments.id')->get();
+        print_r($diagnoses_arr);
+        exit();
+        return view('doctor.add-prescription',["diagnoses_arr"=>$diagnoses_arr]);*/
     }
 
     /**
@@ -28,12 +35,17 @@ class diagnoses_controller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create($id, Request $request)
     {
-        $app_data=appointments::find($id)->first();
+        $request->session()->get('submitid');
+        $app_data=appointments::where('id','=',$id)->first();
         $patient_id=$app_data->patient_id;
         $pdata=appointments::join('patients','patients.id','=','appointments.patient_id')->where('patient_id','=',$patient_id)->first();
-        return view('doctor.add-prescription',["app_data"=>$app_data,"pdata"=>$pdata]);
+        $pdiagnoses=diagnoses::where('appoinment_id','=',$id)->get();
+        $pprescriptions=prescriptions::where('appoinment_id','=',$id)->get();
+        $doc_fav_medicine=doc_fav_medicine::where('doctor_id','=',Session('doctor_id'))->get();
+
+        return view('doctor.add-prescription',["app_data"=>$app_data,"pdata"=>$pdata,"pdiagnoses"=>$pdiagnoses,"pprescriptions"=>$pprescriptions,"doc_fav_medicine"=>$doc_fav_medicine]);
     }
 
     /**
@@ -44,6 +56,12 @@ class diagnoses_controller extends Controller
      */
     public function diagnosis_store(Request $request, $id)
     {
+        $data=$request->validate([
+            'problems'=>'required',
+            'diagnosis'=>'required',
+            'care_suggestion'=>'required',
+            'reports'=>'required',
+        ]);
         $data=new diagnoses;
         $data->problems=$request->problems;
         $data->diagnosis=$request->diagnosis;
@@ -52,11 +70,16 @@ class diagnoses_controller extends Controller
         $data->appoinment_id=$request->appoinment_id;
         $data->patient_id=$request->patient_id;
         $res=$data->save();
-        return redirect('/add-prescription');
+        return back();
     }
 
     public function prescription_store(Request $request, $id)
     {
+        $data=$request->validate([
+            'medicine_name'=>'required',
+            'medicine_Quantity'=>'required',
+            'medicine_take_Days'=>'required',
+        ]);
         $data=new prescriptions;
         $data->medicine_name=$request->medicine_name;
         $data->medicine_Quantity=$request->medicine_Quantity;
@@ -66,9 +89,96 @@ class diagnoses_controller extends Controller
         $data->appoinment_id=$request->appoinment_id;
         $data->patient_id=$request->patient_id;
         $res=$data->save();
-        return redirect('/add-prescription');
+        Session()->pull('submitid');
+        return back();
     }
 
+    
+
+    public function invoice_view(Request $request,$id)
+    {   
+        $request->session()->get('invoice');
+        $data_dia=diagnoses::where('appoinment_id','=',$id)->update(['status'=>"Approved"]);
+        $data_pri=prescriptions::where('appoinment_id','=',$id)->update(['status'=>"Approved"]);
+        $data_app=appointments::where('id','=',$id)->update(['appointment_status'=>"Approved"]);
+
+
+
+        $app_data=appointments::where('id','=',$id)->first();
+        $patient_id=$app_data->patient_id;
+        $patient_data=patient::where('id','=',$patient_id)->first();
+        $doctor_data=doctor::where('id','=',Session('doctor_id'))->first();
+        $diagnoses_data=diagnoses::where('appoinment_id','=',$id)->get();
+        $prescriptions_data=prescriptions::where('appoinment_id','=',$id)->get();
+
+        $data=doc_fav_patient::where("patient_id","=",$patient_id)->first();
+        if($data)
+        {
+
+        }
+        else
+        {
+            $data=new doc_fav_patient;
+            $data->doctor_id=Session('doctor_id');
+            $data->patient_id=$patient_id;
+            $res=$data->save();
+
+
+
+            
+        }
+
+
+        return view('doctor.invoice-view',["app_data"=>$app_data,"patient_data"=>$patient_data,"doctor_data"=>$doctor_data,"diagnoses_data"=>$diagnoses_data,"prescriptions_data"=>$prescriptions_data]);
+        Session()->pull('invoice');
+    }
+    public function prescription_submit(Request $request,$id)
+    {
+        $app_data=appointments::where('id','=',$id)->first();
+        //$patient_id=$app_data->patient_id;
+        $patient_data=patient::where('id','=',Session('patient_id'))->first();
+        $doctor_data=doctor::join('appointments','appointments.doc_id','=','doctors.id')->where('appointments.doc_id','=','doctors.id')->first();
+        $diagnoses_data=diagnoses::where('appoinment_id','=',$id)->where('patient_id','=',Session('patient_id'))->get();
+        $prescriptions_data=prescriptions::where('appoinment_id','=',$id)->where('patient_id','=',Session('patient_id'))->get();
+   
+    }
+//////////////////////////////////////////////patient panel/////////////////////////////////////////
+    public function abcd($id)
+    {
+        $data=diagnoses::join('patients','patients.id','=','diagnoses.patient_id')
+        ->join('prescriptions','prescriptions.patient_id','=','patients.id')
+        ->join('appointments','appointments.id','=','prescriptions.appoinment_id')
+        ->join('doctors','doctors.id','=','appointments.doc_id')
+        ->where('id','=',Session('patient_id'))->first();
+
+        return view('patient.bill',["fetch"=>$data]);
+   
+    }
+
+    public function bill_view($id)
+    {
+       
+        $app_data=appointments::where('id','=',$id)->first();
+        $patient_data=patient::where('id','=',$app_data->patient_id)->first();
+        $doctor_data=doctor::where('id','=',$app_data->doc_id)->first();
+        $diagnoses_data=diagnoses::where('appoinment_id','=',$id)->get();
+        $prescriptions_data=prescriptions::where('appoinment_id','=',$id)->get();
+        return view('patient.bill',["app_data"=>$app_data,"patient_data"=>$patient_data,"doctor_data"=>$doctor_data,"diagnoses_data"=>$diagnoses_data,"prescriptions_data"=>$prescriptions_data]);
+       
+    }   
+
+    public function dtbill_view($id)
+    {
+       
+        $app_data=appointments::where('id','=',$id)->first();
+        $patient_data=patient::where('id','=',$app_data->patient_id)->first();
+        $doctor_data=doctor::where('id','=',$app_data->doc_id)->first();
+        $diagnoses_data=diagnoses::where('appoinment_id','=',$id)->get();
+        $prescriptions_data=prescriptions::where('appoinment_id','=',$id)->get();
+        return view('doctor.dtbill',["app_data"=>$app_data,"patient_data"=>$patient_data,"doctor_data"=>$doctor_data,"diagnoses_data"=>$diagnoses_data,"prescriptions_data"=>$prescriptions_data]);
+       
+    }
+    
     /**
      * Display the specified resource.
      *

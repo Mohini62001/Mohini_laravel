@@ -7,6 +7,8 @@ use App\Models\doc_fav_medicine;
 use App\Models\medicine;
 use App\Models\division;
 use session;
+use Alert;
+use Exception;
 
 class doc_fav_medicines_controller extends Controller
 {
@@ -61,7 +63,8 @@ class doc_fav_medicines_controller extends Controller
         $data->medicine_name=$request->medicine_name;
         $data->doctor_id=session('doctor_id');
         $data->save();
-        return redirect('/doctor-my-medicine')->with('success','Medicine Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Medicine');
+        return redirect('/doctor-my-medicine');
     }
 
     public function addmedicine(Request $request)
@@ -74,7 +77,8 @@ class doc_fav_medicines_controller extends Controller
         $data->medicine_name=$request->medicine_name1;
         $data->doctor_id=session('doctor_id');
         $data->save();
-        return redirect('/doctor-my-medicine')->with('succes','Medicine Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Medicine');
+        return redirect('/doctor-my-medicine');
     }
 
     /**
@@ -121,7 +125,8 @@ class doc_fav_medicines_controller extends Controller
     {
         $data=doc_fav_medicine::find($id);
         $data->delete();
-        return redirect('/doctor-my-medicine')->with("suc"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Medicine');
+        return redirect('/doctor-my-medicine');
         
     }
 
@@ -143,14 +148,16 @@ class doc_fav_medicines_controller extends Controller
         $data->medicine_name=$request->medicine_name;
         $data->company_id=session('company_id');
         $data->save();
-        return redirect('/company-medicine-manager')->with('success','Medicine Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Medicine');
+        return redirect('/company-medicine-manager');
     }
 
     public function companymedicinedelete($id)
     {
         $data=medicine::find($id);
         $data->delete();
-        return redirect('/company-medicine-manager')->with("suc"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Medicine');
+        return redirect('/company-medicine-manager');
     }
 
     public function companydivisioncreate()
@@ -170,14 +177,16 @@ class doc_fav_medicines_controller extends Controller
         $data->division_name=$request->division_name;
         $data->company_id=session('company_id');
         $data->save();
-        return redirect('/company-divisions-manager')->with('succes','Division Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Division');
+        return redirect('/company-divisions-manager');
     }
 
     public function companydivisiondelete($id)
     {
         $data=division::find($id);
         $data->delete();
-        return redirect('/company-divisions-manager')->with("succ"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Division');
+        return redirect('/company-divisions-manager');
     }
 
   //////////////////////////////////////////manager panel///////////////////////////////////////////
@@ -199,14 +208,16 @@ class doc_fav_medicines_controller extends Controller
         $data->medicine_name=$request->medicine_name;
         $data->created_by=Session('manager_id');
         $data->save();
-        return redirect('/manager-medicine-manager')->with('success','Medicine Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Medicine');
+        return redirect('/manager-medicine-manager');
     }
 
     public function managermedicinedelete($id)
     {
         $data=medicine::find($id);
         $data->delete();
-        return redirect('/manager-medicine-manager')->with("suc"," deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Medicine');
+        return redirect('/manager-medicine-manager');
     }
 
     

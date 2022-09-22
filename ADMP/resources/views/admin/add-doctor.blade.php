@@ -1,7 +1,8 @@
 @extends('admin.Layout.main_layout') 	
 @section('main_container')
 			
-			
+			 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
 			
 			<!-- Page Wrapper -->
             <div class="page-wrapper">
@@ -271,7 +272,7 @@
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">State</label>
 													<div class="col-lg-9">
-														<select class="select" value="{{old('state')}}" name="state">
+														<select class="select" id="sid" value="{{old('state')}}" name="state">
 															<option value="">Select</option>
 															<?php
 															foreach($state_id_arr as $d)
@@ -293,26 +294,7 @@
 										
 										<div class="row">
 											<div class="col-xl-6">
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">City</label>
-													<div class="col-lg-9">
-														<select class="select" value="{{old('city')}}" name="city">
-															<option value="">Select</option>
-															<?php
-															foreach($city_id_arr as $c)
-															{
-															?>
-															<option value="<?php echo $c->id;?>">
-														       <?php echo $c->city_name ?></option>
-															<?php
-															}
-															?>
-														</select>
-														@if ($errors->has('city'))
-            												<span class="text-danger">{{ $errors->first('city') }}</span>
-       													@endif
-													</div>
-												</div>
+												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Address</label>
 													<div class="col-lg-9">
@@ -322,31 +304,6 @@
        													@endif
 													</div>
 												</div>
-												
-											</div>
-											<div class="col-xl-6">
-											
-												<div class="form-group row">
-													<label class="col-lg-3 col-form-label">Area</label>
-													<div class="col-lg-9">
-														<select class="select" value="{{old('area')}}" name="area">
-															<option value="">Select</option>
-															<?php
-															foreach($area_id_arr as $a)
-															{
-															?>
-															<option value="<?php echo $a->id;?>">
-														       <?php echo $a->area_name ?></option>
-															<?php
-															}
-															?>
-														</select>
-														@if ($errors->has('area'))
-            												<span class="text-danger">{{ $errors->first('area') }}</span>
-       													@endif
-													</div>
-												</div>
-												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Postal Code</label>
 													<div class="col-lg-9">
@@ -356,6 +313,33 @@
        													@endif
 													</div>
 												</div>
+												
+											</div>
+											<div class="col-xl-6">
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">City</label>
+													<div class="col-lg-9">
+														<select class="select" id="city_id" value="{{old('city')}}" name="city">
+															
+														</select>
+														@if ($errors->has('city'))
+            												<span class="text-danger">{{ $errors->first('city') }}</span>
+       													@endif
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-lg-3 col-form-label">Area</label>
+													<div class="col-lg-9">
+														<select class="select"  id="area_id" value="{{old('area')}}" name="area">
+															
+														</select>
+														@if ($errors->has('area'))
+            												<span class="text-danger">{{ $errors->first('area') }}</span>
+       													@endif
+													</div>
+												</div>
+												
+												
 												<div class="form-group row">
 													<label class="col-lg-3 col-form-label">Google Map URL</label>
 													<div class="col-lg-9">
@@ -489,6 +473,49 @@
 					</div>
 
 
+<script>
+$('#sid').on('change', function () {
+                var sid = this.value;
+                $('#city_id').html('');
+                $.ajax({
+				url:"{{url('/getCity')}}",
+				type: "POST",
+				data: {
+				sid: sid,
+				_token: '{{csrf_token()}}'
+				},
+				
+				success: function(result) {
+                        $('#city_id').html('<option value="">Select City</option>');
+                        $.each(result.cities, function (key, value) {
+                            $('#city_id').append('<option value="' + value.id + '">' + value.city_name + '</option>');
+                        });
+                        
+                    }
+                });
+            });
+			
+$('#city_id').on('change', function () {
+                var city_id = this.value;
+                $('#area_id').html('');
+                $.ajax({
+				url:"{{url('/getArea')}}",
+				type: "POST",
+				data: {
+				city_id: city_id,
+				_token: '{{csrf_token()}}'
+				},
+				
+				success: function(result) {
+                        $('#area_id').html('<option value="">Select Area</option>');
+                        $.each(result.areas, function (key, value) {
+                            $('#area_id').append('<option value="' + value.id + '">' + value.area_name + '</option>');
+                        });
+                        
+                    }
+                });
+            });			
+</script>
 
 					
 				
@@ -499,8 +526,6 @@
         </div>
 		<!-- /Main Wrapper -->
 		
-		<!-- jQuery -->
-        <script src="{{url('Backend/assets/js/jquery-3.2.1.min.js')}}"></script>
 		
 		<!-- Bootstrap Core JS -->
         <script src="{{url('Backend/assets/js/popper.min.js')}}"></script>

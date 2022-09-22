@@ -169,21 +169,31 @@
 					
 					<!-- User Menu -->
 					<li class="nav-item dropdown has-arrow">
+						@if(Session('img'))
 						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 							<span class="user-img"><img class="rounded-circle" src="{{url('upload/admin/'. Session('img'))}}" width="31" alt="Ryan Taylor"></span>
 						</a>
+						@else
+						<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+							<span class="user-img"><img class="rounded-circle" src="{{url('Frontend/assets/img/patients/user.png')}}" width="31" alt="Ryan Taylor"></span>
+						</a>
+						@endif
 						<div class="dropdown-menu">
 							<div class="user-header">
 								<div class="avatar avatar-sm">
-									<img src="{{url('upload/admin/'. Session('img'))}}" alt="User Image" class="avatar-img rounded-circle">
-								</div>
+								@if(Session('img'))
+								<img src="{{url('upload/admin/'. Session('img'))}}" alt="User Image" class="avatar-img rounded-circle">
+								@else
+								<img src="{{url('Frontend/assets/img/patients/user.png')}}" alt="User Image" class="avatar-img rounded-circle">
+								@endif
+									</div>
 								<div class="user-text">
 									<h6>{{session('name')}}</h6>
 									<p class="text-muted mb-0">Administrator</p>
 								</div>
 							</div>
 							<a class="dropdown-item" href="{{url('/admin-profile')}}">My Profile</a>
-							<a class="dropdown-item" href="{{url('/admin-settings')}}">Settings</a>
+							<a class="dropdown-item" href="{{url('/admin-changepassword')}}">Change Password</a>
 							<a class="dropdown-item" href="{{url('/logout')}}">Logout</a>
 						</div>
 					</li>

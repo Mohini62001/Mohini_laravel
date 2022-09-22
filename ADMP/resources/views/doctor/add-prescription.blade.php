@@ -32,9 +32,26 @@
 								<div class="card-body">
 									<div class="pro-widget-content">
 										<div class="profile-info-widget">
+										<?php
+											$ptprofile_img=$pdata->ptprofile_img;
+											if($ptprofile_img=="null")
+											{
+										?>
+											<a href="#" class="booking-doc-img">
+												<img src="{{url('Frontend/assets/img/patients/user.png')}}" alt="User Image">
+											</a>
+										<?php
+											}
+											else
+											{
+										?>
 											<a href="#" class="booking-doc-img">
 												<img src="{{asset('upload/patient/' . $pdata->ptprofile_img)}}" alt="User Image">
 											</a>
+										<?php
+											}
+										?>
+											
 											<div class="profile-det-info">
 												<h3><a href="{{url('/patient-profile')}}"><?php echo $pdata->name?> </a></h3>
 												<div class="patient-details">
@@ -67,15 +84,14 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="biller-info">
-												<h4 class="d-block">Dr. Darren Elder {{Session('drname')}}</h4>
-												<span class="d-block text-sm text-muted">Dentist</span>
-												<span class="d-block text-sm text-muted">Newyork, United States</span>
+												<h4 class="d-block">Dr. {{Session('drname')}}</h4>
+												<span class="d-block text-sm text-muted">{{Session('address')}}</span>
 											</div>
 										</div>
 										<div class="col-sm-6 text-sm-right">
 											<div class="billing-info">
-												<h4 class="d-block">1 November 2019</h4>
-												<span class="d-block text-muted">#INV0001</span>
+												<h4 class="d-block">Date : <?php echo (new DateTime())->format('d-m-Y'); ?></h4>
+												<span class="d-block text-muted">Appointment id : {{$app_data->id}}</span>
 											</div>
 										</div>
 									</div>
@@ -107,15 +123,27 @@
 														<tr>
 															<td>
 																<textarea class="form-control" placeholder="Write Patient Problems" name="problems"></textarea>
+																@if ($errors->has('problems'))
+																	<span class="text-danger">{{ $errors->first('problems') }}</span>
+																@endif
 															</td>
 															<td>
 															<textarea class="form-control" placeholder="Write Patient Diagnosis" name="diagnosis"></textarea>
+															@if ($errors->has('diagnosis'))
+																	<span class="text-danger">{{ $errors->first('diagnosis') }}</span>
+															@endif
 															</td>
 															<td>
 															<textarea class="form-control" placeholder="Write Patient Care suggestions" name="care_suggestion"></textarea>
+															@if ($errors->has('care_suggestion'))
+																	<span class="text-danger">{{ $errors->first('care_suggestion') }}</span>
+															@endif
 															</td>
 															<td>
 															<textarea class="form-control" placeholder="Write Patient Reports Suggestions" name="reports"></textarea>
+															@if ($errors->has('reports'))
+																	<span class="text-danger">{{ $errors->first('reports') }}</span>
+															@endif
 															</td>
 															<input type="hidden" value="<?php echo $app_data->id?>" name="appoinment_id" id="appoinment_id">
 															<input type="hidden" value="<?php echo $app_data->patient_id?>" name="patient_id" id="patient_id">
@@ -126,6 +154,42 @@
 													</tbody>
 												</table>
 											</div>
+											<div class="table-responsive">
+													<table class="datatable table table-hover table-center mb-0">
+														<thead>
+															<tr>
+																<th>Problems</th>
+																<th>Diagnosis</th>
+																<th>care suggestions</th>
+																<th>reports</th>
+															</tr>
+														</thead>
+														<tbody>
+														
+														@if(!$pdiagnoses->isEmpty())
+															@foreach($pdiagnoses as $pdiagnoses1) 		
+															<tr>
+																<td>{{$pdiagnoses1->problems}}</td>
+																<td>{{$pdiagnoses1->diagnosis}}</td>
+																<td>{{$pdiagnoses1->care_suggestion}}</td>
+																<td>{{$pdiagnoses1->reports}}</td>
+																<td class="text-right">
+																	<div class="actions">
+																		<a  href="" class="btn btn-sm bg-danger-light">
+																			<i class="fe fe-trash"></i> Delete
+																		</a>
+																	</div>
+																</td>
+															</tr>
+														@endforeach
+														@else
+														<tr>
+															<td class="text-danger" colspan="5" align="center"> Data Not Found </td>
+														</tr>
+														@endif	
+														</tbody>
+													</table>
+												</div>
 										</div>
 									</div>								
     </div>
@@ -146,7 +210,7 @@
 												<table class="table table-hover table-center">
 													<thead>
 														<tr>
-															<th style="min-width: 100px">Name</th>
+															<th style="min-width: 100px"> Medicine Name</th>
 															<th style="min-width: 100px">Quantity</th>
 															<th style="min-width: 100px">Days</th>
 															<th style="min-width: 100px;">Time</th>
@@ -157,13 +221,29 @@
 													<tbody>
 														<tr>
 															<td>
-																<input class="form-control" placeholder="" type="text" name="medicine_name">
+															<input list="browsers" name="medicine_name" id="browser" class="form-control">
+															<datalist value="" id="browsers">
+															@if(!$doc_fav_medicine->isEmpty())
+																@foreach($doc_fav_medicine as $medicine) 		
+																<option value={{$medicine->medicine_name}}>
+																@if ($errors->has('medicine_name'))
+																	<span class="text-danger">{{ $errors->first('medicine_name') }}</span>
+																@endif
+																@endforeach
+															@endif
+															</datalist>
 															</td>
 															<td>
 																<input class="form-control" placeholder="" type="text" name="medicine_Quantity">
+																@if ($errors->has('medicine_Quantity'))
+																	<span class="text-danger">{{ $errors->first('medicine_Quantity') }}</span>
+																@endif
 															</td>
 															<td>
 																<input class="form-control" placeholder="" type="text" name="medicine_take_Days">
+																@if ($errors->has('medicine_take_Days'))
+																	<span class="text-danger">{{ $errors->first('medicine_take_Days') }}</span>
+																@endif
 															</td>
 															<td>
 																<div class="form-check form-check-inline">
@@ -205,20 +285,58 @@
 														</tr>
 													</tbody>
 												</table>
-												
+												<div class="table-responsive">
+													<table class="datatable table table-hover table-center mb-0">
+														<thead>
+															<tr>
+																<th>Medicine Name</th>
+																<th>Quantity</th>
+																<th>Days</th>
+																<th>Time</th>
+																<th>Dose</th>
+															</tr>
+														</thead>
+														<tbody>
+														<tr>
+														@if(!$pprescriptions->isEmpty())
+															@foreach($pprescriptions as $pprescriptions1) 		
+															<tr>
+																<td>{{$pprescriptions1->medicine_name}}</td>
+																<td>{{$pprescriptions1->medicine_Quantity}}</td>
+																<td>{{$pprescriptions1->medicine_take_Days}}</td>
+																<td>{{$pprescriptions1->medicine_take_Time}}</td>
+																<td>{{$pprescriptions1->medicine_dose}}</td>
+																<td class="text-right">
+																	<div class="actions">
+																		<a  href="" class="btn btn-sm bg-danger-light">
+																			<i class="fe fe-trash"></i> Delete
+																		</a>
+																	</div>
+																</td>
+															</tr>
+															@endforeach
+															
+															@else
+															<tr>
+																<td class="text-danger" colspan="6" align="center"> Data Not Found </td>
+															</tr>
+															@endif
+																
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</div>
 										
 									</div>
     </div><!-- Submit Section -->
-									<div class="row">
-										<div class="col-md-12">
-											<div class="submit-section">
-												<button type="submit" class="btn btn-primary submit-btn">Save</button>
-												<button type="reset" class="btn btn-secondary submit-btn">Clear</button>
-											</div>
-										</div>
-									</div>
+	<td class="text-right">
+			<div class="actions text-right">
+				<a class="btn btn-sm bg-success-light" href="{{url('invoice-view/'.$app_data->id)}}">
+					<i class="fe fe-pencil"></i> Submit
+				</a>
+			</div>
+			</td>
 									<!-- /Submit Section -->
   </div>
   </form>

@@ -25,7 +25,7 @@
 		<![endif]-->
     </head>
     <body>
-	
+	@include('sweetalert::alert')
 		<!-- Main Wrapper -->
         <div class="main-wrapper login-body">
             <div class="login-wrapper">
@@ -38,7 +38,9 @@
 							<div class="login-right-wrap">
 								<h1>Admin Login</h1>
 								<p class="account-subtitle">Access to our dashboard</p>
-								
+								@if(session()->has('fail'))
+								    <i class="alert alert-danger">{{session('fail')}}</i>
+							    @endif
 								<!-- Form -->
 								<form action="{{url('/adminlogin')}}" method="post" enctype="multipart/form-data">
 									@csrf
@@ -61,16 +63,9 @@
 								<!---/Form -->
 								
 								<div class="text-center forgotpass"><a href="{{url('/forgot-password')}}">Forgot Password?</a></div>
-								<div class="login-or">
-									<span class="or-line"></span>
-									<span class="span-or">or</span>
-								</div>
+								
 								  
-								<!-- Social Login -->
-								<div class="social-login">
-									<span>Login with</span>
-									<a href="#" class="facebook"><i class="fa fa-facebook"></i></a><a href="#" class="google"><i class="fa fa-google"></i></a>
-								</div>
+								
 
 							</div>
                         </div>

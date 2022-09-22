@@ -59,10 +59,8 @@
 															</tr>
 														</thead>
 														<tbody>
-															<?php
-																foreach($medicine as $medicine) 
-																{
-															?>
+															@if(!$medicine->isEmpty())
+											                @foreach($medicine as $medicine)
 															<tr>
 																<td><?php echo $medicine->id?></td>
 																<td><?php echo $medicine->medicine_name?></td>
@@ -74,9 +72,11 @@
 																	</div>
 																</td>
 															</tr>
-															<?php
-															}
-															?>	
+																
+															@endforeach
+															@else
+																<p class="text-danger mt-2">No Medicines Available</p>
+															@endif
 														</tbody>
 													</table>
 												</div>		

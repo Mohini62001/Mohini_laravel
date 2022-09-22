@@ -178,12 +178,12 @@
 									<img src="{{url('upload/manager/'. Session('mprofile_img'))}}" alt="User Image" class="avatar-img rounded-circle">
 								</div>
 								<div class="user-text">
-									<h6></h6>
+									<h6>{{Session('mname')}}</h6>
 									<p class="text-muted mb-0">Administrator</p>
 								</div>
 							</div>
 							<a class="dropdown-item" href="{{url('/manager-profile')}}">My Profile</a>
-							<a class="dropdown-item" href="{{url('/manager-settings')}}">Settings</a>
+							<a class="dropdown-item" href="{{url('/manager-changepassword')}}">Change Password</a>
 							<a class="dropdown-item" href="{{url('/managerlogout')}}">Logout</a>
 						</div>
 					</li>

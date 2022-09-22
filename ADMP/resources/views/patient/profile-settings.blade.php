@@ -96,12 +96,28 @@
 														<option>Female</option>
 												<?php
 														}
-													else
+													
+												?>
+
+												<?php
+													$gender=$fetch->gender;
+													if($gender=="Female")
 														{
 												?>
 														<option>Select Gender</option>
 														<option >Male</option>
 														<option value="Female" selected>Female</option>
+												<?php
+														}
+												?>
+												<?php
+													$gender=$fetch->gender;
+													if($gender=="null")
+														{
+												?>
+														<option value="null">Select Gender</option>
+														<option >Male</option>
+														<option >Female</option>
 												<?php
 														}
 												?>

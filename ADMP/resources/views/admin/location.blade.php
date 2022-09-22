@@ -56,10 +56,8 @@
 												</tr>
 											</thead>
 											<tbody>
-											<?php
-													foreach($state_arr as $data) 
-													{
-												?>
+												@if(!$state_arr->isEmpty())
+											   @foreach($state_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 													 <td><?php echo $data->state_name?></td>
@@ -71,9 +69,10 @@
 														</div>
 													</td>
 												</tr>
-												<?php
-												}
-												?>	
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No State Available</p>
+												@endif
 											</tbody>
 										</table>
 									</div>
@@ -130,10 +129,8 @@
 												</tr>
 											</thead>
 											<tbody>
-											<?php
-													foreach($city_arr as $data) 
-													{
-												?>
+												@if(!$city_arr->isEmpty())
+											   @foreach($city_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 												    <td><?php echo $data->city_name?></td>
@@ -145,9 +142,10 @@
 														</div>
 													</td>
 												</tr>
-												<?php
-												}
-												?>	
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No City Available</p>
+												@endif
 											</tbody>
 										</table>
 									</div>
@@ -206,10 +204,8 @@
 												</tr>
 											</thead>
 											<tbody>
-											<?php
-													foreach($area_arr as $data) 
-													{
-												?>
+												@if(!$area_arr->isEmpty())
+											   @foreach($area_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 													 <td><?php echo $data->area_name?></td>
@@ -221,9 +217,10 @@
 														</div>
 													</td>
 												</tr>
-												<?php
-												}
-												?>	
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Area Available</p>
+												@endif
 											</tbody>
 										</table>
 									</div>

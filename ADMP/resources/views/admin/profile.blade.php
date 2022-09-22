@@ -25,9 +25,15 @@
 							<div class="profile-header">
 								<div class="row align-items-center">
 									<div class="col-auto profile-image">
+									@if(Session('img'))
 										<a href="#">
 											<img class="rounded-circle" style="height:100px;width:100px;" src="{{asset('upload/admin/'.$fetch->img)}}">
 										</a>
+									@else
+										<a href="#">
+											<img class="rounded-circle" style="height:100px;width:100px;" src="{{url('Frontend/assets/img/patients/user.png')}}">
+										</a>
+									@endif
 									</div>
 									<div class="col ml-md-n2 profile-user-info">
 										<h4 class="user-name mb-0"><?php echo $fetch->name;?></h4>

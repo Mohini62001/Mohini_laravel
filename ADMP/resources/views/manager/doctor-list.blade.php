@@ -41,24 +41,20 @@
 													<th>Specialist</th>
 													<th>First Name</th>
 													<th>Last Name</th>
-												    <th>Doc status</th>
-													<th class="text-right">Actions</th>
+												   <th class="text-right">Actions</th>
 													
 													
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-													foreach($companydoctor_arr as $data) 
-													{
-												?>
+												@if(!$companydoctor_arr->isEmpty())
+											   @foreach($companydoctor_arr as $data)
 												<tr>
 												<td><?php echo $data->id?></td>
 												<td><img src="{{asset('upload/doctor/' . $data->profile_img)}}" height="50px" width="50px"/></td>
 												<td><?php echo $data->name?></td>
 												<td><?php echo $data->first_name?></td>
 												<td><?php echo $data->last_name?></td>
-												<td><?php echo $data->doctor_status ?></td>
 												<td class="text-right">
 														<div class="actions">
 															<a  href="{{url('admin-add-doctor/'. $data->id)}}" class="btn btn-sm bg-danger-light">
@@ -68,12 +64,10 @@
 												</td>
 												
 												</tr>
-												<?php
-												}
-												?>
-												
-											
-													
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Doctors Available</p>
+												@endif	
 													
 											</tbody>
 										</table>

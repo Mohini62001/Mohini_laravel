@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\service;
 use App\Models\drspecialitie;
 use session;
+use Alert;
 class service_controller extends Controller
 {
     /**
@@ -46,7 +47,8 @@ class service_controller extends Controller
         $data->title=$request->service;
         $data->doctor_id=session('doctor_id');
         $data->save();
-		return redirect('/doctor-service-specialization')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Add Service');
+		return redirect('/doctor-service-specialization');
     }
 
     public function addspecialitie(Request $request)
@@ -59,7 +61,8 @@ class service_controller extends Controller
         $data->title=$request->specialization;
         $data->doctor_id=session('doctor_id');
         $data->save();
-		return redirect('/doctor-service-specialization')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Add Specialization');
+		return redirect('/doctor-service-specialization');
     }
     
     /**
@@ -106,7 +109,8 @@ class service_controller extends Controller
     {
         $data=service::find($id);
         $data->delete();
-        return redirect('/doctor-service-specialization')->with('success','service delete success');
+        Alert::success('Done', 'You\'ve Successfully Delete Service');
+        return redirect('/doctor-service-specialization');
 
     }
 
@@ -114,7 +118,8 @@ class service_controller extends Controller
     {
         $data=drspecialitie::find($id);
         $data->delete();
-        return redirect('/doctor-service-specialization')->with('succes','speciality delete success');
+        Alert::success('Done', 'You\'ve Successfully Delete Specialization');
+        return redirect('/doctor-service-specialization');
 
     }
 }

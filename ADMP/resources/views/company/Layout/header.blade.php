@@ -6,6 +6,22 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
         <title>Doccure - Dashboard</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="{{url('Frontend/assets/css/bootstrap.min.css')}}">
+
+		
+		
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="{{url('Frontend/assets/plugins/fontawesome/css/fontawesome.min.css')}}">
+<link rel="stylesheet" href="{{url('Frontend/assets/plugins/fontawesome/css/all.min.css')}}">
+	
 		
 		<!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="{{url('/Backend/assets/img/favicon.png')}}">
@@ -179,12 +195,12 @@
 									<img src="{{url('upload/companyprofile/'. Session('cprofile_img'))}}" alt="User Image" class="avatar-img rounded-circle">
 								</div>
 								<div class="user-text">
-									<h6>{{session('name')}}</h6>
+									<h6>{{Session('cname')}}</h6>
 									<p class="text-muted mb-0">Administrator</p>
 								</div>
 							</div>
 							<a class="dropdown-item" href="{{url('/company-profile')}}">My Profile</a>
-							<a class="dropdown-item" href="{{url('/company-settings')}}">Settings</a>
+							<a class="dropdown-item" href="{{url('/company-changepassword')}}">Change Password</a>
 							<a class="dropdown-item" href="{{url('/companylogout')}}">Logout</a>
 						</div>
 					</li>
@@ -207,6 +223,10 @@
 							<li class="active"> 
 								<a href="{{url('/company')}}"><i class="fe fe-home"></i> <span>Dashboard</span></a>
 							</li>
+							
+							<li> 
+								<a href="{{url('/company-myappointment')}}"><i class="fe fe-calendar"></i> <span>My Appointments</span></a>
+							</li>
 
 							<li> 
 								<a href="{{url('/company-divisions-manager')}}"><i class="fe fe-plus"></i> <span>Divisions</span></a>
@@ -224,14 +244,6 @@
 									</li>
 									<li>
 											<a href="{{url('/company-fav-doctor')}}"><i class="fe fe-user"></i> <span>My Doctors</span></a>
-									</li>
-									<li class="submenu">
-										<a href="javascript:void(0);"><i class="fe fe-calendar"></i> <span>Appointment</span> <span class="menu-arrow"></span></a>
-										<ul style="display: none;">
-											<li><a href="{{url('/company-doctor-appointment')}}"><span>Approve</span></a></li>
-											
-											<li><a href="{{url('/company-doctor-cancel-appointment')}}"> <span>Cancel</span></a></li>
-										</ul>
 									</li>
 									
 								</ul>

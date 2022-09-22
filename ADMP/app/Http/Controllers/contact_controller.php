@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\contact;
+use Alert;
+use Exception;
 
 class contact_controller extends Controller
 {
@@ -50,8 +52,8 @@ class contact_controller extends Controller
         $data->comment=$request->comment;
 
         $res=$data->save();
-
-        return redirect('contact')->with('success','Contact Sent Success');
+        Alert::success('Done', 'You\'ve Successfully Send You\'re Contact');
+        return redirect('contact');
     }
 
     /**
@@ -98,6 +100,7 @@ class contact_controller extends Controller
     {
         $data=contact::find($id);
         $data->delete();
-        return redirect('admin-contact')->with('success','Deleted successfully');
+        Alert::success('Done', 'You\'ve Successfully Delete Contact');
+        return redirect('admin-contact');
     }
 }

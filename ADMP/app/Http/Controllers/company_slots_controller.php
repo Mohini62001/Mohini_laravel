@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\company_slots;
 use App\Models\doctor;
+use Alert;
+use Exception;
 
 class company_slots_controller extends Controller
 {
@@ -48,8 +50,8 @@ class company_slots_controller extends Controller
             $data->cslot_evening_to=$request->cslot_evening_to;
             $data->cslot_evening_from=$request->cslot_evening_from;
             $data->save();
-           
-        return redirect('doctor-company-schedule-timings')->with('success','Schedule add success');
+            Alert::success('Done', 'You\'ve Successfully Add Schedule');
+        return redirect('doctor-company-schedule-timings');
     }
 
     /**

@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('last_name')->after('first_name');
             $table->string('email')->after('last_name');
             $table->string('password')->after('email');
-            $table->string('mrprofile_img')->after('password');
+            $table->string('dpass')->after('password');
+            $table->string('mrprofile_img')->after('dpass');
             $table->string('visiting_card')->after('mrprofile_img');
             $table->enum('status',['Block','Unblock'])->default('Unblock')->after('visiting_card');
         });

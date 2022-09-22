@@ -48,17 +48,41 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\afterlogin::class
         ],
 
+        'beforelogin'=>[
+            \App\Http\Middleware\beforelogin::class
+        ],
+
         'afterlogincompany'=>[
             \App\Http\Middleware\afterlogincompany::class
+        ],
+
+        'beforelogincompany'=>[
+            \App\Http\Middleware\beforelogincompany::class
         ],
 
         'doctorafterlogin'=>[
             \App\Http\Middleware\doctorafterlogin::class
         ],
 
+        'doctorbeforelogin'=>[
+            \App\Http\Middleware\doctorbeforelogin::class
+        ],
+
+        'managerafterlogin'=>[
+            \App\Http\Middleware\managerafterlogin::class
+        ],
+
+        'managerbeforelogin'=>[
+            \App\Http\Middleware\managerbeforelogin::class
+        ],
+
         'patientafterlogin'=>[
             \App\Http\Middleware\patientafterlogin::class
-       ]
+        ],
+
+        'patientbeforelogin'=>[
+            \App\Http\Middleware\patientbeforelogin::class
+        ]
     ];
 
     /**
@@ -69,8 +93,6 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
-        'doctorbeforelogin'=> \App\Http\Middleware\doctorbeforelogin::class,
-        'patientbeforelogin'=> \App\Http\Middleware\patientbeforelogin::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,

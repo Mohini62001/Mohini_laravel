@@ -39,10 +39,8 @@
 												</tr>
 											</thead>
 											<tbody>
-											<?php
-													foreach($specialities_arr as $data) 
-													{
-												?>
+												@if(!$specialities_arr->isEmpty())
+											   @foreach($specialities_arr as $data)
 												<tr>
 													<td><?php echo $data->id?></td>
 													<td><img src="{{asset('upload/specialities/' . $data->img)}}" height="50px" width="50px"/></td>
@@ -58,9 +56,10 @@
 														</div>
 													</td>
 												</tr>
-												<?php
-												}
-												?>
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Specialities Available</p>
+												@endif
 												
 												
 												

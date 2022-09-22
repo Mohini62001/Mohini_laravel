@@ -8,6 +8,8 @@ use App\Models\state;
 use App\Models\citie;
 use App\Models\area;
 use session;
+use Alert;
+use Exception;
 
 class stockiest_controller extends Controller
 {
@@ -123,7 +125,8 @@ class stockiest_controller extends Controller
         $data->pincode=$request->pincode;
 
         $res=$data->save();
-        return redirect('company-add-stockiest')->with('success','Stockiest Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Stockiest');
+        return redirect('company-add-stockiest');
 
     }
 
@@ -163,7 +166,8 @@ class stockiest_controller extends Controller
        $data->pincode=$request->pincode;
 
        $res=$data->save();
-       return redirect('manager-add-stockiest')->with('success','Stockiest Add Success');
+       Alert::success('Done', 'You\'ve Successfully Add Stockiest');
+       return redirect('manager-add-stockiest');
 
     }
 }

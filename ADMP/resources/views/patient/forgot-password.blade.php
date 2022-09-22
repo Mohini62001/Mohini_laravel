@@ -28,7 +28,7 @@
 	
 	</head>
 	<body class="account-page">
-
+	@include('sweetalert::alert')
 		<!-- Main Wrapper -->
 		<div class="main-wrapper">
 		
@@ -97,19 +97,23 @@
 									<div class="col-md-12 col-lg-6 login-right">
 										<div class="login-header">
 											<h3>Forgot Password?</h3>
-											<p class="small text-muted">Enter your email to get a password reset link</p>
+											<p class="small text-muted">Enter your email to reset password</p>
 										</div>
 										
 										<!-- Forgot Password Form -->
-										<form action="https://dreamguys.co.in/demo/doccure/{{url('/login')}}">
+										<form action="{{url('forgot-password')}}" method="post" enctype="multipart/form-data">
+											@csrf
 											<div class="form-group form-focus">
-												<input type="email" class="form-control floating">
+												<input type="email" name="email" class="form-control floating">
 												<label class="focus-label">Email</label>
+												@if ($errors->has('email'))
+            										<span class="text-danger">{{ $errors->first('email') }}</span>
+       											@endif
 											</div>
 											<div class="text-right">
 												<a class="forgot-link" href="{{url('/login')}}">Remember your password?</a>
 											</div>
-											<button class="btn btn-primary btn-block btn-lg login-btn" type="submit">Reset Password</button>
+											<button class="btn btn-primary btn-block btn-lg login-btn" name="submit" value="send" type="submit">Reset Password</button>
 										</form>
 										<!-- /Forgot Password Form -->
 										

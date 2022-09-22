@@ -9,10 +9,10 @@
 							<nav aria-label="breadcrumb" class="page-breadcrumb">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="{{url('/index')}}">Home</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Invoices</li>
+									<li class="breadcrumb-item active" aria-current="page">Medicine</li>
 								</ol>
 							</nav>
-							<h2 class="breadcrumb-title">Invoices</h2>
+							<h2 class="breadcrumb-title">My Medicines</h2>
 						</div>
 					</div>
 				</div>
@@ -38,7 +38,7 @@
                         <div class="col-md-7 col-lg-8 col-xl-9">
 							<div class="card card-table">
 								<div class="card-body">
-								<div class="row">
+								<div class="row p-3">
 									<div class="col-md-6 col-lg-6">
 										<h4>Add Medicines Form-list</h4>
 										@if(session()->has('success'))
@@ -50,22 +50,22 @@
 											<label>Medicines</label>
 											<select class="col-lg-9 form-control" name="medicine_name">
 											<option value="">Select</option>
-															<?php
-															foreach($medicine_arr as $data)
-															{
-															?>
-															<option value="<?php echo $data->medicine_name;?>">
-															       <?php echo $data->medicine_name ?></option>
-															<?php
-															}
-															?>			
+												<?php
+												foreach($medicine_arr as $data)
+												{
+												?>
+												<option value="<?php echo $data->medicine_name;?>">
+														<?php echo $data->medicine_name ?></option>
+												<?php
+												}
+												?>			
 											</select>
 											@if ($errors->has('medicine_name'))
             									<span class="text-danger">{{ $errors->first('medicine_name') }}</span>
        										@endif
 										</div>
 										<div class="text-right">
-											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
+											<button type="submit" style="margin-right:125px" class="btn btn-primary" name="submit" value="Send">Submit</button>
 										</div>
 										</form>
 									</div>
@@ -76,7 +76,7 @@
 							            @endif
 										<form action="{{url('/addmedicine')}}" method="post" enctype="multipart/form-data">
 											@csrf
-										<div class="form-group">
+										<div class="form-group col-lg-9">
 											<label>Medicine </label>
 											<input type="text" class="form-control" name="medicine_name1" placeholder="">
 											@if ($errors->has('medicine_name1'))
@@ -84,7 +84,7 @@
        										@endif
 										</div>
 										<div class="text-right">
-											<button type="submit" class="btn btn-primary" name="submit" value="Send">Submit</button>
+											<button type="submit" style="margin-right:145px" class="btn btn-primary" name="submit" value="Send">Submit</button>
 										</div>
 										</form>
 									</div>
@@ -94,7 +94,7 @@
 								@if(session()->has('suc'))
 									<i class="alert alert-success">{{session('suc')}}</i>
 								@endif
-								<div class="table-responsive">
+								<div class="table-responsive p-3">
 												<table id="table" class="table table-hover table-center mb-0">
 											<thead>
 												<tr>
@@ -104,10 +104,8 @@
 												</tr>
 											</thead>
 											<tbody>
-											<?php
-													foreach($medi_arr as $fetch) 
-													{
-												?>
+											 @if(!$medi_arr->isEmpty())
+											   @foreach($medi_arr as $fetch)
 												<tr>
 													<td><?php echo $fetch->id?></td>
 													<td><?php echo $fetch->medicine_name?></td>
@@ -119,9 +117,10 @@
 														</div>
 													</td>
 												</tr>
-												<?php
-												}
-												?>
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Medicines Available</p>
+												@endif
 												
 												
 												

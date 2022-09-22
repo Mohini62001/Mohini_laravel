@@ -10,11 +10,10 @@
 					<div class="page-header">
 						<div class="row">
 							<div class="col-sm-12">
-								<h3 class="page-title">General Settings</h3>
+								<h3 class="page-title">Change Password</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="{{url('/admin')}}">Dashboard</a></li>
-									<li class="breadcrumb-item"><a href="javascript:(0)">Settings</a></li>
-									<li class="breadcrumb-item active">General Settings</li>
+									<li class="breadcrumb-item active">Change Password</li>
 								</ul>
 							</div>
 						</div>
@@ -23,34 +22,40 @@
 					
 					<div class="row">
 						
-						<div class="col-12">
+						<div class="col-6">
 							
 							<!-- General -->
 							
 								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">General</h4>
-									</div>
-									<div class="card-body">
-										<form action="#">
 									
+									<div class="card-body">
+									<form action="{{url('/admin-changepassword')}}" method="post" enctype="multipart/form-data">
+											@csrf	
 											<div class="form-group">
-												<label>Website Name</label>
-												<input type="text" class="form-control">
-											</div>
-											<div class="form-group">
-												<label>Website Logo</label>
-												<input type="file" class="form-control">
-												<small class="text-secondary">Recommended image size is <b>150px x 150px</b></small>
-											</div>
-											<div class="form-group mb-0">
-												<label>Favicon</label>
-												<input type="file" class="form-control">
-												<small class="text-secondary">Recommended image size is <b>16px x 16px</b> or <b>32px x 32px</b></small><br>
-												<small class="text-secondary">Accepted formats : only png and ico</small>
-											</div>
-											
-										</form>
+													<label>Old Password</label>
+													<input type="password" class="form-control" name="oldpassword">
+														@if($errors->has('oldpassword'))	
+															<span class="text-danger" >{{($errors->first('oldpassword'))}}</span>
+														@endif
+												</div>
+												<div class="form-group">
+													<label>New Password</label>
+													<input type="password" class="form-control" name="newpassword">
+														@if($errors->has('newpassword'))	
+															<span class="text-danger" >{{($errors->first('newpassword'))}}</span>
+														@endif
+												</div>
+												<div class="form-group">
+													<label>Confirm Password</label>
+													<input type="password" class="form-control"  name="confirm_password">
+														@if($errors->has('confirm_password'))	
+															<span class="text-danger" >{{($errors->first('confirm_password'))}}</span>
+														@endif
+												</div>
+												<div class="submit-section">
+													<button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+												</div>
+											</form>
 									</div>
 								</div>
 							

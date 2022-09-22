@@ -13,7 +13,6 @@
 								<h3 class="page-title">List of Doctors</h3>
 								<ul class="breadcrumb">
 									<li class="breadcrumb-item"><a href="{{url('/company-dashboard')}}">Dashboard</a></li>
-									<li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li>
 									<li class="breadcrumb-item active">Doctor</li>
 								</ul>
 								
@@ -48,11 +47,8 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-													foreach($alldoctor_arr as $data) 
-													{
-														
-												?>
+												@if(!$alldoctor_arr->isEmpty())
+											    @foreach($alldoctor_arr as $data)
 													<tr>
 													<input type="hidden" value="<?php echo $data->id?>" name="doctor_id" id="doctor_id">
 													<td><?php echo $data->id?></td>
@@ -63,18 +59,18 @@
 													
 													<td class="text-right">
 															<div class="actions">
-																<a href="{{url('company_fav_doc/'.$data->id)}}" class="btn btn-sm bg-success-light" >
-																<i class="fe fe-bookmark">Add to Fav.</i></a>
-															<!--<a  href="{{url('admin-add-doctor/'. $data->id)}}" class="btn btn-sm bg-danger-light">
-																	<i class="fe fe-trash"></i> Delete
-																</a>-->
-															</div>
+																
+															<a href="{{url('company-doctor-profile/'.$data->id)}}" class="btn btn-sm bg-success-light" >
+																View Profile
+															</a>
+														</div>
 													</td>
 													
 													</tr>
-												<?php
-												}
-												?>
+													@endforeach
+												@else
+													<p class="text-danger mt-2">No Doctors Available</p>
+												@endif
 												
 											
 													

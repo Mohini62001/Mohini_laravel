@@ -44,10 +44,8 @@
 											</thead>
 											<tbody>
 
-											  <?php
-											   foreach($companie_arr as $data)
-											   {
-											  ?>
+											  	@if(!$companie_arr->isEmpty())
+											   @foreach($companie_arr as $data)
 												<tr>
 													
 													<td><?php echo $data->id?></td>
@@ -71,9 +69,10 @@
 														</div>
 													</td>
 												</tr>
-												<?php
-												}
-												?>	
+												@endforeach
+												@else
+													<p class="text-danger mt-2">No Company Available</p>
+												@endif
 											</tbody>
 										</table>
 									</div>

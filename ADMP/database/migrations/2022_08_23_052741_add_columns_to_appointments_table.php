@@ -18,10 +18,13 @@ return new class extends Migration
 			$table->foreign('doc_id')->references('id')->on('doctors')->after('id');
             $table->unsignedBigInteger('patient_id');
 			$table->foreign('patient_id')->references('id')->on('patients')->after('doc_id');
-            $table->string('date')->after('patient_id');
+            $table->unsignedBigInteger('slot_id');
+			$table->foreign('slot_id')->references('id')->on('patient_slots')->after('patient_id');
+            $table->string('report_img')->default('Null')->after('slot_id');
+            $table->string('date')->after('report_img');
             $table->string('comment')->after('date');
             $table->string('time')->after('comment');
-            $table->enum('status',['Approved','Pending'])->default('Pending')->after('comment');
+            $table->enum('appointment_status',['Approved','Pending'])->default('Pending')->after('comment');
         });
     }
 

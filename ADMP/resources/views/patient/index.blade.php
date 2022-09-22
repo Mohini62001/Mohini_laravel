@@ -1,5 +1,6 @@
 @extends('patient.Layout.main_layout') 	
 @section('main_container')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 			<!-- Home Banner -->
 			<section class="section section-search">
 				<div class="container-fluid">
@@ -11,13 +12,41 @@
                          
 						<!-- Search -->
 						<div class="search-box">
-							<form action="templateshub.net">
+							<form action="">
+							<div class="form-group search-location">
+									
+									<select class="col-lg-13 form-control" id="city_id"  name="city_id">
+										<option value="">Select</option>
+										<?php
+										foreach($city_id_arr as $c)
+										{
+										?>
+										<option value="<?php echo $c->id;?>">
+												<?php echo $c->city_name ?></option>
+										<?php
+										}
+										?>
+									</select>
+									<span class="form-text">Based on your City</span>
+								</div>
 								<div class="form-group search-location">
-									<input type="text" class="form-control" placeholder="Search Location">
-									<span class="form-text">Based on your Location</span>
+									<select class="col-lg-13 form-control"  id="area_id"  name="area_id">
+									</select>
+									<span class="form-text">Based on your Area</span>
 								</div>
 								<div class="form-group search-info">
-									<input type="text" class="form-control" placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc">
+									<select class="col-lg-13 form-control" value="" name="specialist_id">
+										<option value="">Select Specialist</option>
+										<?php
+										foreach($special_id_arr as $data)
+										{
+										?>
+										<option value="<?php echo $data->id;?>">
+											<?php echo $data->name ?></option>
+										<?php
+										}
+										?>
+									</select>
 									<span class="form-text">Ex : Dental or Sugar Check up etc</span>
 								</div>
 								<button type="submit" class="btn btn-primary search-btn"><i class="fas fa-search"></i> <span>Search</span></button>
@@ -570,7 +599,49 @@
 				</div>
 			</section>		
 			<!-- Availabe Features -->
+			<script>
+$('#sid').on('change', function () {
+                var sid = this.value;
+                $('#city_id').html('');
+                $.ajax({
+				url:"{{url('/getCity')}}",
+				type: "POST",
+				data: {
+				sid: sid,
+				_token: '{{csrf_token()}}'
+				},
+				
+				success: function(result) {
+                        $('#city_id').html('<option value="">Select City</option>');
+                        $.each(result.cities, function (key, value) {
+                            $('#city_id').append('<option value="' + value.id + '">' + value.city_name + '</option>');
+                        });
+                        
+                    }
+                });
+            });
 			
+$('#city_id').on('change', function () {
+                var city_id = this.value;
+                $('#area_id').html('');
+                $.ajax({
+				url:"{{url('/getptArea')}}",
+				type: "POST",
+				data: {
+				city_id: city_id,
+				_token: '{{csrf_token()}}'
+				},
+				
+				success: function(result) {
+                        $('#area_id').html('<option value="">Select Area</option>');
+                        $.each(result.areas, function (key, value) {
+                            $('#area_id').append('<option value="' + value.id + '">' + value.area_name + '</option>');
+                        });
+                        
+                    }
+                });
+            });			
+</script>		
 			
 			
 			

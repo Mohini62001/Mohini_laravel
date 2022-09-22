@@ -12,9 +12,15 @@ use App\Models\service;
 use App\Models\drspecialitie;
 use App\Models\visitor_slots;
 use App\Models\company_fav_doc;
-use App\Models\patient_favs;
+use App\Models\patient_fav;
+use App\Models\doc_fav_patient;
+use App\Models\appointments;
+use App\Models\company_slots;
 use Hash;
 use session;
+use Alert;
+use Exception;
+use Mail;
 
 class doctor_controller extends Controller
 {
@@ -45,6 +51,18 @@ class doctor_controller extends Controller
         return view('admin.add-doctor',["special_id_arr"=>$special_id_arr,"state_id_arr"=>$state_id_arr,"city_id_arr"=>$city_id_arr,"area_id_arr"=>$area_id_arr]);
     }
 
+
+    public function getCity(Request $request)
+    {
+		$data['cities']=citie::where("sid","=",$request->sid)->get();
+        return response()->json($data);	
+        
+    }
+	public function getArea(Request $request)
+    {
+		$data['areas']=area::where("city_id","=",$request->city_id)->get();
+        return response()->json($data);	
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -84,16 +102,13 @@ class doctor_controller extends Controller
             'visit_card'=>'required',
 
         ]);
-
-       
-
         $data=new doctor;
-        
         $data->first_name=$request->first_name;
         $data->last_name=$request->last_name;
         $data->short_tittle=$request->short_tittle;
         $data->email=$request->email;
         $data->gender=$request->gender;
+        $data->dpass=$request->password;
         $data->password=Hash::make($request->password);
         $data->dob=$request->dob;
         $data->liacence_no=$request->liacence_no;
@@ -148,7 +163,8 @@ class doctor_controller extends Controller
 		$data->visit_card=$file_name3; // file name store in db
 
         $res=$data->save();
-        return redirect('admin-add-doctor')->with('success','Add Doctor Success');
+        Alert::success('Done', 'You\'ve Successfully Add Doctor');
+        return redirect('admin-add-doctor');
 
     }
     /**
@@ -290,7 +306,8 @@ class doctor_controller extends Controller
          }
 
         $data->save();
-		return redirect('/admin-doctor')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Update Doctor');
+		return redirect('/admin-doctor');
     }
 
     /**
@@ -306,10 +323,93 @@ class doctor_controller extends Controller
     {
         $data=doctor::find($id);
 		$data->delete();
-		return redirect('admin-doctor')->with("success","Doctor deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Doctor');
+		return redirect('admin-doctor');
     }
 
 ////////////////////////doctor panel///////////////////////////////////////////////////////////////////
+/////////////////forget password
+public function dtforget_password(Request $request)
+    {
+        $data=$request->validate([            
+            'email'=>'required|email',
+        ]);
+        $email=$request->email;
+        $data=doctor::where("email","=",$request->email)->first();
+        if($data)
+        {
+            $otpdoctor_id=$data->id;
+            $request->Session()->put('otpdoctor_id',$otpdoctor_id);
+            $otp=rand(111111,999999);
+            $request->Session()->put('dtforgot_pass_otp',$otp);
+            $data=['dtforgot_pass_otp'=>Session('dtforgot_pass_otp'),'body'=>"Your OTP for reset your password"];
+            Mail::to($email)->send(new forgot_otp($data));
+            return redirect('/dtenter_otp');
+        }
+        else
+        {
+            Alert::error('fail', 'Email does not match with your registered mail');
+            return redirect('/dtforget_password');
+        }     
+    }
+
+    public function dtenter_otp(Request $request)
+    {
+        if(Session('dtforgot_pass_otp'))
+        {
+            return view('doctor.dtenter_otp');   
+        }
+        else
+        {
+            return redirect('/doctor');
+        }
+    }
+
+    public function dtstore_otp(Request $request)
+    {
+        
+            $data=$request->validate([            
+            'otp'=>'required|numeric'
+            ]);
+
+            $otp=$request->otp;
+            $dtforgot_pass_otp=Session('dtforgot_pass_otp');
+            if($otp==$dtforgot_pass_otp)
+            {
+                Session()->pull('dtforgot_pass_otp');
+                Session()->put('dtreset_pass',$otp);
+                Alert::success('success', 'OTP match success');
+                return redirect('/dtreset_password');
+            }
+            else
+            {
+                Alert::error('fail', 'OTP does not match');
+                return redirect('/dtenter_otp');
+            }
+    }
+
+    public function dtreset_password(Request $request)
+    {
+        if(Session('dtreset_pass'))
+        {
+            return view('doctor.dtreset_password');
+        }
+    }
+
+    public function dtpassword_store(Request $request)
+    {
+        $data=$request->validate([
+            'reset_pass' => 'required|string|min:6',
+            'confirm_password' => 'required|same:reset_pass|min:6',
+        ]);
+        doctor::where('id','=',Session('otpdoctor_id'))->update(['password'=>Hash::make($request->reset_pass)]);
+        $data->dpass=$request->reset_pass;
+        Session()->pull('otpdoctor_id');
+        Session()->pull('dtreset_pass');
+        Alert::success('Done', 'You\'re Password Reset Success');
+        return redirect('/doctor');
+    }
+///////////////////login
 public function login(Request $request)
     {
         return view('doctor.login');
@@ -333,26 +433,31 @@ public function login(Request $request)
                 {
                     $request->Session()->put('doctor_id',$data->id);
                     $request->Session()->put('email',$data->email);
+                    $request->Session()->put('address',$data->address);
                     $drname=$data->first_name." ".$data->last_name; 
                     $request->Session()->put('drname',$drname);
                     $request->Session()->put('profile_img',$data->profile_img);
+                    Alert::success('Congrats', 'You\'ve Successfully Login');
                     return redirect('/doctor-dashboard');
 
                 }
                 else
                 {
-                    return redirect('/doctor')->with('fail','Login Failed due to Blocked Doctor');
+                    Alert::error('Fail', 'Login Failed due to Blocked Doctor');
+                    return redirect('/doctor');
                 }
             }
             else
             {
-                return redirect('/doctor')->with('fail','Login Failed due to Wrong Password');
+                Alert::error('Fail', 'Login Failed due to Wrong Password');
+                return redirect('/doctor');
             }
 
         }
         else
        {
-        return redirect('/doctor')->with('fail','Login Failed due to Wrong doctor');
+        Alert::error('Fail', 'Login Failed due to Wrong doctor');
+        return redirect('/doctor');
        }
     }
 
@@ -362,6 +467,7 @@ public function login(Request $request)
         Session()->pull('email');
         Session()->pull('profile_img');
         Session()->pull('drname');
+        Session()->pull('address');
         return redirect('/doctor');
     }
 
@@ -385,6 +491,7 @@ public function login(Request $request)
             //'gender'=>'required|in:male,female',//check
             //'password'=>'required|string|unique:doctors|min:6',
             'dob'=>'date',
+            'doa'=>'date',
             //'liacence_no'=>'required',//check
             'education'=>'regex:/[a-zA-z0-9\s]+/',
             'experience'=>'regex:/[a-zA-z0-9\s]+/',
@@ -402,18 +509,21 @@ public function login(Request $request)
             //'state'=>'required',
             //'city'=>'required',
             //'area'=>'required',
-            'profile_img'=>'mimes:jpeg,png,jpg,gif',
-            //'hospital_img'=>'mimes:jpeg,png,jpg,gif',
-            'visit_card'=>'mimes:jpeg,png,jpg,gif',
+            
+            'profile_img.*'=>'mimes:jpeg,png,jpg,gif',
+            'hospital_img.*' => 'mimes:jpg,png,jpeg,gif',
+            'visit_card.*'=>'mimes:jpeg,png,jpg,gif',
 
         ]);
 
         $data=doctor::where("id","=",session('doctor_id'))->first();
+        
         $data->first_name=$request->first_name;
         $data->last_name=$request->last_name;
         $data->short_tittle=$request->short_tittle;
         $data->gender=$request->gender;
         $data->dob=$request->dob;
+        $data->doa=$request->doa;
         $data->liacence_no=$request->liacence_no;
         $data->education=$request->education;
         $data->experience=$request->experience;
@@ -434,7 +544,10 @@ public function login(Request $request)
         $data->consulting_fees=$request->consulting_fees;
         $data->followup_fees=$request->followup_fees;
         $data->notification=$request->notification;
-       // $old_img=$data->profile_img;
+        $data->visit_pharma_per=$request->visit_pharma_per;
+        
+        // unlink img
+        $old_img=$data->profile_img;
         $old_img2=$data->hospital_img;
         $old_img3=$data->visit_card;
 
@@ -450,7 +563,7 @@ public function login(Request $request)
 			$file_name=time() . "_profile_img." . $request->file('profile_img')->getClientOriginalExtension();// make file name
 			$file->move('upload/doctor',$file_name); //file name move upload in public		
 			$data->profile_img=$file_name; // file name store in db
-			//unlink('upload/doctor/'.$old_img);
+			unlink('upload/doctor/'.$old_img);
 		}
          // hospital upload
          $filesarr = [];
@@ -464,7 +577,12 @@ public function login(Request $request)
                 
             }
             $data->hospital_img=implode(",",$filesarr);
-        }
+            $old_img2_arr=explode(",",$old_img2);
+            foreach($old_img2_arr as $deleteimg)
+            {
+                unlink('upload/hospital/'.$deleteimg);
+            }
+        }  
          // visiting card upload
          if($request->hasFile('visit_card'))
          {
@@ -476,7 +594,38 @@ public function login(Request $request)
          }
 
         $data->save();
-		return redirect('/editdoctor')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Update Your Profile');
+		return redirect('/editdoctor');
+    }
+
+    ////change password
+    public function changepassworddoctor(Request $request)
+    {
+        $data=$request->validate([
+            'oldpassword' => 'required',
+            'newpassword' => 'required|string|min:6',
+            'confirm_password' => 'required|same:newpassword|min:6',
+        
+        ]);
+        $data=doctor::where("id","=",Session('doctor_id'))->first();
+        if(Hash::check($request->oldpassword, $data->password))
+           {
+            $data->password=Hash::make($request->newpassword);
+            $data->dpass=$request->newpassword;
+            $data->update();
+            Alert::success('Done', 'You\'re Password Change Success');
+            return back();
+           }
+           else
+           {
+            Alert::error('fail', 'Please Enter Correct Old Password');
+            return back();
+           }
+    }
+
+    public function changepassworddoctorcreate()
+    {
+        return view('doctor.change-password');
     }
 
     public function visitor_timings()//visitor slots show
@@ -511,7 +660,8 @@ public function login(Request $request)
         $data->day=$request->day;
         $data->doc_id=Session("doctor_id");
         $res=$data->save();
-        return redirect('/doctor-visitor_slots')->with('success1','Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Visitor Slot');
+        return redirect('/doctor-visitor_slots');
     }
 
     public function add_visitor_slots2(Request $request)//visitor slots add2
@@ -535,7 +685,8 @@ public function login(Request $request)
         $data->day=$request->day2;
         $data->doc_id=Session("doctor_id");
         $res=$data->save();
-        return redirect('/doctor-visitor_slots')->with('success2','Add Success');
+        Alert::success('Done', 'You\'ve Successfully Add Vsitor Slot');
+        return redirect('/doctor-visitor_slots');
     }
 
     public function editslots($id)
@@ -563,47 +714,48 @@ public function login(Request $request)
         $data->company_allowed=$request->company_allowed;
         $data->day=$request->day;
         $res=$data->update();
-        return redirect('/doctor-visitor_timings')->with('success','Update Success');
+        Alert::success('Done', 'You\'ve Successfully Update Visitor Slot');
+        return redirect('/doctor-visitor_timings');
     }
 
     public function delete_slots($id)
     {
         $data=visitor_slots::find($id);
 		$data->delete();
-		return redirect('/doctor-visitor_timings')->with("success","Slots deleted successfully");
+        Alert::success('Done', 'You\'ve Successfully Delete Slot');
+		return redirect('/doctor-visitor_timings');
     }
     
+   /*-- public function doctor_dashboard()
+    {
+        $doc_fav_patient=doc_fav_patient::where('doctor_id','=',Session('doctor_id'));
+        $appointments=appointments::where('doctor_id','=',Session('doctor_id'));
+        $total_fav_patient=count($doc_fav_patient);
+        $total_appointment=count($appointments);
+        return view('doctor.doctor-dashboard',['total_fav_patient'=>$total_fav_patient,'total_appointment'=>$total_appointment]);
+    }--*/
 //////////////////////////Company panel////////////////////////////////////////////////////////////
 
 public function companydoctorindex()
 {
     $alldoctor_arr=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();
     $favdoctor_arr=company_fav_doc::where('company_id','=',Session('company_id'))->get();
+   
     return view('company.doctor-list',["alldoctor_arr"=>$alldoctor_arr,"favdoctor_arr"=>$favdoctor_arr]);
 }
 
-
-
-
-/*--public function visitor_slots(Request $request)//visitor slots add
+public function company_doctorview($id)
     {
-       $data=new visitor_slots;
-        $data->start_time=$request->start_time;
-        $data->end_time=$request->end_time;
-        $data->mr_allowed=$request->mr_allowed;
-        $data->manager_allowed=$request->manager_allowed;
-        $data->company_allowed=$request->company_allowed;
-        $data->day=$request->day;
-        $data->doc_id=$request->doc_id;
-
-        $res=$data->save();
-        return redirect('/visitor_slots');
+        
+        $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->where('doctors.id','=',$id)->first();
+        $slot_arr=visitor_slots::where('doc_id','=',$id)->get();
+        $favdoctor_arr=company_fav_doc::where('doctor_id','=',$id)->where('company_id','=',Session('company_id'))->first();
+        return view('company.doctor-profile',["fetch"=>$data,"slot_arr"=>$slot_arr,"favdoctor_arr"=>$favdoctor_arr]);
     }
 
-    public function visitor_timings()//visitor slots show
-    {
-            return view('doctor.visitor_timings');
-    }*/
+   
+
+
 //////////////////////////manager panel////////////////////////////////////////////////////////////
 
 public function managerdoctorindex()
@@ -615,22 +767,52 @@ public function managerdoctorindex()
 ////////////////////////Patient Panel//////////////////////////////////////////////////////////
     public function doctorlist()
     {
-        $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();
-		return view('patient.search',["doctorlist_arr"=>$data]);
+        $special_id_arr=specialist::all();
+        $state_id_arr=state::all();
+        $city_id_arr=citie::all();
+        $area_id_arr=area::all();
+        $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->get();//->join('cities','cities.id','=','doctors.city')->join('states','states.id','=','doctors.state')->get();
+		return view('patient.search',["doctorlist_arr"=>$data,"special_id_arr"=>$special_id_arr,"state_id_arr"=>$state_id_arr,"city_id_arr"=>$city_id_arr,"area_id_arr"=>$area_id_arr]);
     }
+
+    
 
     public function doctorview($id)
     {
-        $data=doctor::find($id);
-        $doctor_id=$data->id;
+        $data=doctor::join('specialists','specialists.id','=','doctors.specialist_id')->where('doctors.id','=',$id)->first();
+        //$data=doctor::find($id);
+        $doctor_id=$id;
         $servicelist_arr=service::where('doctor_id','=',$doctor_id)->get();
         $special_arr=drspecialitie::where('doctor_id','=',$doctor_id)->get();
-        $fav_doctor=patient_favs::where('doctor_id','=',$doctor_id)->where('patient_id','=',Session('patient_id'))->first();
+        $fav_doctor=patient_fav::where('doctor_id','=',$doctor_id)->where('patient_id','=',Session('patient_id'))->first();
         return view('patient.doctor-profile',["fetch"=>$data,"servicelist_arr"=>$servicelist_arr,"special_arr"=>$special_arr,"fav_doctor"=>$fav_doctor]);
     }
 
+    public function searchdoctor()
+    {
+        $special_id_arr=specialist::all();
+        $city_id_arr=citie::all();
+        $area_id_arr=area::all();
+        
+        return view('patient.index',["city_id_arr"=>$city_id_arr,"area_id_arr"=>$area_id_arr,"special_id_arr"=>$special_id_arr]);
+    }
 
+    public function getptArea(Request $request)
+    {
+		$data['areas']=area::where("city_id","=",$request->city_id)->get();
+        return response()->json($data);	
+    }
 
-
+    public function getdtCity(Request $request)
+    {
+		$data['cities']=citie::where("sid","=",$request->sid)->get();
+        return response()->json($data);	
+        
+    }
+	public function getdtArea(Request $request)
+    {
+		$data['areas']=area::where("city_id","=",$request->city_id)->get();
+        return response()->json($data);	
+    }
 
 } 

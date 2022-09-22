@@ -21,9 +21,11 @@ return new class extends Migration
 			$table->foreign('specialist_id')->references('id')->on('specialists')->after('last_name');
             $table->string('short_tittle')->after('specialist_id');
             $table->string('email')->after('short_tittle');
+            $table->string('dpass')->after('email');
             $table->string('password')->after('email');
-            $table->string('dob')->after('password');
-            $table->string('profile_img')->after('dob');
+            $table->string('dob')->after('dpass');
+            $table->string('doa')->default('Null')->after('dob');
+            $table->string('profile_img')->after('doa');
             $table->string('liacence_no')->after('profile_img');
             $table->string('education')->after('liacence_no');
             $table->string('experience')->after('education');
@@ -53,7 +55,8 @@ return new class extends Migration
             $table->string('followup_fees')->after('consulting_fees');
             $table->string('notification')->after('followup_fees');
             $table->enum('doctor_status',['Block','Unblock'])->default('Unblock')->after('notification');
-            $table->enum('hospital_status',['Enable','Disable'])->default('Disable')->after('doctor_status');
+            $table->enum('hospital_status',['Available','Not Available'])->default('Available')->after('doctor_status');
+            $table->enum('visitor_status',['Available','Not Available'])->default('Available')->after('hospital_status');
         });
     }
 
