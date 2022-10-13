@@ -1,0 +1,190 @@
+SDLC - software development life cycle
+1. Requirement Gathering
+2. Analysis & SRS Report
+3. Designing
+4. Implementataion(coding)
+5. Testing
+6. Maintanance
+
+HTML - Hypertext Markup Language
+	-Clientside scripting language
+	-Element based 
+	-Create a website structure
+	-pairing tags
+	-Selfclosing tags
+	-Images,links,tables,form....
+CSS - Cascading style sheet
+	-Beautify to your old HTML
+	-3 Types of CSS 
+		-inline css
+		-internal CSS
+		-External CSS
+	-you can create HTML pages attractive using CSS
+Boostrap - framework of css
+	-Follows Grid System
+
+SQL AND MYSQL
+MYSQL : Database
+SQL : Structure Query Language
+1. DDL - create,drop,alter,Truncate
+2. DML - Insert,Update,Delete
+3. DQL - Select
+4. DCL - Commit,Rollback
+Q: Differance Between Delete & Truncate?
+Q : Differance Between Drop & Delete?
+
+SQL Queries
+1. CREATE DATABASE 27Apr_IP
+2. CREATE TABLE Customer (id int PRIMARY KEY AUTO_INCREMENT,cust_name varchar(50),cust_email varchar(50))
+3. ALTER TABLE customer ADD (PASSWORD varchar(50))
+4. INSERT INTO customer (cust_name,cust_email,PASSWORD) VALUES ('Rahul','rahul@gmail.com',123);
+5. UPDATE customer SET cust_name="John",cust_email='john@gmail.com',PASSWORD='hello' where id=1
+6. SELECT * FROM customer
+7. SELECT * from customer WHERE id=2
+8. SELECT cust_email,PASSWORD from customer
+9. SELECT cust_email,PASSWORD from customer WHERE id=1
+10. DELETE from customer WHERE id=1
+11. DELETE from customer WHERE id=1;
+COMMIT
+12. DELETE from customer WHERE id=1;
+ROLLBACK
+13. drop TABLE customer
+14. CREATE TABLE country (cid int PRIMARY KEY AUTO_INCREMENT,cname varchar(50))
+15. CREATE TABLE Emp (emp_id int AUTO_INCREMENT,emp_name varchar(50),passwod varchar(50),country int,PRIMARY KEY(emp_id),FOREIGN KEY(country) REFERENCES country(cid))
+16. SELECT emp.emp_name,passwod,country.cname from emp JOIN country on emp.country = country.cid
+17. CREATE VIEW myview as SELECT passwod from emp
+18). CREATE INDEX MyIndex on emp(emp_name)
+19). CREATE INDEX Demo on emp(emp_name,country)
+
+Q: SQL Aggrigate Functions
+SUM,COUNT,MIN,MAX,AVG...
+
+Q:What differance Between orderby & group by?
+Q : What are the storage Engines in MySQL?
+Q : Data Types?
+Q : Difference Between ENUM & SET Data types?
+Q : What is the use of BLOB data Types?
+
+Core PHP:
+	-Founder of PHP is Resumus lerdoff in 1994 as a serverside scripting language.
+	-open source
+	-loosely typed language
+	-variables does not need to define a data types - $var
+Variables - are used to storing values.
+operators - Arithmatic,bitwise,logical,assignment...
+statements & loops - if,else..if,nestead if..else,switch,for,while,do..while,foreach
+Q : What is the use of foreach loop?
+
+
+Functions : UserDifened,Built-in
+		-Array Types - Numeric,Associative,Multideminsional
+		-Array functions
+			-array_merge,array_merge_recursive
+			-array_keys,array_values
+			-array_combine,array_push,array_pop....
+Q : Write any 5 array functions with an example
+		-String Functions
+		-strlen(),str_word_count(),strrev(),strpos()
+		-md5(),base64_encode(),base64_decode()....
+Q : Write any 5 String functions with an example
+Q : What is diff between include & require?
+Q : What is the diff between include & include_once?
+Q : Types of Header Functions?
+	-location
+	-Refresh
+	-Content-type
+	-Content-Dispotion
+
+
+OOPS : Object Oriented Programing Structure
+1). Class
+2). Inheritance
+3). Constructor/Destructor
+4). Abstract class
+5). Interface
+6). Scope Resolution
+7). Encapsulation
+8). Type Hinting
+9). Object iteration
+10). Magic methods - autoload....
+11). Trait
+
+Advance PHP
+1. File Handling
+	-Mode - r,x,a,w,a+,w+,a+,x+
+	-fopen(),fclose(),fread(),fwrite(),feof(),fgetc(),fgets()
+2. Email Send - PHPmailer
+		-sendmail(to,sub,message)
+
+3. Session - is used to store user's value on serverside
+	 - unique id 
+	 -session_start(),unset(),session_destroy()
+4. Cookie - is used to store user's value on clientside(i.e : user's browser)
+		-setcookie("user","tops",time()+3600)
+		-setcookie("user","tops",time()-3600)
+Q:What is session?
+Q:What is persistant cookie?
+
+5. What is Javascript?
+	-clientside scripting Language
+	-used to validation			
+	-detect user's browser
+ 	-used to display statement
+Q:How to print statement in javascript?
+	document.write()
+	console.log()
+	alert()
+Q:How many types of popup box in jS?
+	-alert()
+	-Prompt()
+	-Confirm()
+Q:How to get HTML value in javascript?
+	-document.getElementById()
+	-document.getElementByTagName()
+	-document.getElementByName()
+	-doument.querySelector()
+	-document.getElementByClassName()
+	-document.querySelectorAll()
+Q:What is the dif between let,var & const?
+Q:How many types of events?
+	-onclick,onchange,onblur,onselect....
+
+6. Jqyuery?
+	-jquery is a library of javascript.
+	document.ready(function(){
+		alert("Hello World!")
+	})
+7. Ajax - Asynchronance javascript and xml
+	-without page refreshing we get data from database
+	
+8. Web services - API - json,xml
+		-Third party integration
+
+
+*Laravel : Framework - MVC - libraries,helpers,packages
+Q: what is installation Proccess?
+- need composer
+-using composer need to install laravel
+Q: explain directory structure of laravel?
+Q: What is Middleware?Types of Middleware.
+Q: What is Migration?
+	-php artisan make:Model CRUD -mcr
+	-php arisan make:migration
+	-php artisan migrate
+Q: What is routes?
+Q: what is .env file?
+Q: What is Collectives & macros?
+Q: What is session in laravel? how to apply session in laravel?
+Q: how to upload a file in laravel?
+Q: How to send a Mail in laravel?
+Q: What is Queue In laravel?
+Q: What is packages?
+Q: what is socialite packege in laravel?
+Q: How to create API in laravel?
+Q: What is Query Builder?
+Q: What is Eloquent ORM?
+
+
+
+
+	

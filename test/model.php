@@ -7,7 +7,7 @@
 	  function __construct()
 	  
 	  {
-		  $this->conn=new mysqli('localhost','root','','test');
+		  $this->conn=new mysqli('localhost','root','','practice');
 	  }
 	  
 	  function select($tbl)
