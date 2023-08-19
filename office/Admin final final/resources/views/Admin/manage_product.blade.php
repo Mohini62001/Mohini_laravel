@@ -1,5 +1,8 @@
 @extends('Admin.Layout.main_layout') 	
 @section('main_container')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
                 <!-- begin app-main -->
                 <div class="app-main" id="main">
                     <!-- begin container-fluid -->
@@ -22,6 +25,9 @@
                                                 Product
                                                 </li>
                                                 <li class="breadcrumb-item active text-primary" aria-current="page">Manage Product</li>
+                                                <div style="padding-top:25px">
+                                                    <a href="{{url('/product/add_product')}}" class="btn btn-primary btn-lg btn-block-sm" >Add Product</a>
+                                                </div>
                                             </ol>
                                         </nav>
                                     </div>
@@ -71,13 +77,12 @@
                                                         </td>
                                                         <td class="text-left">
                                                             <div class="actions">
-                                                                <a class="btn btn-sm bg-success-light"  href="{{url('product/edit_product/'.$data->id)}}">
+                                                                <a class="btn btn-success"  href="{{url('product/edit_product/'.$data->id)}}">
                                                                     <i class="fe fe-edit"></i> Edit Product
-                                                                </a><br>
-                                                                <a  href="{{url('product/destroy_product/'. $data->id)}}" onclick="return confirm('Are you sure?')"  class="btn btn-sm bg-danger-light">
-                                                                    <i class="fe fe-trash"></i> Delete Product
-                                                                </a><br>
-                                                                
+                                                                </a><br><br>
+                                                                <a class="delete btn btn-danger;" href="{{url('product/destroy_product/'.$data->id)}}"  >
+                                                                    <i class="fe fe-trash"></i>Delete Product
+                                                                </a>
                                                             </div>
                                                         </td>
                                                         
@@ -96,10 +101,39 @@
                             </div>
                         </div>
                         <!-- end row -->
+                       
                     </div>
                     <!-- end container-fluid -->
+
                 </div>
                 <!-- end app-main -->
             </div>
             <!-- end app-container -->
+
+<script>
+    $('.delete').on('click',function (e) {
+        e.preventDefault();
+        var self = $(this);
+        console.log(self.data('title'));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+                )
+                location.href = self.attr('href');
+            }
+            })
+    })
+</script>
             @endsection
+           

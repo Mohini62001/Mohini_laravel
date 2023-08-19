@@ -15,6 +15,12 @@
     </div>
     <!-- end app -->
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+
+
     <!-- plugins -->
     <script src="{{url('Admin/assets/js/vendors.js')}}"></script>
 

@@ -150,7 +150,7 @@ class product_controller extends Controller
         $data=product::find($id);
         $data->delete();
 
-        $data=
+        
         Alert::success('Done', 'You\'ve Successfully Delete Product');
         return back();
     }

@@ -9,6 +9,10 @@
     <meta name="description" content="Admin template that can be used to build dashboards for CRM, CMS, etc." />
     <meta name="author" content="Potenza Global Solutions" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- app favicon -->
     <link rel="shortcut icon" href="{{url('Admin/assets/img/favicon.ico')}}">
     <!-- google fonts -->
@@ -17,6 +21,11 @@
     <link rel="stylesheet" type="text/css" href="{{url('Admin/assets/css/vendors.css')}}" />
     <!-- app style -->
     <link rel="stylesheet" type="text/css" href="{{url('Admin/assets/css/style.css')}}" />
+    <!----sweet-alert js--->
+    <!-- Sweet Alert -->
+   <!-- SweetAlert2 -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
 </head>
 
 <body>
